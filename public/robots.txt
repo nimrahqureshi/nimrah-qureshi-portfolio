@@ -1,0 +1,11 @@
+# Robots.txt for Nimrah Qureshi Portfolio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://nimrahqureshi.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin
+Disallow: /api/
+Disallow: /_next/
