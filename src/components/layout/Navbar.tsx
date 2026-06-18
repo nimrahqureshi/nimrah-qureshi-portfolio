@@ -18,7 +18,7 @@ const navLinks: NavLink[] = [
   { to: '/ai-tools', label: 'AI Tools' },
   { to: '/blog', label: 'Blog' },
   { to: '/pricing', label: 'Pricing' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/faq', label: 'FAQ' },
 ];
 
 export default function Navbar() {
