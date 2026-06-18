@@ -92,7 +92,7 @@ export default function Hero() {
                   inactiveTransition="transform 0.5s ease-in-out"
                 >
                   <img
-                    src="/banner.png"
+                    src="images/banner.png"
                     alt="Nimrah Qureshi"
                     loading="eager"
                     fetchPriority="high"
