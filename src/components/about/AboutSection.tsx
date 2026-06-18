@@ -1,12 +1,41 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Code2, Briefcase, Award, Users, Sparkles, GraduationCap, Flame, Terminal } from 'lucide-react';
+import { Code2, Briefcase, Award, Users, Sparkles, GraduationCap, Terminal, MessageCircle, Mail } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
+import { SiFiverr } from 'react-icons/si';
 
 const stats = [
-  { icon: Briefcase, value: 2, suffix: '', label: 'AI Brands Founded', prefix: '' },
-  { icon: Code2, value: 10, suffix: '+', label: 'Projects Completed', prefix: '' },
+  { icon: Briefcase, value: 2, suffix: '', label: 'Companies Founded', prefix: '' },
+  { icon: Code2, value: 15, suffix: '+', label: 'Projects Built', prefix: '' },
   { icon: Award, value: 20, suffix: '+', label: 'Technologies', prefix: '' },
-  { icon: Users, value: 2, suffix: '', label: 'AI Certifications', prefix: '' },
+  { icon: Users, value: 2, suffix: '', label: 'Certifications', prefix: '' },
+];
+
+const skills = [
+  "OpenAI",
+  "LangChain",
+  "Agentic AI",
+  "RAG",
+  "Python",
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "MongoDB",
+  "PostgreSQL",
+  "Tailwind CSS",
+  "Framer Motion",
+  "Vercel",
+  "GitHub",
+  "Automation"
+];
+
+const socialLinks = [
+  { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
+  { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
+  { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~nimrahqureshi', label: 'Upwork' },
+  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi013', label: 'Instagram' },
 ];
 
 function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {
@@ -50,6 +79,9 @@ function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number;
 }
 
 export default function AboutSection() {
+  // State to manage mobile tap color activations
+  const [isTouched, setIsTouched] = useState(false);
+
   return (
     <section 
       id="about" 
@@ -88,7 +120,7 @@ export default function AboutSection() {
           >
             <Sparkles className="w-3.5 h-3.5 text-[#E1E0CC]" />
             <span className="text-xs font-medium tracking-[0.2em] uppercase text-[#E1E0CC]/80">
-              Our Identity
+              Personal Profile
             </span>
           </motion.div>
           <motion.h2 
@@ -101,30 +133,33 @@ export default function AboutSection() {
             About Me
           </motion.h2>
         </div>
-        <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  className="mt-12"
->
-  <h3 className="text-2xl text-[#E1E0CC] mb-6">
-    Professional Upwork Presence
-  </h3>
 
-  <img
-    src="/images/upwork-profile.png"
-    alt="Upwork Profile"
-    className="w-full rounded-2xl border border-neutral-800 shadow-2xl"
-  />
-</motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 mb-20"
+        >
+          <h3 className="text-2xl text-[#E1E0CC] mb-6">
+            Professional Upwork Presence
+          </h3>
+          <img
+            src="/images/upwork-profile.png"
+            alt="Upwork Profile"
+            className="w-full rounded-2xl border border-neutral-800 shadow-2xl"
+          />
+        </motion.div>
 
         {/* MAIN PROFILE INFRASTRUCTURE */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-24">
           
-          {/* LEFT COLUMN: PREMIUM GALLERY BLOCK (All 4 Images Preserved Separately) */}
-          <div className="lg:col-span-5 grid grid-cols-12 gap-4 relative group">
+          {/* LEFT COLUMN: PREMIUM GALLERY BLOCK (Touch/Hover interactions configured perfectly) */}
+          <div 
+            onTouchStart={() => setIsTouched(!isTouched)}
+            className="lg:col-span-5 grid grid-cols-12 gap-4 relative group cursor-pointer"
+          >
             {/* Absolute accent element behind layout gallery */}
-            <div className="absolute -inset-4 bg-[#E1E0CC]/5 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
+            <div className={`absolute -inset-4 bg-[#E1E0CC]/5 rounded-[2rem] blur-2xl transition-all duration-700 pointer-events-none ${isTouched ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
             
             {/* Image 1: Main Feature Block */}
             <motion.div 
@@ -135,9 +170,9 @@ export default function AboutSection() {
               className="col-span-8 aspect-[4/5] rounded-2xl md:rounded-[1.5rem] overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl relative"
             >
               <img 
-                src="images/banner.png" 
+                src="/images/banner.png" 
                 alt="Nimrah Qureshi Profile" 
-                className="w-full h-full object-cover grayscale tracking-wide group-hover:grayscale-0 transition-all duration-700 ease-out"
+                className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
             </motion.div>
@@ -151,9 +186,9 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg mt-6"
             >
               <img 
-                src="images/banner.png" 
+                src="/images/banner.png" 
                 alt="AI Development Workspace" 
-                className="w-full h-full object-cover scale-110 grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 ease-out"
+                className={`w-full h-full object-cover scale-110 transition-all duration-700 ease-out ${isTouched ? 'grayscale-0 brightness-100' : 'grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100'}`}
               />
             </motion.div>
 
@@ -166,9 +201,9 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg -mt-12 z-20"
             >
               <img 
-                src="images/banner.png" 
+                src="/images/banner.png" 
                 alt="Neural Operations" 
-                className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale contrast-125 group-hover:grayscale-0'}`}
               />
             </motion.div>
 
@@ -181,9 +216,9 @@ export default function AboutSection() {
               className="col-span-8 aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl -mt-4"
             >
               <img 
-                src="images/banner.png" 
+                src="/images/banner.png" 
                 alt="System Architecture Hub" 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
+                className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-neutral-950/10 mix-blend-multiply" />
             </motion.div>
@@ -198,13 +233,19 @@ export default function AboutSection() {
               transition={{ duration: 0.6 }}
             >
               <h3 className="text-xl md:text-2xl font-normal text-[#E1E0CC] mb-4">
-                Pioneering Next-Generation Autonomous Workflows
+                AI Engineer, Agentic AI Developer & Full-Stack Developer
               </h3>
+              <p className="text-sm md:text-base text-gray-400 leading-relaxed mb-4 font-normal tracking-wide">
+                I am Nimrah Qureshi, an AI Engineer and Full-Stack Developer from Pakistan. I specialize in AI Chatbots, Agentic AI Systems, RAG Applications, Automation Workflows, React, Next.js, TypeScript and modern web development.
+              </p>
               <p className="text-sm md:text-base text-gray-400 leading-relaxed mb-6 font-normal tracking-wide">
-                I am an AI Engineer &amp; Full-Stack Developer specializing in architecting custom multi-agent frameworks, complex RAG pipelines, and automated intelligence hubs. Based in Karachi, Pakistan, I operate globally to engineer infrastructure that bridges the gap between raw data paradigms and beautiful, scalable web execution.
+                My goal is to help startups, businesses and entrepreneurs build intelligent products that automate tasks, improve customer experience and increase productivity.
               </p>
               <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal tracking-wide">
-                As the founder of <span className="text-[#E1E0CC] font-medium">Brainlink AI</span> and <span className="text-[#E1E0CC] font-medium">Neuraloft</span>, my operations focus entirely on creating robust software ecosystems. Whether training intelligent customer support systems, crafting fluid web interfaces with glassmorphic aesthetics, or configuring AI automation systems, I target absolute precision.
+                I am the founder of Brain Link AI and Neuraloft. I work with clients worldwide to build AI-powered solutions including GPT Chatbots, WhatsApp Automation, AI Agents, SaaS Platforms and custom business automation systems.
+              </p>
+              <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal tracking-wide mt-4">
+                I enjoy turning complex ideas into scalable digital products with clean design, modern technologies and real business impact.
               </p>
             </motion.div>
 
@@ -220,13 +261,21 @@ export default function AboutSection() {
                 </div>
               </div>
 
+              {/* Education Section Added Successfully */}
               <div className="flex gap-4 items-start">
                 <div className="w-8 h-8 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center flex-shrink-0 mt-1">
                   <GraduationCap className="w-4 h-4 text-[#E1E0CC]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-white uppercase tracking-wider">Advanced Core Tech</h4>
-                  <p className="text-xs text-gray-500 mt-1">Deep integration experience across LangChain systems, OpenAI interfaces, Python environments, Next.js, and TypeScript architectures.</p>
+                  <h4 className="text-sm font-medium text-white uppercase tracking-wider">
+                    Education & Certifications
+                  </h4>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Certified Agentic AI Engineer (PIAIC)
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Certified AI, Metaverse & Web3 Developer (GIAIC)
+                  </p>
                 </div>
               </div>
             </div>
@@ -258,8 +307,45 @@ export default function AboutSection() {
           </div>
         </div>
 
+        {/* SKILLS GRID MODULE */}
+        <div className="mt-12 bg-[#101010]/30 border border-neutral-900 rounded-2xl p-6 md:p-8">
+          <h3 className="text-xl text-[#E1E0CC] mb-6 font-medium">
+            Technologies & Expertise
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {skills.map((skill) => (
+              <span
+                key={skill}
+                className="px-4 py-2 rounded-full bg-[#101010] border border-neutral-800 text-sm text-gray-300 hover:border-[#E1E0CC]/20 transition-colors"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* REAL SOCIAL LINKS MODULE */}
+        <div className="mt-12 bg-[#101010]/30 border border-neutral-900 rounded-2xl p-6 md:p-8">
+          <h3 className="text-xl text-[#E1E0CC] mb-4 font-medium">
+            Connect With Me
+          </h3>
+          <div className="flex flex-wrap gap-4">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#101010] border border-neutral-800 text-sm text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/30 hover:bg-white/[0.02] transition-all duration-300"
+              >
+                <social.icon className="w-4 h-4" />
+                <span>{social.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );
 }
-
