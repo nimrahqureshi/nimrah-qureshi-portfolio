@@ -101,6 +101,22 @@ export default function AboutSection() {
             About Me
           </motion.h2>
         </div>
+        <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className="mt-12"
+>
+  <h3 className="text-2xl text-[#E1E0CC] mb-6">
+    Professional Upwork Presence
+  </h3>
+
+  <img
+    src="/images/upwork-profile.png"
+    alt="Upwork Profile"
+    className="w-full rounded-2xl border border-neutral-800 shadow-2xl"
+  />
+</motion.div>
 
         {/* MAIN PROFILE INFRASTRUCTURE */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-24">
@@ -119,7 +135,7 @@ export default function AboutSection() {
               className="col-span-8 aspect-[4/5] rounded-2xl md:rounded-[1.5rem] overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl relative"
             >
               <img 
-                src="/banner.png" 
+                src="images/banner.png" 
                 alt="Nimrah Qureshi Profile" 
                 className="w-full h-full object-cover grayscale tracking-wide group-hover:grayscale-0 transition-all duration-700 ease-out"
               />
@@ -135,7 +151,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg mt-6"
             >
               <img 
-                src="/banner.png" 
+                src="images/banner.png" 
                 alt="AI Development Workspace" 
                 className="w-full h-full object-cover scale-110 grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 ease-out"
               />
@@ -150,7 +166,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg -mt-12 z-20"
             >
               <img 
-                src="/banner.png" 
+                src="images/banner.png" 
                 alt="Neural Operations" 
                 className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 ease-out"
               />
@@ -165,7 +181,7 @@ export default function AboutSection() {
               className="col-span-8 aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl -mt-4"
             >
               <img 
-                src="/banner.png" 
+                src="images/banner.png" 
                 alt="System Architecture Hub" 
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
               />
@@ -246,3 +262,4 @@ export default function AboutSection() {
     </section>
   );
 }
+
