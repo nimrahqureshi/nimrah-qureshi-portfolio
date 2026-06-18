@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { Bot, Mail, Heart, Send, Loader2 } from 'lucide-react';
+import { Bot, Mail, Heart, Send, Loader2, MessageCircle } from 'lucide-react';
 import { api, ApiError } from '@/lib/api';
 import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
 import { SiFiverr } from 'react-icons/si';
@@ -21,20 +21,18 @@ const footerLinks = {
     { label: 'Contact', href: '/contact' },
   ],
   support: [
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Pricing', href: '/pricing' }
   ]
 };
 
 const socialLinks = [
-  { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
   { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~nimrahqureshi', label: 'Upwork' },
   { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
+  { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi013', label: 'Instagram' },
-  { icon: Mail, href: 'mailto:brainlinkai13@gmail.com', label: 'Email' },
+  { icon: MessageCircle, href: 'https://wa.me/923445495438', label: 'WhatsApp' },
+  { icon: Mail, href: 'mailto:nimrahqureshi013@gmail.com', label: 'Email' },
 ];
 
 export default function Footer() {
@@ -95,24 +93,36 @@ export default function Footer() {
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold tracking-tight text-[#E1E0CC]">
-                Nimrah<span className="text-purple-400">Qureshi</span>
+                Nimrah Qureshi
               </span>
             </div>
             
-            <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
-              AI Engineer & Full-Stack Developer helping businesses automate workflows, 
-              deploy AI agents, and build scalable web applications.
-            </p>
+            <div className="space-y-3">
+              <p className="text-white text-sm font-medium tracking-wide">
+                Full Stack Developer, Chatbot Developer and Digital Solutions Builder.
+              </p>
+              <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
+                Passionate about creating modern websites, intelligent chatbot experiences,
+                automation solutions and scalable digital products for businesses worldwide.
+              </p>
+            </div>
+
+            {/* Direct Contact Stack */}
+            <div className="space-y-2 text-sm text-gray-400 pt-2 border-t border-white/[0.03]">
+              <p className="flex items-center gap-2">📧 nimrahqureshi013@gmail.com</p>
+              <p className="flex items-center gap-2">💬 WhatsApp: +92 344 5495438</p>
+              <p className="flex items-center gap-2">📍 Karachi, Pakistan</p>
+            </div>
             
             {/* Social Links */}
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2.5 pt-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-[#161616] border border-white/5 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300"
+                  className="w-10 h-10 rounded-xl bg-[#161616] border border-white/5 flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/30 hover:bg-white/[0.02] transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -123,12 +133,12 @@ export default function Footer() {
             {/* Newsletter Form */}
             <form onSubmit={handleSubscribe} className="pt-4 max-w-sm">
               <h4 className="text-[#E1E0CC] font-medium mb-1 text-sm">
-                Subscribe to the newsletter
+                Stay Connected
               </h4>
-              <p className="text-gray-500 text-xs mb-3">
-                AI tips, project breakdowns, and occasional updates. No spam.
+              <p className="text-gray-500 text-xs mb-3 leading-relaxed">
+                Get updates about projects, new work, creative ideas, and opportunities to collaborate.
               </p>
-              <div className="flex gap-2 bg-[#141414] border border-white/5 p-1.5 rounded-xl focus-within:border-purple-500/30 transition-colors">
+              <div className="flex gap-2 bg-[#141414] border border-white/5 p-1.5 rounded-xl focus-within:border-[#E1E0CC]/30 transition-colors">
                 <input
                   type="email"
                   value={email}
@@ -161,7 +171,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="space-y-4"
+              className="space-y-4 lg:pl-8"
             >
               <h3 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h3>
               <ul className="space-y-2.5">
@@ -169,7 +179,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <button
                       onClick={() => handleLinkClick(link.href)}
-                      className="text-gray-400 hover:text-purple-400 transition-colors text-sm font-normal text-left block w-full"
+                      className="text-gray-400 hover:text-[#E1E0CC] transition-colors text-sm font-normal text-left block w-full"
                     >
                       {link.label}
                     </button>
@@ -183,20 +193,11 @@ export default function Footer() {
         {/* Bottom Metadata Bar */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-xs sm:text-sm flex items-center gap-1 font-light">
-            &copy; {new Date().getFullYear()} Nimrah Qureshi. Made with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> and AI.
+            &copy; {new Date().getFullYear()} Nimrah Qureshi. Made with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> by Nimrah Qureshi.
           </p>
           <p className="text-gray-500 text-xs sm:text-sm tracking-wide font-light italic">
-            Building the future, one line of code at a time.
+            Turning ideas into meaningful digital experiences.
           </p>
-        </div>
-
-        {/* Legal Links */}
-        <div className="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-2 text-xs text-gray-600">
-          <button onClick={() => handleLinkClick('/privacy')} className="hover:text-purple-400 transition-colors">Privacy</button>
-          <span className="opacity-20">·</span>
-          <button onClick={() => handleLinkClick('/terms')} className="hover:text-purple-400 transition-colors">Terms</button>
-          <span className="opacity-20">·</span>
-          <button onClick={() => handleLinkClick('/cookies')} className="hover:text-purple-400 transition-colors">Cookies</button>
         </div>
       </div>
     </footer>
