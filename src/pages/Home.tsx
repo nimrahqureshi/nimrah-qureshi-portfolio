@@ -21,10 +21,6 @@ export default function Home() {
       />
       <Hero />
       <Stats />
-      <AboutSection />
-      <ServicesSection />
-      <PortfolioSection />
-      <CaseStudiesSection />
       <AIToolsSection />
       <TestimonialsSection />
       <BlogSection />

@@ -27,10 +27,10 @@ const tabs: AdminTab[] = [
 ];
 
 const stats = [
-  { label: 'Total Leads', value: '156', change: '+12%', icon: UserPlus, color: 'from-purple-500 to-cyan-400' },
-  { label: 'Conversion Rate', value: '24.5%', change: '+5.2%', icon: TrendingUp, color: 'from-green-500 to-emerald-500' },
-  { label: 'Active Projects', value: '8', change: '+2', icon: Briefcase, color: 'from-blue-500 to-purple-500' },
-  { label: 'Revenue', value: '$48,000', change: '+18%', icon: DollarSign, color: 'from-orange-500 to-pink-500' },
+  { label: 'Total Leads', value: '156', change: '+12%', icon: UserPlus, color: 'from-purple-500/20 to-cyan-400/20 text-cyan-300 border border-cyan-500/30' },
+  { label: 'Conversion Rate', value: '24.5%', change: '+5.2%', icon: TrendingUp, color: 'from-green-500/20 to-emerald-500/20 text-emerald-300 border border-emerald-500/30' },
+  { label: 'Active Projects', value: '8', change: '+2', icon: Briefcase, color: 'from-blue-500/20 to-purple-500/20 text-purple-300 border border-purple-500/30' },
+  { label: 'Revenue', value: '$48,000', change: '+18%', icon: DollarSign, color: 'from-orange-500/20 to-pink-500/20 text-pink-300 border border-pink-500/30' },
 ];
 
 const recentLeads = [
@@ -48,25 +48,28 @@ export default function AdminDashboard() {
     switch (activeTab) {
       case 'dashboard':
         return (
-          <div className="space-y-8">
+          <div className="space-y-8 relative z-10">
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <GlassCard>
+                  <GlassCard className="bg-[#101010]/80 border border-white/[0.04] p-6 rounded-xl relative overflow-hidden group hover:border-white/[0.08] transition-all duration-300">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-sm text-muted">{stat.label}</p>
-                        <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
-                        <p className="text-xs text-green-400 mt-1">{stat.change}</p>
+                        <p className="text-xs text-gray-400 tracking-wider uppercase font-mono">{stat.label}</p>
+                        <p style={{ color: '#E1E0CC' }} className="text-3xl font-medium mt-2 tracking-tight">{stat.value}</p>
+                        <p className="text-xs text-emerald-400 font-mono mt-1.5 flex items-center gap-1">
+                          <span>{stat.change}</span> 
+                          <span className="text-gray-500 font-sans">vs last month</span>
+                        </p>
                       </div>
-                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${stat.color} flex items-center justify-center`}>
-                        <stat.icon className="w-5 h-5 text-white" />
+                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center transition-transform duration-300 group-hover:scale-105`}>
+                        <stat.icon className="w-5 h-5" />
                       </div>
                     </div>
                   </GlassCard>
@@ -75,67 +78,73 @@ export default function AdminDashboard() {
             </div>
 
             {/* Recent Leads */}
-            <GlassCard>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-white">Recent Leads</h3>
-                <button 
-                  onClick={() => setActiveTab('leads')}
-                  className="text-sm text-purple-400 hover:text-purple-300"
-                >
-                  View All
-                </button>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-purple-500/10">
-                      <th className="text-left py-3 text-muted font-medium">Name</th>
-                      <th className="text-left py-3 text-muted font-medium">Email</th>
-                      <th className="text-left py-3 text-muted font-medium">Project</th>
-                      <th className="text-left py-3 text-muted font-medium">Date</th>
-                      <th className="text-left py-3 text-muted font-medium">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentLeads.map((lead) => (
-                      <tr key={lead.email} className="border-b border-purple-500/5 hover:bg-white/5 transition-colors">
-                        <td className="py-3 text-white">{lead.name}</td>
-                        <td className="py-3 text-muted">{lead.email}</td>
-                        <td className="py-3 text-muted">{lead.project}</td>
-                        <td className="py-3 text-muted">{lead.date}</td>
-                        <td className="py-3">
-                          <span className={`px-2 py-1 rounded-full text-xs ${
-                            lead.status === 'new' ? 'bg-blue-500/10 text-blue-400' :
-                            lead.status === 'contacted' ? 'bg-yellow-500/10 text-yellow-400' :
-                            lead.status === 'qualified' ? 'bg-purple-500/10 text-purple-400' :
-                            'bg-green-500/10 text-green-400'
-                          }`}>
-                            {lead.status}
-                          </span>
-                        </td>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <GlassCard className="bg-[#101010]/80 border border-white/[0.04] p-6 sm:p-8 rounded-xl">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 style={{ color: '#E1E0CC' }} className="text-lg font-medium tracking-tight">Recent Leads</h3>
+                  <button 
+                    onClick={() => setActiveTab('leads')}
+                    className="text-xs font-mono tracking-wider uppercase text-purple-400 hover:text-purple-300 transition-colors border-b border-purple-400/20 pb-0.5"
+                  >
+                    View All
+                  </button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Name</th>
+                        <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Email</th>
+                        <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Project</th>
+                        <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Date</th>
+                        <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </GlassCard>
+                    </thead>
+                    <tbody className="divide-y divide-white/[0.02]">
+                      {recentLeads.map((lead) => (
+                        <tr key={lead.email} className="group hover:bg-white/[0.02] transition-colors">
+                          <td className="py-3.5 text-gray-200 font-medium">{lead.name}</td>
+                          <td className="py-3.5 text-gray-400 font-mono text-xs">{lead.email}</td>
+                          <td className="py-3.5 text-gray-300">{lead.project}</td>
+                          <td className="py-3.5 text-gray-500 text-xs font-mono">{lead.date}</td>
+                          <td className="py-3.5">
+                            <span className={`px-2.5 py-0.5 rounded text-[11px] font-mono tracking-wide uppercase border ${
+                              lead.status === 'new' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                              lead.status === 'contacted' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
+                              lead.status === 'qualified' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                              'bg-green-500/10 text-green-400 border-green-500/20'
+                            }`}>
+                              {lead.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </GlassCard>
+            </motion.div>
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <GlassCard className="cursor-pointer hover:border-purple-500/30 transition-all">
-                <MessageSquare className="w-8 h-8 text-purple-400 mb-3" />
-                <h4 className="font-medium text-white mb-1">AI Knowledge Base</h4>
-                <p className="text-sm text-muted">Update chatbot training data</p>
+              <GlassCard className="cursor-pointer bg-[#101010]/80 border border-white/[0.04] p-6 rounded-xl hover:border-purple-500/30 hover:bg-[#121115]/90 transition-all duration-300 group">
+                <MessageSquare className="w-6 h-6 text-purple-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <h4 style={{ color: '#E1E0CC' }} className="font-medium mb-1 tracking-tight">AI Knowledge Base</h4>
+                <p className="text-xs text-gray-400 leading-relaxed font-light">Update agent system prompts & chatbot structural training datasets.</p>
               </GlassCard>
-              <GlassCard className="cursor-pointer hover:border-purple-500/30 transition-all">
-                <Eye className="w-8 h-8 text-cyan-400 mb-3" />
-                <h4 className="font-medium text-white mb-1">Preview Site</h4>
-                <p className="text-sm text-muted">View live portfolio website</p>
+              <GlassCard className="cursor-pointer bg-[#101010]/80 border border-white/[0.04] p-6 rounded-xl hover:border-cyan-500/30 hover:bg-[#101315]/90 transition-all duration-300 group">
+                <Eye className="w-6 h-6 text-cyan-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <h4 style={{ color: '#E1E0CC' }} className="font-medium mb-1 tracking-tight">Preview Site</h4>
+                <p className="text-xs text-gray-400 leading-relaxed font-light">Launch live portfolio environment to view staging adjustments.</p>
               </GlassCard>
-              <GlassCard className="cursor-pointer hover:border-purple-500/30 transition-all">
-                <UserPlus className="w-8 h-8 text-green-400 mb-3" />
-                <h4 className="font-medium text-white mb-1">Add Team Member</h4>
-                <p className="text-sm text-muted">Invite collaborators</p>
+              <GlassCard className="cursor-pointer bg-[#101010]/80 border border-white/[0.04] p-6 rounded-xl hover:border-green-500/30 hover:bg-[#101411]/90 transition-all duration-300 group">
+                <UserPlus className="w-6 h-6 text-green-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <h4 style={{ color: '#E1E0CC' }} className="font-medium mb-1 tracking-tight">Add Team Member</h4>
+                <p className="text-xs text-gray-400 leading-relaxed font-light">Provision granular RBAC security roles to external collaborators.</p>
               </GlassCard>
             </div>
           </div>
@@ -143,34 +152,34 @@ export default function AdminDashboard() {
 
       case 'leads':
         return (
-          <GlassCard>
-            <h3 className="text-lg font-semibold text-white mb-6">All Leads</h3>
+          <GlassCard className="bg-[#101010]/80 border border-white/[0.04] p-6 sm:p-8 rounded-xl relative z-10">
+            <h3 style={{ color: '#E1E0CC' }} className="text-lg font-medium mb-6 tracking-tight">All Leads</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-purple-500/10">
-                    <th className="text-left py-3 text-muted font-medium">Name</th>
-                    <th className="text-left py-3 text-muted font-medium">Email</th>
-                    <th className="text-left py-3 text-muted font-medium">Project Type</th>
-                    <th className="text-left py-3 text-muted font-medium">Budget</th>
-                    <th className="text-left py-3 text-muted font-medium">Date</th>
-                    <th className="text-left py-3 text-muted font-medium">Status</th>
-                    <th className="text-left py-3 text-muted font-medium">Actions</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Name</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Email</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Project Type</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Budget</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Date</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Status</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-white/[0.02]">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <tr key={i} className="border-b border-purple-500/5 hover:bg-white/5 transition-colors">
-                      <td className="py-3 text-white">Lead {i}</td>
-                      <td className="py-3 text-muted">lead{i}@example.com</td>
-                      <td className="py-3 text-muted">AI Chatbot</td>
-                      <td className="py-3 text-muted">$3,000 - $8,000</td>
-                      <td className="py-3 text-muted">2 days ago</td>
-                      <td className="py-3">
-                        <span className="px-2 py-1 rounded-full text-xs bg-purple-500/10 text-purple-400">new</span>
+                    <tr key={i} className="hover:bg-white/[0.01] transition-colors">
+                      <td className="py-3.5 text-gray-200 font-medium">Lead {i}</td>
+                      <td className="py-3.5 text-gray-400 font-mono text-xs">lead{i}@example.com</td>
+                      <td className="py-3.5 text-gray-300">AI Chatbot</td>
+                      <td className="py-3.5 text-emerald-400/90 font-mono text-xs">$3,000 - $8,000</td>
+                      <td className="py-3.5 text-gray-500 font-mono text-xs">2 days ago</td>
+                      <td className="py-3.5">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/20">new</span>
                       </td>
-                      <td className="py-3">
-                        <button className="text-purple-400 hover:text-purple-300 text-xs">View</button>
+                      <td className="py-3.5">
+                        <button className="text-purple-400 hover:text-purple-300 text-xs font-medium transition-colors">View</button>
                       </td>
                     </tr>
                   ))}
@@ -182,42 +191,45 @@ export default function AdminDashboard() {
 
       case 'subscribers':
         return (
-          <GlassCard>
-            <h3 className="text-lg font-semibold text-white mb-6">Newsletter Subscribers</h3>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-4 rounded-xl bg-purple-500/10">
-                <p className="text-2xl font-bold text-white">156</p>
-                <p className="text-sm text-muted">Total Subscribers</p>
+          <GlassCard className="bg-[#101010]/80 border border-white/[0.04] p-6 sm:p-8 rounded-xl relative z-10">
+            <h3 style={{ color: '#E1E0CC' }} className="text-lg font-medium mb-6 tracking-tight">Newsletter Subscribers</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                <p style={{ color: '#E1E0CC' }} className="text-2xl font-medium tracking-tight">156</p>
+                <p className="text-xs text-gray-400 uppercase font-mono tracking-wider mt-1">Total Subscribers</p>
               </div>
-              <div className="p-4 rounded-xl bg-green-500/10">
-                <p className="text-2xl font-bold text-green-400">142</p>
-                <p className="text-sm text-muted">Active</p>
+              <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                <p className="text-2xl font-medium text-emerald-400 tracking-tight">142</p>
+                <p className="text-xs text-emerald-500 uppercase font-mono tracking-wider mt-1">Active metrics</p>
               </div>
-              <div className="p-4 rounded-xl bg-red-500/10">
-                <p className="text-2xl font-bold text-red-400">14</p>
-                <p className="text-sm text-muted">Unsubscribed</p>
+              <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/10">
+                <p className="text-2xl font-medium text-rose-400 tracking-tight">14</p>
+                <p className="text-xs text-rose-500 uppercase font-mono tracking-wider mt-1">Unsubscribed</p>
               </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-purple-500/10">
-                    <th className="text-left py-3 text-muted font-medium">Email</th>
-                    <th className="text-left py-3 text-muted font-medium">Subscribed</th>
-                    <th className="text-left py-3 text-muted font-medium">Status</th>
-                    <th className="text-left py-3 text-muted font-medium">Actions</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Email</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Subscribed</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Status</th>
+                    <th className="text-left pb-3 text-gray-400 font-medium font-mono text-xs uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-white/[0.02]">
                   {[1, 2, 3, 4].map((i) => (
-                    <tr key={i} className="border-b border-purple-500/5 hover:bg-white/5 transition-colors">
-                      <td className="py-3 text-white">subscriber{i}@example.com</td>
-                      <td className="py-3 text-muted">Jan 15, 2024</td>
-                      <td className="py-3">
-                        <span className="text-green-400 text-xs">● Active</span>
+                    <tr key={i} className="hover:bg-white/[0.01] transition-colors">
+                      <td className="py-3.5 text-gray-300 font-mono text-xs">subscriber{i}@example.com</td>
+                      <td className="py-3.5 text-gray-500 font-mono text-xs">Jan 15, 2024</td>
+                      <td className="py-3.5">
+                        <span className="text-emerald-400 text-xs font-mono flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          Active
+                        </span>
                       </td>
-                      <td className="py-3">
-                        <button className="text-red-400 hover:text-red-300 text-xs">Remove</button>
+                      <td className="py-3.5">
+                        <button className="text-rose-400 hover:text-rose-300 text-xs font-medium transition-colors">Remove</button>
                       </td>
                     </tr>
                   ))}
@@ -229,111 +241,135 @@ export default function AdminDashboard() {
 
       default:
         return (
-          <GlassCard>
-            <h3 className="text-lg font-semibold text-white mb-4 capitalize">
+          <GlassCard className="bg-[#101010]/80 border border-white/[0.04] p-6 sm:p-8 rounded-xl relative z-10">
+            <h3 style={{ color: '#E1E0CC' }} className="text-lg font-medium mb-3 capitalize tracking-tight">
               {activeTab} Management
             </h3>
-            <p className="text-muted">Manage your {activeTab} content here.</p>
+            <p className="text-sm text-gray-400 font-light">Configure and orchestrate your customizable {activeTab} parameters and systemic workflows.</p>
           </GlassCard>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary">
-      {/* Sidebar Overlay */}
+    <div className="min-h-screen bg-black selection:bg-[#E1E0CC] selection:text-black relative overflow-hidden font-sans antialiased text-gray-200">
+      
+      {/* 1. Premium Dynamic Noise Texture Overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.14] pointer-events-none mix-blend-overlay z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+        }}
+      />
+      
+      {/* 2. Abstract Premium Radial Glow Clusters (Prisma Style Depth) */}
+      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute bottom-[-5%] left-[15%] w-[700px] h-[700px] bg-cyan-900/10 rounded-full blur-[160px] pointer-events-none z-0" />
+
+      {/* Sidebar Mobile Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/80 backdrop-blur-md z-40 lg:hidden transition-all duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-64 glass z-50 transform transition-transform duration-300 ${
+      {/* Sidebar Panel Container */}
+      <aside className={`fixed top-0 left-0 h-full w-64 bg-[#0a0a0a]/90 border-r border-white/[0.04] backdrop-blur-xl z-50 transform transition-all duration-300 ease-[0.16, 1, 0.3, 1] ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-purple-500 to-cyan-400 flex items-center justify-center">
-                <LayoutDashboard className="w-4 h-4 text-white" />
+        <div className="p-6 h-full flex flex-col justify-between relative">
+          <div>
+            <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-400/20 border border-purple-500/30 flex items-center justify-center shadow-inner">
+                  <LayoutDashboard className="w-4 h-4 text-[#E1E0CC]" />
+                </div>
+                <span style={{ color: '#E1E0CC' }} className="font-medium text-sm tracking-wider uppercase font-mono">Admin Panel</span>
               </div>
-              <span className="font-bold text-white">Admin Panel</span>
+              <button 
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <button 
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-muted hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
+
+            <nav className="space-y-1.5">
+              {tabs.map((tab) => {
+                const IsActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => { setActiveTab(tab.id); setSidebarOpen(false); }}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-xs tracking-wide uppercase font-mono transition-all duration-200 group ${
+                      IsActive
+                        ? 'bg-white/[0.04] text-[#E1E0CC] border-l-2 border-[#E1E0CC] pl-3.5 shadow-sm'
+                        : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <tab.icon className={`w-4 h-4 transition-colors ${IsActive ? 'text-[#E1E0CC]' : 'text-gray-500 group-hover:text-gray-300'}`} />
+                      <span>{tab.label}</span>
+                    </div>
+                    {tab.count !== undefined && (
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono ${
+                        IsActive ? 'bg-[#E1E0CC]/10 text-[#E1E0CC]' : 'bg-white/[0.04] text-gray-500 group-hover:text-gray-400'
+                      }`}>
+                        {tab.count}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
           </div>
 
-          <nav className="space-y-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => { setActiveTab(tab.id); setSidebarOpen(false); }}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-purple-500/10 text-purple-400'
-                    : 'text-muted hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <tab.icon className="w-4 h-4" />
-                  {tab.label}
-                </div>
-                {tab.count !== undefined && (
-                  <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/10 text-purple-400">
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            ))}
-          </nav>
-
-          <div className="absolute bottom-6 left-6 right-6">
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-muted hover:text-red-400 hover:bg-red-500/5 transition-all">
-              <LogOut className="w-4 h-4" />
+          <div className="pt-6 border-t border-white/[0.04]">
+            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-mono uppercase tracking-wide text-gray-400 hover:text-rose-400 hover:bg-rose-500/5 transition-all duration-200 group">
+              <LogOut className="w-4 h-4 text-gray-500 group-hover:text-rose-400 transition-colors" />
               Sign Out
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <div className="lg:ml-64">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-30 glass">
+      {/* Main Framework Layout Frame */}
+      <div className="lg:ml-64 min-h-screen flex flex-col justify-between relative z-10">
+        
+        {/* Transparent Modern Top Bar */}
+        <header className="sticky top-0 z-30 bg-black/20 border-b border-white/[0.02] backdrop-blur-md">
           <div className="flex items-center justify-between px-6 py-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-muted hover:text-white hover:bg-white/5"
+              className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.04] transition-all"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-4 ml-auto">
-              <button className="relative p-2 rounded-lg text-muted hover:text-white hover:bg-white/5">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
+            <div className="flex items-center gap-5 ml-auto">
+              <button className="relative p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.04] transition-all group">
+                <Bell className="w-4 h-4" />
+                <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-purple-500 ring-2 ring-black" />
               </button>
+              
+              <div className="h-4 w-[1px] bg-white/[0.08]" />
+
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400 flex items-center justify-center text-sm font-medium text-white">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-white/[0.08] flex items-center justify-center text-xs font-mono font-medium text-[#E1E0CC]">
                   NQ
                 </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">Nimrah Qureshi</p>
-                  <p className="text-xs text-muted">Admin</p>
+                <div className="hidden sm:block text-left">
+                  <p className="text-xs font-medium text-gray-200 tracking-tight">Nimrah Qureshi</p>
+                  <p className="text-[10px] text-gray-500 font-mono uppercase tracking-widest mt-0.5">Admin</p>
                 </div>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="p-6">
+        {/* Dynamic Structural Content Render Engine */}
+        <main className="p-6 sm:p-8 flex-grow max-w-7xl w-full mx-auto">
           {renderContent()}
         </main>
       </div>

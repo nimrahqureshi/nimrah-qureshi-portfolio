@@ -6,23 +6,27 @@ interface SectionHeadingProps {
   gradient?: string;
 }
 
-export default function SectionHeading({ title, subtitle, gradient = 'from-purple-500 to-cyan-400' }: SectionHeadingProps) {
+export default function SectionHeading({ 
+  title, 
+  subtitle, 
+  gradient = 'from-purple-500 to-cyan-400' 
+}: SectionHeadingProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="text-center mb-16"
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="text-center mb-16 relative z-10"
     >
-      <h2 className={`text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+      <h2 className={`text-4xl md:text-5xl font-bold mb-4 tracking-tight bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
         {title}
       </h2>
-      <p className="text-lg text-muted max-w-2xl mx-auto">
+      <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
         {subtitle}
       </p>
       <div className="mt-6 flex justify-center">
-        <div className="h-1 w-20 rounded-full bg-gradient-to-r from-purple-500 to-cyan-400" />
+        <div className={`h-1 w-20 rounded-full bg-gradient-to-r ${gradient} shadow-[0_2px_10px_rgba(168,85,247,0.4)]`} />
       </div>
     </motion.div>
   );

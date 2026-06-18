@@ -38,14 +38,19 @@ export default function Typewriter() {
   }, [charIndex, isDeleting, currentIndex]);
 
   return (
-    <div className="text-2xl md:text-3xl font-mono text-muted">
-      <span className="text-purple-400">&gt; </span>
-      <span>{roles[currentIndex].substring(0, charIndex)}</span>
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ repeat: Infinity, duration: 0.8 }}
-        className="inline-block w-0.5 h-6 bg-purple-400 ml-0.5"
-      />
+    <div className="relative overflow-hidden py-2 rounded-xl inline-block">
+      {/* Integrated Atmospheric Micro-Glow Layer specifically tuned for text highlights */}
+      <div className="absolute inset-0 bg-[#E1E0CC]/[0.01] blur-md rounded-full pointer-events-none" />
+      
+      <div className="relative z-10 text-xl md:text-2xl font-mono text-gray-400 tracking-wide flex items-center">
+        <span className="text-[#E1E0CC]/60 font-light mr-1">&gt; </span>
+        <span className="text-[#E1E0CC]">{roles[currentIndex].substring(0, charIndex)}</span>
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ repeat: Infinity, duration: 0.8 }}
+          className="inline-block w-[2px] h-5 bg-[#E1E0CC] ml-1 align-middle"
+        />
+      </div>
     </div>
   );
 }

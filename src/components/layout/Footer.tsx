@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Bot, Mail, Heart, Send, Loader2 } from 'lucide-react';
 import { api, ApiError } from '@/lib/api';
+import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
+import { SiFiverr } from 'react-icons/si';
 
 const footerLinks = {
   services: [
@@ -26,9 +28,6 @@ const footerLinks = {
   ]
 };
 
-import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
-import { SiFiverr } from 'react-icons/si';
-
 const socialLinks = [
   { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
@@ -41,6 +40,12 @@ const socialLinks = [
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLinkClick = (href: string) => {
+    navigate(href);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,38 +72,47 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-bg-card border-t border-purple-500/10">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-purple-900/5 pointer-events-none" />
+    <footer className="relative bg-black border-t border-purple-500/10 overflow-hidden py-16 sm:py-20">
+      <div className="absolute inset-0 bg-[#101010]/40" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand */}
+      <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+          
+          {/* Brand Panel */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2"
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-2 space-y-6"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/10">
                 <Bot className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold">
+              <span className="text-xl font-bold tracking-tight text-[#E1E0CC]">
                 Nimrah<span className="text-purple-400">Qureshi</span>
               </span>
             </div>
-            <p className="text-muted mb-6 max-w-md">
+            
+            <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
               AI Engineer & Full-Stack Developer helping businesses automate workflows, 
               deploy AI agents, and build scalable web applications.
             </p>
-            <div className="flex gap-3">
+            
+            {/* Social Links */}
+            <div className="flex flex-wrap gap-2.5">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-muted hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200"
+                  className="w-10 h-10 rounded-xl bg-[#161616] border border-white/5 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -106,27 +120,27 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Newsletter */}
-            <form onSubmit={handleSubscribe} className="mt-8 max-w-md">
-              <h4 className="text-white font-medium mb-2 text-sm">
+            {/* Newsletter Form */}
+            <form onSubmit={handleSubscribe} className="pt-4 max-w-sm">
+              <h4 className="text-[#E1E0CC] font-medium mb-1 text-sm">
                 Subscribe to the newsletter
               </h4>
-              <p className="text-muted text-xs mb-3">
+              <p className="text-gray-500 text-xs mb-3">
                 AI tips, project breakdowns, and occasional updates. No spam.
               </p>
-              <div className="flex gap-2">
+              <div className="flex gap-2 bg-[#141414] border border-white/5 p-1.5 rounded-xl focus-within:border-purple-500/30 transition-colors">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   aria-label="Email address"
-                  className="flex-1 bg-white/5 border border-purple-500/20 rounded-xl px-4 py-2.5 text-sm text-white placeholder-muted focus:outline-none focus:border-purple-500/50 transition-colors"
+                  className="flex-1 bg-transparent px-3 text-sm text-white placeholder-gray-600 focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={subscribing}
-                  className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-cyan-500 text-white rounded-lg font-medium text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
                 >
                   {subscribing ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -139,25 +153,26 @@ export default function Footer() {
             </form>
           </motion.div>
 
-          {/* Links */}
+          {/* Links Column Units */}
           {Object.entries(footerLinks).map(([title, links], i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="space-y-4"
             >
-              <h3 className="text-white font-semibold mb-4 capitalize">{title}</h3>
-              <ul className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h3>
+              <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-muted hover:text-purple-400 transition-colors text-sm"
+                    <button
+                      onClick={() => handleLinkClick(link.href)}
+                      className="text-gray-400 hover:text-purple-400 transition-colors text-sm font-normal text-left block w-full"
                     >
                       {link.label}
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -165,22 +180,23 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-purple-500/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-muted text-sm flex items-center gap-1">
+        {/* Bottom Metadata Bar */}
+        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-gray-500 text-xs sm:text-sm flex items-center gap-1 font-light">
             &copy; {new Date().getFullYear()} Nimrah Qureshi. Made with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> and AI.
           </p>
-          <p className="text-muted text-sm">
+          <p className="text-gray-500 text-xs sm:text-sm tracking-wide font-light italic">
             Building the future, one line of code at a time.
           </p>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted">
-          <Link to="/privacy" className="hover:text-purple-400 transition-colors">Privacy</Link>
-          <span className="opacity-40">·</span>
-          <Link to="/terms" className="hover:text-purple-400 transition-colors">Terms</Link>
-          <span className="opacity-40">·</span>
-          <Link to="/cookies" className="hover:text-purple-400 transition-colors">Cookies</Link>
+        {/* Legal Links */}
+        <div className="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-2 text-xs text-gray-600">
+          <button onClick={() => handleLinkClick('/privacy')} className="hover:text-purple-400 transition-colors">Privacy</button>
+          <span className="opacity-20">·</span>
+          <button onClick={() => handleLinkClick('/terms')} className="hover:text-purple-400 transition-colors">Terms</button>
+          <span className="opacity-20">·</span>
+          <button onClick={() => handleLinkClick('/cookies')} className="hover:text-purple-400 transition-colors">Cookies</button>
         </div>
       </div>
     </footer>

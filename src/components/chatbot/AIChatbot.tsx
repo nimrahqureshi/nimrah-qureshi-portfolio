@@ -52,12 +52,10 @@ const knowledgeBase = [
 function getResponse(input: string): string {
   const lower = input.toLowerCase();
   
-  // Check for greeting
   if (lower.match(/^(hi|hello|hey|greetings|sup|howdy)/)) {
     return "Hello! 👋 Thanks for reaching out! I'm Nimrah's AI assistant. How can I help you today? Feel free to ask about services, pricing, projects, or anything else!";
   }
 
-  // Check knowledge base
   for (const item of knowledgeBase) {
     for (const keyword of item.keywords) {
       if (lower.includes(keyword)) {
@@ -66,7 +64,6 @@ function getResponse(input: string): string {
     }
   }
 
-  // Default response
   return "Great question! 🤔 I'd love to help you with that. However, for the most accurate and personalized information, I'd recommend:\n\n1️⃣ **Booking a discovery call** with Nimrah\n2️⃣ **Filling out the contact form** below\n3️⃣ **Checking the Services section** for detailed offerings\n\nOr you can ask me about: services, pricing, portfolio, experience, process, testimonials, or availability!";
 }
 
@@ -89,7 +86,6 @@ export default function AIChatbot() {
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI thinking
     setTimeout(() => {
       const response = getResponse(input);
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
@@ -123,78 +119,85 @@ export default function AIChatbot() {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             className="fixed bottom-24 right-6 z-40 w-[90vw] sm:w-96 h-[500px] max-h-[80vh]"
           >
-            <div className="glass-card rounded-2xl overflow-hidden flex flex-col h-full">
-              {/* Header */}
-              <div className="bg-gradient-to-r from-purple-600 to-cyan-500 p-4 flex items-center justify-between flex-shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">AI Assistant</p>
-                    <p className="text-white/70 text-xs flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" /> Powered by Nimrah's knowledge
-                    </p>
+            {/* Ambient Background Geometry Layer (Replacing video layout dependency) */}
+            <div className="absolute inset-0 bg-neutral-950/95 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+              <div className="absolute -top-12 -left-12 w-40 h-40 bg-purple-600/10 rounded-full blur-2xl" />
+              <div className="absolute -bottom-12 -right-12 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl" />
+              
+              <div className="flex flex-col h-full relative z-10 backdrop-blur-xl">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-purple-600 to-cyan-500 p-4 flex items-center justify-between flex-shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                      <Bot className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-white font-medium text-sm">AI Assistant</p>
+                      <p className="text-white/70 text-xs flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" /> Powered by Nimrah's knowledge
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((msg, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-                        msg.role === 'user'
-                          ? 'bg-purple-600/30 text-white border border-purple-500/20'
-                          : 'bg-white/5 text-muted border border-white/10'
-                      }`}
+                {/* Messages Container */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  {messages.map((msg, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
-                      <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                    </div>
-                  </motion.div>
-                ))}
-                {isTyping && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex justify-start"
-                  >
-                    <div className="bg-white/5 rounded-2xl px-4 py-3 border border-white/10">
-                      <div className="flex gap-1">
-                        <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div
+                        className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                          msg.role === 'user'
+                            ? 'bg-purple-600/20 text-white border border-purple-500/30 shadow-[0_4px_12px_rgba(168,85,247,0.1)]'
+                            : 'bg-white/5 text-gray-200 border border-white/10 backdrop-blur-md'
+                        }`}
+                      >
+                        <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                       </div>
-                    </div>
-                  </motion.div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
+                    </motion.div>
+                  ))}
+                  
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-white/5 rounded-2xl px-4 py-3 border border-white/10 backdrop-blur-md">
+                        <div className="flex gap-1">
+                          <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
 
-              {/* Input */}
-              <div className="p-4 border-t border-purple-500/10 flex-shrink-0">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Ask me anything..."
-                    className="flex-1 bg-white/5 border border-purple-500/20 rounded-xl px-4 py-2.5 text-sm text-white placeholder-muted focus:outline-none focus:border-purple-500/50 transition-colors"
-                  />
-                  <button
-                    onClick={handleSend}
-                    disabled={!input.trim() || isTyping}
-                    className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl text-white disabled:opacity-50 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-200"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
+                {/* Input Controls */}
+                <div className="p-4 border-t border-white/10 flex-shrink-0 bg-black/20">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                      placeholder="Ask me anything..."
+                      className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                    />
+                    <button
+                      onClick={handleSend}
+                      disabled={!input.trim() || isTyping}
+                      className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl text-white disabled:opacity-50 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-200 flex-shrink-0"
+                    >
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
