@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Bot } from 'lucide-react';
@@ -24,18 +24,35 @@ const navLinks: NavLink[] = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      
+      // Determine background transparency change threshold
+      setScrolled(currentScrollY > 50);
+
+      // Core functionality: Scroll up to show, scroll down to hide navbar
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // Scrolling down — hide navbar unless mobile menu is actively open
+        if (!isOpen) setIsVisible(false);
+      } else {
+        // Scrolling up — safely show navbar
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isOpen]);
 
   const handleNav = (link: NavLink) => {
     setIsOpen(false);
@@ -56,8 +73,8 @@ export default function Navbar() {
     <>
       <motion.nav
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        animate={{ y: isVisible ? 0 : -120 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 md:px-6 pt-4',
           scrolled ? 'translate-y-0' : 'translate-y-2'
