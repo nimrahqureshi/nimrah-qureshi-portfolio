@@ -1,3 +1,7 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Bot, Send, User, Sparkles, MessageSquare, Phone, Mail } from 'lucide-react';
+
 export interface ChatOption {
   label: string;
   keywords: string[];
@@ -6,6 +10,13 @@ export interface ChatOption {
 export interface KnowledgeItem {
   keywords: string[];
   response: string;
+}
+
+interface Message {
+  id: string;
+  sender: 'bot' | 'user';
+  text: string;
+  timestamp: Date;
 }
 
 export const quickActions: ChatOption[] = [
@@ -87,7 +98,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     keywords: ['contact', 'reach', 'email', 'call', 'message', 'talk', 'phone', 'mail', 'social', 'linkedin', 'github'],
     response:
-      "Let's get in touch immediately:\n\n📧 Email: nimrahqueshi013@gmail.com\n💬 WhatsApp: +92 3445495438\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
+      "Let's get in touch immediately:\n\n📧 Email: nimrahqureshi013@gmail.com\n💬 WhatsApp: +92 3445495438\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
   },
   {
     keywords: ['location', 'where', 'karachi', 'pakistan', 'available', 'availability', 'hours', 'weekly', 'book', 'schedule', 'freelance', 'free', 'consulting', 'timeline', 'process', 'delivery', 'deadline', 'workflow', 'steps'],
@@ -131,30 +142,21 @@ export const knowledgeBase: KnowledgeItem[] = [
 export function getGreeting(input: string): string | null {
   const lower = input.toLowerCase().trim();
 
-  // 1. Structural Identity Queries
   if (lower.match(/\b(who are you|your name|what is your name)\b/)) {
     return "I'm Flabby 🤖✨ Nimrah's AI assistant. I'm here to help you learn about her AI services, projects, automation solutions and answer your questions.";
   }
-
-  // 2. State of Being / Inquiries
   if (lower.match(/\b(how are you|how r you|how you doing)\b/)) {
     return "I'm doing wonderful today! 😊 Thanks for asking. How are you doing? Hope you're having an amazing day! ✨";
   }
-
-  // 3. User Expression Validation
   if (lower.match(/\b(i am fine|im fine|good|great|excellent|awesome|amazing|fantastic)\b/)) {
     return "That's wonderful to hear! 🌟 I love positive energy. How can I help you today?";
   }
-
-  // 4. Emotional Compliments & Aesthetic Appreciation
   if (lower.match(/\b(you are beautiful|pretty|cute bot)\b/)) {
     return "Aww, that's sweet of you! 😊 Thank you. I'm just a friendly little AI helper trying my best. 💛";
   }
   if (lower.match(/\b(nice|nice name|cute|lovely)\b/)) {
     return "Aww thank you! 😊 My name is Flabby and I'm Nimrah's friendly AI assistant. It's nice meeting you too! 💛";
   }
-
-  // 5. Time-Sensitive Greetings
   if (lower.match(/\b(good morning)\b/)) {
     return "Good morning! ☀️ Wishing you a productive and successful day ahead. How can I help you?";
   }
@@ -164,8 +166,6 @@ export function getGreeting(input: string): string | null {
   if (lower.match(/\b(good evening)\b/)) {
     return "Good evening! ✨ Glad you're here. How can I assist you today?";
   }
-
-  // 6. Base Standard Core Greetings
   if (lower.match(/\b(hi|hello|hey|greetings|sup|howdy|salam|assalam|yo)\b/)) {
     return "Hello there! 👋 I'm Flabby, Nimrah's friendly AI assistant.\n\nI can tell you about her tech stacks, pricing models, completed projects, and core development services. What would you like to explore today?";
   }
@@ -181,6 +181,189 @@ export function getGreeting(input: string): string | null {
 
 export function handleFallbackResponse(): string {
   const randomReply = friendlyReplies[Math.floor(Math.random() * friendlyReplies.length)];
-  
   return `${randomReply}\n\nI'm not sure about that specific detail yet 😊\n\nTry asking me about:\n🤖 Services & AI Agents\n💰 Project Pricing\n📁 Portfolio & Live Demos\n🧠 Experience & Tech Stack\n🏆 Certifications & PIAIC\n💬 WhatsApp Automation\n📄 Professional Profile\n📞 Contact Details\n\nOr tell me about your project and we can map out a custom solution! ✨`;
 }
+
+// --- Default Export Component Added to Fix Vercel Build Block ---
+export default function ContactSection() {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      sender: 'bot',
+      text: "Hello there! 👋 I'm Flabby, Nimrah's friendly AI assistant.\n\nI can tell you about her tech stacks, pricing models, completed projects, and core development services. What would you like to explore today?",
+      timestamp: new Date(),
+    },
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const processResponse = (userInput: string) => {
+    const cleanInput = userInput.toLowerCase().trim();
+    
+    // Check custom specific structured greetings
+    const greeting = getGreeting(cleanInput);
+    if (greeting) return greeting;
+
+    // Search knowledge base matrices
+    for (const item of knowledgeBase) {
+      if (item.keywords.some((keyword) => cleanInput.includes(keyword))) {
+        return item.response;
+      }
+    }
+
+    return handleFallbackResponse();
+  };
+
+  const handleSendMessage = (text: string) => {
+    if (!text.trim()) return;
+
+    const userMsg: Message = {
+      id: Math.random().toString(),
+      sender: 'user',
+      text: text,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
+    setInputValue('');
+
+    setTimeout(() => {
+      const botResponse = processResponse(text);
+      const botMsg: Message = {
+        id: Math.random().toString(),
+        sender: 'bot',
+        text: botResponse,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botMsg]);
+    }, 600);
+  };
+
+  return (
+    <section id="contact" className="relative min-h-screen py-24 bg-black overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#E1E0CC03_1px,transparent_1px),linear-gradient(to_bottom,#E1E0CC03_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      
+      <div className="max-w-6xl mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        {/* Info Column */}
+        <div className="lg:col-span-5 space-y-8">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#101010] border border-[#E1E0CC]/10 mb-4">
+              <Sparkles className="w-3.5 h-3.5 text-[#E1E0CC]" />
+              <span className="text-xs font-medium tracking-widest uppercase text-[#E1E0CC]/80">Connect</span>
+            </div>
+            <h2 className="text-4xl font-medium text-white uppercase tracking-tight">Let's build magic.</h2>
+            <p className="text-gray-400 text-sm mt-4 leading-relaxed">
+              Have a platform, workflow automation, or custom AI system idea? Reach out directly or start interactive briefing matches with my personal AI module.
+            </p>
+          </div>
+
+          <div className="space-y-4 text-sm text-gray-400">
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-[#101010] border border-neutral-900">
+              <Mail className="w-4 h-4 text-[#E1E0CC]" />
+              <span>nimrahqureshi013@gmail.com</span>
+            </div>
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-[#101010] border border-neutral-900">
+              <Phone className="w-4 h-4 text-[#E1E0CC]" />
+              <span>+92 3445495438</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat System Box */}
+        <div className="lg:col-span-7 bg-[#101010] border border-neutral-900 rounded-2xl h-[600px] flex flex-col overflow-hidden shadow-2xl">
+          {/* Top Bar */}
+          <div className="p-4 bg-neutral-950 border-b border-neutral-900 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-white">Flabby AI</h3>
+                <p className="text-[10px] text-green-400 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full inline-block animate-pulse" /> Active Assistant
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Messages Node Container */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+            <AnimatePresence initial={false}>
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`flex gap-2.5 max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-xs ${
+                      msg.sender === 'user' ? 'bg-neutral-800 text-white' : 'bg-neutral-900 text-[#E1E0CC]'
+                    }`}>
+                      {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
+                    </div>
+                    <div className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-line ${
+                      msg.sender === 'user' 
+                        ? 'bg-[#E1E0CC] text-black rounded-tr-none' 
+                        : 'bg-neutral-900 border border-neutral-800/60 text-gray-300 rounded-tl-none'
+                    }`}>
+                      {msg.text}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Prompt Suggestion Chips */}
+          <div className="px-4 py-2 flex flex-wrap gap-2 bg-neutral-950/40 border-t border-neutral-900/60">
+            {quickActions.map((action) => (
+              <button
+                key={action.label}
+                onClick={() => handleSendMessage(action.label)}
+                className="text-[11px] px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-gray-400 hover:text-white hover:border-neutral-700 transition-colors"
+              >
+                {action.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Input Panel Bar */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSendMessage(inputValue);
+            }}
+            className="p-3 bg-neutral-950 border-t border-neutral-900 flex gap-2"
+          >
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Ask me about skills, pricing, certifications..."
+              className="flex-1 bg-neutral-900 border border-neutral-800 rounded-xl px-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neutral-700 transition-colors"
+            />
+            <button
+              type="submit"
+              className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center hover:bg-neutral-200 transition-colors flex-shrink-0"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+``` Feel free to safely push your changes now. This will allow your project compilation to succeed successfully!
