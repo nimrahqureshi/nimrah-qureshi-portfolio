@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, Send, User, Sparkles, MessageSquare, Phone, Mail } from 'lucide-react';
+import { Bot, Send, User, Sparkles, Phone, Mail } from 'lucide-react';
 
 export interface ChatOption {
   label: string;
@@ -184,7 +184,6 @@ export function handleFallbackResponse(): string {
   return `${randomReply}\n\nI'm not sure about that specific detail yet 😊\n\nTry asking me about:\n🤖 Services & AI Agents\n💰 Project Pricing\n📁 Portfolio & Live Demos\n🧠 Experience & Tech Stack\n🏆 Certifications & PIAIC\n💬 WhatsApp Automation\n📄 Professional Profile\n📞 Contact Details\n\nOr tell me about your project and we can map out a custom solution! ✨`;
 }
 
-// --- Default Export Component Added to Fix Vercel Build Block ---
 export default function ContactSection() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -208,11 +207,9 @@ export default function ContactSection() {
   const processResponse = (userInput: string) => {
     const cleanInput = userInput.toLowerCase().trim();
     
-    // Check custom specific structured greetings
     const greeting = getGreeting(cleanInput);
     if (greeting) return greeting;
 
-    // Search knowledge base matrices
     for (const item of knowledgeBase) {
       if (item.keywords.some((keyword) => cleanInput.includes(keyword))) {
         return item.response;
@@ -330,6 +327,7 @@ export default function ContactSection() {
             {quickActions.map((action) => (
               <button
                 key={action.label}
+                type="button"
                 onClick={() => handleSendMessage(action.label)}
                 className="text-[11px] px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-gray-400 hover:text-white hover:border-neutral-700 transition-colors"
               >
@@ -366,4 +364,3 @@ export default function ContactSection() {
     </section>
   );
 }
-``` Feel free to safely push your changes now. This will allow your project compilation to succeed successfully!
