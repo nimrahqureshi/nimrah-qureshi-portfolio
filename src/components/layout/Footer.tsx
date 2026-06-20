@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { Bot, Mail, Heart, Send, Loader2, MessageCircle } from 'lucide-react';
+import { Bot, Mail, Heart, Send, Loader2 } from 'lucide-react';
 import { api, ApiError } from '@/lib/api';
 import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
 import { SiFiverr } from 'react-icons/si';
@@ -27,11 +27,10 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
-  { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~nimrahqureshi', label: 'Upwork' },
+  { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~010d340d7ed5f5c501?mp_source=share', label: 'Upwork' },
   { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
   { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi013', label: 'Instagram' },
-  { icon: MessageCircle, href: 'https://wa.me/923445495438', label: 'WhatsApp' },
   { icon: Mail, href: 'mailto:nimrahqureshi013@gmail.com', label: 'Email' },
 ];
 
@@ -110,7 +109,6 @@ export default function Footer() {
             {/* Direct Contact Stack */}
             <div className="space-y-2 text-sm text-gray-400 pt-2 border-t border-white/[0.03]">
               <p className="flex items-center gap-2">📧 nimrahqureshi013@gmail.com</p>
-              <p className="flex items-center gap-2">💬 WhatsApp: +92 344 5495438</p>
               <p className="flex items-center gap-2">📍 Karachi, Pakistan</p>
             </div>
             
