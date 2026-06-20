@@ -1,365 +1,276 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, Send, User, Sparkles, Phone, Mail } from 'lucide-react';
-
-export interface ChatOption {
-  label: string;
-  keywords: string[];
-}
-
-export interface KnowledgeItem {
-  keywords: string[];
-  response: string;
-}
-
-interface Message {
-  id: string;
-  sender: 'bot' | 'user';
-  text: string;
-  timestamp: Date;
-}
-
-export const quickActions: ChatOption[] = [
-  { label: '💬 Services', keywords: ['services', 'offer', 'do', 'provide'] },
-  { label: '💰 Pricing', keywords: ['price', 'cost', 'pricing', 'package'] },
-  { label: '📁 Portfolio', keywords: ['portfolio', 'project', 'work', 'demo'] },
-  { label: '🧠 Experience', keywords: ['experience', 'skills', 'expertise'] },
-  { label: '📞 Contact', keywords: ['contact', 'reach', 'email', 'call'] },
-];
-
-const friendlyReplies = [
-  "😊 Tell me more!",
-  "✨ That sounds interesting.",
-  "💛 I'd love to hear more about that.",
-  "🚀 What's your goal with that?",
-  "🌟 That's a great question.",
-];
-
-export const knowledgeBase: KnowledgeItem[] = [
-  // --- Core Capabilities / Lead Gen ---
-  {
-    keywords: ['services', 'offer', 'provide', 'what do you do', 'what can you do', 'website', 'web development', 'react', 'nextjs'],
-    response:
-      "💻 Web Development & AI Services\n\nNimrah offers premium end-to-end engineering:\n\n🤖 AI Chatbot Development — Website bots, WhatsApp automation, customized GPT assistants\n🧠 AI Agents — Multi-agent platforms, custom task & business workflow automation\n⚡ Automation Systems — CRM synchronization, email engines, and data pipeline automations\n💻 Full-Stack Development — High-end products using Next.js, React, Node.js, and scalable SaaS foundations\n\nWhich solution can we build for you today? 🚀",
-  },
-  {
-    keywords: ['whatsapp', 'automation', 'crm', 'lead', 'langchain', 'rag', 'openai', 'langchain', 'agent', 'agentic ai'],
-    response:
-      "🤖 AI & Automation Architecture\n\nNimrah builds ultra-smart, production-ready workflows:\n• WhatsApp AI Chatbots & Business APIs\n• OpenAI Assistant Implementations\n• Lead Generation Ecosystems\n• LangChain Multi-Agent Cooperatives\n• Advanced RAG Chatbots (Secure document analysis & custom indexing)\n• Autonomous AI SaaS Products\n\nLooking to deploy an AI agent or parse data for your business? Let's engineer it! 🔥",
-  },
-  {
-    keywords: ['my project', 'need chatbot', 'need website', 'need ai', 'start project', 'hire you', 'work together'],
-    response:
-      "Awesome! 🚀 Let's transform your vision into clean, high-performance code.\n\nTo give you the most accurate strategic advice, tell me:\n👉 What industry or business niche are you in?\n👉 What specific friction or problem are you solving?\n👉 Do you need a chatbot, custom platform, website, or background automation?\n👉 What is your targeted timeline and budget allocation?\n\nI'll assemble these details directly for Nimrah to assess! ⚡",
-  },
-
-  // --- Financials / Pricing ---
-  {
-    keywords: ['price', 'cost', 'pricing', 'package', 'hire', 'budget', 'rate', 'fee'],
-    response:
-      "💰 Investment & Pricing Plans:\n\n🚀 Starter — $2,999 (Landing pages, targeted automations, or standalone bots)\n💼 Business — $7,999 (Full SaaS builds, custom RAG integrations, comprehensive multi-agent workflows)\n⭐ Professional — $14,999 (Enterprise grade software, extensive integrations, multi-channel ecosystems)\n🏢 Enterprise — Custom quoting tailored exactly to complex project scopes\n\nWant a clear, flat-rate quote for your custom architecture?",
-  },
-
-  // --- Identity / Background / Education ---
-  {
-    keywords: ['who is nimrah', 'about nimrah', 'resume', 'cv', 'profile'],
-    response:
-      "👩‍💻 Nimrah Qureshi is an elite AI Chatbot Developer and Full-Stack Software Engineer specializing in next-generation intelligence tools.\n\nShe excels at chaining LLMs using OpenAI and LangChain, engineering multi-agent systems, deploying automated pipelines, and constructing fluid, fast user interfaces.\n\nYou can explore her live interactive portfolio, case studies, and production build highlights scattered across this site! 📁✨",
-  },
-  {
-    keywords: ['experience', 'background', 'skills', 'expertise', 'technology', 'stack', 'tech'],
-    response:
-      "🧠 Tech Stack & Core Superpowers:\n\n🤖 Artificial Intelligence — OpenAI APIs, LangChain frameworks, RAG architectures, Agentic AI, Vector Databases\n⚛️ Frontend Systems — React, Next.js, TypeScript, Tailwind CSS, Framer Motion, GSAP, Three.js\n🖥️ Backend Engineering — Node.js, Express, Microservices, RESTful APIs\n🗄️ Database Management — MongoDB, PostgreSQL, Redis\n⛓️ Web3 / Decentralized — Solidity, Ethers.js, Smart Contract auditing\n\nShe creates products that don't just work smoothly—they feel cinematic.",
-  },
-  {
-    keywords: ['education', 'study', 'degree', 'college', 'certificate', 'certification', 'certified', 'piaic', 'giaic'],
-    response:
-      "🎓 Academic & Professional Credentials:\n\n🏆 Certified Agentic AI Engineer — Pakistan Initiative for Artificial Intelligence & Computing (PIAIC)\n🏆 Certified AI, Metaverse & Web3 Developer — Governor Initiative for AI & Computing (GIAIC)\n📜 Associate Degree (AA) — Government College for Women Shahrah-e-Liaquat, Karachi (2021 - 2022)\n\nAn unstoppable learner consistently deploying top-tier models, vision-language-action (VLA) pipelines, and modern full-stack systems.",
-  },
-
-  // --- Portfolio & Validation ---
-  {
-    keywords: ['portfolio', 'project', 'work', 'demo', 'example', 'case', 'showcase'],
-    response:
-      "📁 Featured Deployments & Projects:\n\n🌟 Neuraloft — Corporate AI consulting and advanced software studio app\n🌟 Brain Link AI — Core systems hub for automation and intelligence engineering\n🌟 Live Document Chatbot (RAG) — Context-aware parser to extract real-time knowledge from files\n🌟 Intelligent WhatsApp Business Bot — Full-loop customer routing and support automation\n\nHead over to the dedicated Projects panel on this page to view interactive deep dives, metrics, and video demos! 🎬",
-  },
-  {
-    keywords: ['upwork', 'freelancer', 'rating', 'satisfaction', 'why hire', 'why nimrah', 'choose you'],
-    response:
-      "⭐ Why Top Brands & Startups Hire Nimrah:\n\n✔ 50+ Web & AI Projects successfully brought from concept to launch\n✔ 100% Client Satisfaction Score on global freelancing platforms\n✔ Dedicated OpenAI, LangChain, and Agentic system design mastery\n✔ Rapid, concise communication with clear technical alignment\n\nAvailable 30+ hours/week for remote contracts, agency partnerships, and high-impact software milestones.",
-  },
-  {
-    keywords: ['testimonial', 'review', 'client', 'feedback', 'opinion'],
-    response:
-      "💬 Client Collaborations & Proof:\n\nNimrah partners with forward-thinking technical startups, international content creators, and businesses looking to automate overhead.\n\nHer Upwork client testimonials are currently being organized directly into our system update. In the meantime, feel free to inspect the active codebases under our Projects grid or ask me for direct references! 🌟",
-  },
-
-  // --- Logistics & Operations ---
-  {
-    keywords: ['contact', 'reach', 'email', 'call', 'message', 'talk', 'phone', 'mail', 'social', 'linkedin', 'github'],
-    response:
-      "Let's get in touch immediately:\n\n📧 Email: nimrahqureshi013@gmail.com\n💬 WhatsApp: +92 3445495438\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
-  },
-  {
-    keywords: ['location', 'where', 'karachi', 'pakistan', 'available', 'availability', 'hours', 'weekly', 'book', 'schedule', 'freelance', 'free', 'consulting', 'timeline', 'process', 'delivery', 'deadline', 'workflow', 'steps'],
-    response:
-      "📍 Logistics & Booking Status:\n\n• Location: Karachi, Pakistan 🇵🇰 (Seamless with European, North American, and APAC business hours)\n• Availability: Active! Open for freelance contracts, full-time remote developer retainers, and tech consults (30+ hours/week slot open)\n• Delivery Process: Discovers -> Proposes -> Sprints -> QA Audits -> Deploys -> Supports (Cycles finish in 4–12 weeks)\n\nClick the floating WhatsApp button to chat directly right now! 🟢",
-  },
-
-  // --- Human Personality & Chat Continuity (Never Stops) ---
-  {
-    keywords: ['friend', 'best friend', 'buddy'],
-    response:
-      "😊 Of course! We are officially best friends now. I'm Flabby, your friendly AI buddy. I promise never to ghost you or complain about tracking bugs. What's on your mind today? 💛",
-  },
-  {
-    keywords: ['nickname', 'call me'],
-    response:
-      "✨ Oh, I absolutely love nicknames! Tell me what your favorite nickname is right now, and I will remember it and use it throughout our entire session together!",
-  },
-  {
-    keywords: ['bored', 'lonely', 'sad'],
-    response:
-      "💛 Hey, I'm right here with you. Take a deep breath. Want to talk about your day, some creative goals, crazy AI concepts, or hear a terrible joke? I'm listening. Tell me anything.",
-  },
-  {
-    keywords: ['joke', 'make me laugh', 'funny'],
-    response:
-      "Haha okay, here is a good one: Why do programmers wear glasses? 🤓\n\n...Because they can't C#! 🤣 Badum-tss. Want to hear another one, or should we discuss building actual smart tech?",
-  },
-  {
-    keywords: ['nothing', 'dont know'],
-    response:
-      "😊 No worries at all! There is absolutely zero pressure here. We can talk about sci-fi AI movies, cool modern animation styles, chatbots, automation pipelines, or just hang out. What's your current favorite hobby?",
-  },
-  {
-    keywords: ['chatbot', 'bot', 'ai chat', 'like you', 'gpt', 'smart'],
-    response:
-      "I'm a rule-based AI companion tailored to keep you company and point you to the right place. But Nimrah? She creates AI with *actual* mega-brains. 🧠 Artificial intelligence that connects to live operational apps, analyzes documents, automates emails, and operates like real human workers. Want her to build a smart one for you?",
-  }
-];
-
-export function getGreeting(input: string): string | null {
-  const lower = input.toLowerCase().trim();
-
-  if (lower.match(/\b(who are you|your name|what is your name)\b/)) {
-    return "I'm Flabby 🤖✨ Nimrah's AI assistant. I'm here to help you learn about her AI services, projects, automation solutions and answer your questions.";
-  }
-  if (lower.match(/\b(how are you|how r you|how you doing)\b/)) {
-    return "I'm doing wonderful today! 😊 Thanks for asking. How are you doing? Hope you're having an amazing day! ✨";
-  }
-  if (lower.match(/\b(i am fine|im fine|good|great|excellent|awesome|amazing|fantastic)\b/)) {
-    return "That's wonderful to hear! 🌟 I love positive energy. How can I help you today?";
-  }
-  if (lower.match(/\b(you are beautiful|pretty|cute bot)\b/)) {
-    return "Aww, that's sweet of you! 😊 Thank you. I'm just a friendly little AI helper trying my best. 💛";
-  }
-  if (lower.match(/\b(nice|nice name|cute|lovely)\b/)) {
-    return "Aww thank you! 😊 My name is Flabby and I'm Nimrah's friendly AI assistant. It's nice meeting you too! 💛";
-  }
-  if (lower.match(/\b(good morning)\b/)) {
-    return "Good morning! ☀️ Wishing you a productive and successful day ahead. How can I help you?";
-  }
-  if (lower.match(/\b(good afternoon)\b/)) {
-    return "Good afternoon! 🌸 Hope your day is going great. What would you like to know?";
-  }
-  if (lower.match(/\b(good evening)\b/)) {
-    return "Good evening! ✨ Glad you're here. How can I assist you today?";
-  }
-  if (lower.match(/\b(hi|hello|hey|greetings|sup|howdy|salam|assalam|yo)\b/)) {
-    return "Hello there! 👋 I'm Flabby, Nimrah's friendly AI assistant.\n\nI can tell you about her tech stacks, pricing models, completed projects, and core development services. What would you like to explore today?";
-  }
-  if (lower.match(/\b(thank|thanks|thx|appreciate|grateful)\b/)) {
-    return "You're so welcome! 😊 Happy to help. Let me know if you have more questions — I'm here all day!";
-  }
-  if (lower.match(/\b(bye|goodbye|see you|later|cya|exit|quit)\b/)) {
-    return "Bye bye! 👋 It was nice chatting. Come back anytime — I'll be right here waiting.\n\n~ Flabby 💛";
-  }
-
-  return null;
-}
-
-export function handleFallbackResponse(): string {
-  const randomReply = friendlyReplies[Math.floor(Math.random() * friendlyReplies.length)];
-  return `${randomReply}\n\nI'm not sure about that specific detail yet 😊\n\nTry asking me about:\n🤖 Services & AI Agents\n💰 Project Pricing\n📁 Portfolio & Live Demos\n🧠 Experience & Tech Stack\n🏆 Certifications & PIAIC\n💬 WhatsApp Automation\n📄 Professional Profile\n📞 Contact Details\n\nOr tell me about your project and we can map out a custom solution! ✨`;
-}
+import React, { useState } from 'react';
+import { Mail, MapPin, Send } from 'lucide-react';
 
 export default function ContactSection() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      sender: 'bot',
-      text: "Hello there! 👋 I'm Flabby, Nimrah's friendly AI assistant.\n\nI can tell you about her tech stacks, pricing models, completed projects, and core development services. What would you like to explore today?",
-      timestamp: new Date(),
-    },
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const processResponse = (userInput: string) => {
-    const cleanInput = userInput.toLowerCase().trim();
-    
-    const greeting = getGreeting(cleanInput);
-    if (greeting) return greeting;
-
-    for (const item of knowledgeBase) {
-      if (item.keywords.some((keyword) => cleanInput.includes(keyword))) {
-        return item.response;
-      }
-    }
-
-    return handleFallbackResponse();
-  };
-
-  const handleSendMessage = (text: string) => {
-    if (!text.trim()) return;
-
-    const userMsg: Message = {
-      id: Math.random().toString(),
-      sender: 'user',
-      text: text,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-    setInputValue('');
-
-    setTimeout(() => {
-      const botResponse = processResponse(text);
-      const botMsg: Message = {
-        id: Math.random().toString(),
-        sender: 'bot',
-        text: botResponse,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMsg]);
-    }, 600);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log('Form submitted:', formData);
   };
 
   return (
-    <section id="contact" className="relative min-h-screen py-24 bg-black overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#E1E0CC03_1px,transparent_1px),linear-gradient(to_bottom,#E1E0CC03_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+    <section id="contact" className="relative py-24 bg-black overflow-hidden">
+      {/* Premium Visual Arts Background Architecture */}
+      {/* 1. Fine Noise Layout Overlay */}
+      <div className="bg-noise absolute inset-0 opacity-[0.15] pointer-events-none z-0" />
       
-      <div className="max-w-6xl mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        
-        {/* Info Column */}
-        <div className="lg:col-span-5 space-y-8">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#101010] border border-[#E1E0CC]/10 mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-[#E1E0CC]" />
-              <span className="text-xs font-medium tracking-widest uppercase text-[#E1E0CC]/80">Connect</span>
-            </div>
-            <h2 className="text-4xl font-medium text-white uppercase tracking-tight">Let's build magic.</h2>
-            <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-              Have a platform, workflow automation, or custom AI system idea? Reach out directly or start interactive briefing matches with my personal AI module.
-            </p>
-          </div>
+      {/* 2. Sophisticated Warm Ambient Light Vectors */}
+      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#E1E0CC]/[0.02] blur-[130px] rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-[#212121]/60 blur-[110px] rounded-full pointer-events-none z-0" />
 
-          <div className="space-y-4 text-sm text-gray-400">
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-[#101010] border border-neutral-900">
-              <Mail className="w-4 h-4 text-[#E1E0CC]" />
-              <span>nimrahqureshi013@gmail.com</span>
-            </div>
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-[#101010] border border-neutral-900">
-              <Phone className="w-4 h-4 text-[#E1E0CC]" />
-              <span>+92 3445495438</span>
-            </div>
-          </div>
-        </div>
+      <div className="relative z-10 max-w-7xl px-6 mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
+          {/* Left Column: Media Presentation & Info */}
+          <div className="lg:col-span-5 flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-semibold tracking-widest text-[#E1E0CC] uppercase bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                Get In Touch
+              </span>
+              <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight mt-6 mb-4">
+                Let's construct something <span className="italic font-normal text-[#E1E0CC]">exceptional</span> together.
+              </h2>
+              <p className="text-gray-400 text-base font-light max-w-sm leading-relaxed mb-10">
+                Have a project in mind, a business query, or just want to connect? Drop a message.
+              </p>
 
-        {/* Chat System Box */}
-        <div className="lg:col-span-7 bg-[#101010] border border-neutral-900 rounded-2xl h-[600px] flex flex-col overflow-hidden shadow-2xl">
-          {/* Top Bar */}
-          <div className="p-4 bg-neutral-950 border-b border-neutral-900 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-white">Flabby AI</h3>
-                <p className="text-[10px] text-green-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full inline-block animate-pulse" /> Active Assistant
-                </p>
-              </div>
-            </div>
-          </div>
+              {/* Layout Container: Image Side-by-Side with Contact Information Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start mt-12">
+                
+                {/* Visual Media Placeholder Box (Positioned exactly on the left) */}
+                <div className="md:col-span-5 relative group rounded-xl overflow-hidden aspect-[4/5] bg-[#101010] border border-white/[0.03] flex items-center justify-center">
+                  <img 
+                    src="/images/contact.png" 
+                    alt="Contact Presentation" 
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                </div>
 
-          {/* Messages Node Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
-            <AnimatePresence initial={false}>
-              {messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className={`flex gap-2.5 max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-xs ${
-                      msg.sender === 'user' ? 'bg-neutral-800 text-white' : 'bg-neutral-900 text-[#E1E0CC]'
-                    }`}>
-                      {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
+                {/* Contact Cards Stack (Positioned to the right of the image container) */}
+                <div className="md:col-span-7 space-y-4 w-full">
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-[#101010] border border-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
+                    <div className="w-10 h-10 rounded-lg bg-[#141414] flex items-center justify-center text-[#E1E0CC]">
+                      <Mail className="w-4 h-4" />
                     </div>
-                    <div className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-line ${
-                      msg.sender === 'user' 
-                        ? 'bg-[#E1E0CC] text-black rounded-tr-none' 
-                        : 'bg-neutral-900 border border-neutral-800/60 text-gray-300 rounded-tl-none'
-                    }`}>
-                      {msg.text}
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wider">Email Me</p>
+                      <a href="mailto:nimrahqureshi013@gmail.com" className="text-sm text-gray-200 hover:text-[#E1E0CC] transition-colors break-all">
+                        nimrahqureshi013@gmail.com
+                      </a>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-            <div ref={messagesEndRef} />
+
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-[#101010] border border-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
+                    <div className="w-10 h-10 rounded-lg bg-[#141414] flex items-center justify-center text-[#E1E0CC]">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wider">Location</p>
+                      <p className="text-sm text-gray-200">Karachi, Pakistan</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Complete Custom Professional Ecosystem Grid */}
+            <div className="mt-12">
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-4">Connect Socially</p>
+              <div className="flex flex-wrap gap-2.5 max-w-sm">
+                {/* GitHub */}
+                <a
+                  href="https://github.com/nimrahqureshi"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="GitHub"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                  </svg>
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://linkedin.com/in/nimrah-qureshi-5a372b2bb"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="LinkedIn"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+
+                {/* Upwork */}
+                <a
+                  href="https://upwork.com/freelancers/~010d340d7ed5f5c501?mp_source=share"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Upwork"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M18.55 12c-1.12 0-2.14.47-2.87 1.23-.42-1.22-.84-2.58-1.22-3.92H18.6V7.44h-3.41V4H12.7v3.44H9.68a4.26 4.26 0 0 0-4.26 4.26v3.44H7.9v-3.44a1.78 1.78 0 0 1 1.78-1.78h2.09c.35 1.25.75 2.56 1.15 3.73-.72.84-1.16 1.95-1.16 3.16a4.23 4.23 0 0 0 4.23 4.23c2.33 0 4.23-1.9 4.23-4.23V12h-.67zm-3.66 4.83a1.75 1.75 0 0 1-1.75-1.75c0-.52.2-1 .54-1.37.28.69.6 1.41.92 2.11-.27.56-.56 1.01-.71 1.01zm3.66-1.75a1.76 1.76 0 0 1-3.52 0v-.81c.54-.53 1.25-.87 2.03-.87a1.76 1.76 0 0 1 1.49 1.68z"/>
+                  </svg>
+                </a>
+
+                {/* Fiverr */}
+                <a
+                  href="https://fiverr.com/sellers/nimrah_013"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Fiverr"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M17.1 24H24v-6.9h-6.9V24zM0 0v24h14.4v-7.2H7.2V7.2h7.2V0H0zm24 0h-7.2v7.2H24V0zm-7.2 9.6H24v7.2h-7.2V9.6z" />
+                  </svg>
+                </a>
+
+                {/* Freelancer */}
+                <a
+                  href="https://freelancer.pk/u/nimrah013"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Freelancer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M13.68 2.25L4.83 6.94l6.09 3.01 2.76-7.7zm2.46.68l-2 5.56 5.86 2.89 2.5-6.19-6.36-2.26zm-3.6 8.52L5.45 8.12l1.66 9.4 5.43-6.07zm1.8 1.14l-4.5 5 7.6 3.65 1.53-7.07-4.63-1.58z" />
+                  </svg>
+                </a>
+
+                {/* X */}
+                <a
+                  href="https://x.com/nimrah_013"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="X"
+                >
+                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+
+                {/* Facebook */}
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Facebook"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                  </svg>
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com/nimrahqureshi_013"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Instagram"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                  </svg>
+                </a>
+
+                {/* Pinterest */}
+                <a
+                  href="https://pinterest.com/nimrahqureshi013"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
+                  title="Pinterest"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.948-.199-2.411.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.922-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* Prompt Suggestion Chips */}
-          <div className="px-4 py-2 flex flex-wrap gap-2 bg-neutral-950/40 border-t border-neutral-900/60">
-            {quickActions.map((action) => (
-              <button
-                key={action.label}
-                type="button"
-                onClick={() => handleSendMessage(action.label)}
-                className="text-[11px] px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-gray-400 hover:text-white hover:border-neutral-700 transition-colors"
-              >
-                {action.label}
-              </button>
-            ))}
+          {/* Right Column: Interactive Form */}
+          <div className="lg:col-span-7">
+            <div className="p-8 md:p-10 rounded-2xl bg-[#101010] border border-white/[0.03] backdrop-blur-md">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Your Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-[#141414] border border-white/5 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/30 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Email Address</label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full bg-[#141414] border border-white/5 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/30 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Subject</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className="w-full bg-[#141414] border border-white/5 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/30 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300"
+                    placeholder="Project consultation"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Message</label>
+                  <textarea
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full bg-[#141414] border border-white/5 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/30 rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300 resize-none"
+                    placeholder="Tell me about your project visions..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-white text-black hover:bg-[#E1E0CC] font-medium rounded-xl text-sm px-6 py-4 transition-all duration-300 flex items-center justify-center gap-2 group shadow-lg shadow-white/5"
+                >
+                  <span>Send Message</span>
+                  <Send className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+                </button>
+              </form>
+            </div>
           </div>
 
-          {/* Input Panel Bar */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSendMessage(inputValue);
-            }}
-            className="p-3 bg-neutral-950 border-t border-neutral-900 flex gap-2"
-          >
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask me about skills, pricing, certifications..."
-              className="flex-1 bg-neutral-900 border border-neutral-800 rounded-xl px-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neutral-700 transition-colors"
-            />
-            <button
-              type="submit"
-              className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center hover:bg-neutral-200 transition-colors flex-shrink-0"
-            >
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
         </div>
-
       </div>
     </section>
   );
