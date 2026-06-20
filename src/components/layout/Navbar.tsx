@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Bot } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 interface NavLink {
@@ -18,7 +18,6 @@ const navLinks: NavLink[] = [
   { to: '/ai-tools', label: 'AI Tools' },
   { to: '/blog', label: 'Blog' },
   { to: '/pricing', label: 'Pricing' },
-  { to: '/faq', label: 'FAQ' },
 ];
 
 export default function Navbar() {
@@ -97,8 +96,17 @@ export default function Navbar() {
               }} 
               className="flex items-center gap-2 group"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center shadow-md shadow-purple-500/20">
-                <Bot className="w-4 h-4 text-white" />
+              {/* Image Logo Container */}
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                <img 
+                  src="/images/logo.png" 
+                  alt="Logo" 
+                  className="w-full h-full object-cover filter brightness-100 group-hover:brightness-110 transition-all duration-300"
+                  onError={(e) => {
+                    // Fallback hidden line if image fails to load properly
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
               <span className="text-lg font-bold text-[#E1E0CC] group-hover:text-purple-400 transition-colors">
                 Nimrah<span className="text-purple-400">.</span>
