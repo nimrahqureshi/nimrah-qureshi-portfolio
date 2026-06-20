@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { Bot, Mail, Heart, Send, Loader2 } from 'lucide-react';
+import { Mail, Heart, Send, Loader2 } from 'lucide-react';
 import { api, ApiError } from '@/lib/api';
 import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
 import { SiFiverr } from 'react-icons/si';
@@ -49,6 +49,7 @@ export default function Footer() {
     if (subscribing) return;
 
     const trimmed = email.trim();
+    // Validate standard email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       toast.error('Please enter a valid email address.');
       return;
@@ -56,6 +57,7 @@ export default function Footer() {
 
     setSubscribing(true);
     try {
+      // Direct integration with your real subscription API endpoint
       const res = await api.subscribe({ email: trimmed });
       toast.success(res.message || 'Subscribed successfully!');
       setEmail('');
@@ -88,8 +90,17 @@ export default function Footer() {
             className="lg:col-span-2 space-y-6"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/10">
-                <Bot className="w-5 h-5 text-white" />
+              {/* Profile Image Logo Integration */}
+              <div className="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-purple-500 to-cyan-400 p-[1px] shadow-lg shadow-purple-500/10 flex items-center justify-center">
+                <img 
+                  src="/images/logo.png" 
+                  alt="Nimrah Qureshi Logo" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    // Fallback visually if image fails to load during local development configuration
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
               <span className="text-xl font-bold tracking-tight text-[#E1E0CC]">
                 Nimrah Qureshi
@@ -176,6 +187,7 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link.label}>
                     <button
+                      type="button"
                       onClick={() => handleLinkClick(link.href)}
                       className="text-gray-400 hover:text-[#E1E0CC] transition-colors text-sm font-normal text-left block w-full"
                     >
