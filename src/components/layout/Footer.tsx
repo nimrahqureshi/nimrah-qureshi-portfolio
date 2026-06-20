@@ -49,7 +49,6 @@ export default function Footer() {
     if (subscribing) return;
 
     const trimmed = email.trim();
-    // Validate standard email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       toast.error('Please enter a valid email address.');
       return;
@@ -57,7 +56,6 @@ export default function Footer() {
 
     setSubscribing(true);
     try {
-      // Direct integration with your real subscription API endpoint
       const res = await api.subscribe({ email: trimmed });
       toast.success(res.message || 'Subscribed successfully!');
       setEmail('');
@@ -89,17 +87,13 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-2 space-y-6"
           >
+            {/* Logo Container */}
             <div className="flex items-center gap-3">
-              {/* Profile Image Logo Integration */}
-              <div className="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-purple-500 to-cyan-400 p-[1px] shadow-lg shadow-purple-500/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] border border-white/10 p-1.5 flex items-center justify-center shadow-lg shadow-purple-500/5 overflow-hidden">
                 <img 
                   src="/images/logo.png" 
                   alt="Nimrah Qureshi Logo" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    // Fallback visually if image fails to load during local development configuration
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  className="w-full h-full object-contain"
                 />
               </div>
               <span className="text-xl font-bold tracking-tight text-[#E1E0CC]">
@@ -187,7 +181,6 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link.label}>
                     <button
-                      type="button"
                       onClick={() => handleLinkClick(link.href)}
                       className="text-gray-400 hover:text-[#E1E0CC] transition-colors text-sm font-normal text-left block w-full"
                     >
