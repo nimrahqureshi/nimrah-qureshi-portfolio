@@ -170,7 +170,7 @@ export default function AboutSection() {
               className="col-span-8 aspect-[4/5] rounded-2xl md:rounded-[1.5rem] overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl relative"
             >
               <img 
-                src="/images/banner.png" 
+                src="/images/about.png" 
                 alt="Nimrah Qureshi Profile" 
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
@@ -186,7 +186,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg mt-6"
             >
               <img 
-                src="/images/banner.png" 
+                src="/images/about.png" 
                 alt="AI Development Workspace" 
                 className={`w-full h-full object-cover scale-110 transition-all duration-700 ease-out ${isTouched ? 'grayscale-0 brightness-100' : 'grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100'}`}
               />
@@ -201,7 +201,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg -mt-12 z-20"
             >
               <img 
-                src="/images/banner.png" 
+                src="/images/about.png" 
                 alt="Neural Operations" 
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale contrast-125 group-hover:grayscale-0'}`}
               />
@@ -216,7 +216,7 @@ export default function AboutSection() {
               className="col-span-8 aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl -mt-4"
             >
               <img 
-                src="/images/banner.png" 
+                src="/images/about.png" 
                 alt="System Architecture Hub" 
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
