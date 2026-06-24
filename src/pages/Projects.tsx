@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Terminal } from 'lucide-react';
+import { ExternalLink, FolderGit2, Terminal } from 'lucide-react';
 
 const highTierProjects = [
   {
@@ -64,7 +64,7 @@ export default function Projects() {
                 </div>
                 <div className="flex items-center gap-3 pt-3 border-t border-white/5">
                   <a href={proj.git} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-                    <Github className="w-4 h-4" /> Source
+                    <FolderGit2 className="w-4 h-4" /> Source
                   </a>
                   <a href={proj.live} className="flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors ml-auto">
                     Live Demo <ExternalLink className="w-3.5 h-3.5" />
