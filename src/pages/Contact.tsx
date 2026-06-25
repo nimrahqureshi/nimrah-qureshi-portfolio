@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Mail, Globe, MessageSquare, Loader2, Send } from 'lucide-react';
+import { Globe, Github, MessageSquare, Loader2, Send } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -15,7 +14,7 @@ export default function Contact() {
     }
     setSending(true);
     
-    // Simulate real backend ingestion tracking logs
+    // Simulate API delivery pipeline latency
     await new Promise(resolve => setTimeout(resolve, 1200));
     toast.success('Your message has been processed successfully.');
     setFormData({ name: '', email: '', message: '' });
@@ -26,12 +25,12 @@ export default function Contact() {
     <div className="relative min-h-screen pt-24 pb-16 overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8 relative z-10">
         
-        {/* Left Side Metadata Panel */}
+        {/* Left Side Info Panel */}
         <div className="lg:col-span-5 space-y-6 text-left">
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">Let's Work Together</h1>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Let's discuss your next AI, automation, or web development project. I'm available for freelance work, collaborations, and long-term partnerships.
+              Let's discuss your AI, automation, or web development project. I'm available for freelance work, collaborations, and long-term partnerships.
             </p>
           </div>
 
@@ -42,16 +41,16 @@ export default function Contact() {
 
           <div className="flex flex-wrap gap-2 pt-2">
             {[
-              { icon: Globe, url: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', title: 'LinkedIn Profile' },
-              { icon: Globe, url: 'https://github.com/nimrahqureshi', title: 'GitHub Profile' },
-              { icon: MessageSquare, url: 'mailto:nimrahqureshi013@gmail.com', title: 'Direct Email' }
+              { icon: Globe, url: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
+              { icon: Github, url: 'https://github.com/nimrahqureshi', label: 'GitHub' },
+              { icon: MessageSquare, url: 'mailto:nimrahqureshi013@gmail.com', label: 'Email' }
             ].map((soc, i) => (
               <a 
                 key={i} 
                 href={soc.url} 
                 target="_blank" 
                 rel="noreferrer" 
-                title={soc.title}
+                title={soc.label}
                 className="w-10 h-10 rounded-xl bg-[#1E2023] border border-white/5 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/20 transition-all"
               >
                 <soc.icon className="w-4 h-4" />
@@ -60,7 +59,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Right Side Secure Form Portal */}
+        {/* Right Side Form Panel */}
         <div className="lg:col-span-7">
           <form onSubmit={handleSubmit} className="premium-card p-6 sm:p-8 space-y-4 text-left bg-[#1E2023]/80">
             <div>
