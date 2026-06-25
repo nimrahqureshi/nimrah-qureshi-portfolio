@@ -139,7 +139,7 @@ export default function Contact() {
             </button>
           </form>
 
-        </div>
+        </div> {/* This closes the 12-column grid container perfectly */}
       </div>
     </div>
   );
