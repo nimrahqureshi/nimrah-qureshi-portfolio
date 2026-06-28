@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import NeuralNetwork from '@/components/effects/NeuralNetwork';
+import WhatsAppButton from '@/components/whatsapp/WhatsAppButton';
 import AIChatbot from '@/components/chatbot/AIChatbot';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 import ScrollProgress from '@/components/layout/ScrollProgress';
@@ -55,6 +56,7 @@ export default function Layout() {
       </main>
 
       <Footer />
+      <WhatsAppButton />
       <AIChatbot />
     </div>
   );
