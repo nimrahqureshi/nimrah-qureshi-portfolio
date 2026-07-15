@@ -34,7 +34,7 @@ export function WordsPullUp({ text, className = "", showAsterisk = false }: Word
                 {word.replace(/a$/, "")}
                 <span className="relative">
                   a
-                  <sup className="absolute top-[0.55em] -right-[0.35em] text-[0.35em] text-[#00E5FF] text-glow">*</sup>
+                  <sup className="absolute top-[0.55em] -right-[0.35em] text-[0.35em] text-[#E1E0CC] text-glow">*</sup>
                 </span>
               </span>
             ) : (

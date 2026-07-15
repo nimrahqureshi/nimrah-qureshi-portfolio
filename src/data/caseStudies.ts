@@ -32,7 +32,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     businessImpact: '$1.2M annual savings in support costs, 40% increase in customer retention, and the ability to scale support without proportional hiring.',
     timeline: '8 weeks from kickoff to full deployment',
-    gradient: 'from-purple-600 to-cyan-400',
+    gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]',
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop'
   },
   {
@@ -52,7 +52,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     businessImpact: '$800K annual cost savings, 3x increase in onboarding capacity, and 95% reduction in billing errors.',
     timeline: '12 weeks for full implementation',
-    gradient: 'from-cyan-400 to-blue-600',
+    gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop'
   },
   {
@@ -72,7 +72,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     businessImpact: 'Faster patient care decisions, regulatory compliance achieved, and the ability to handle 3x the document volume without additional staff.',
     timeline: '16 weeks from design to production',
-    gradient: 'from-green-500 to-cyan-400',
+    gradient: 'from-[#33302a] via-[#1e1c18] to-[#121110]',
     image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop'
   }
 ];

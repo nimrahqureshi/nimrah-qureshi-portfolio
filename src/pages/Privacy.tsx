@@ -11,7 +11,7 @@ export default function Privacy() {
       <SEOHead
         title="Privacy Policy | Nimrah Qureshi"
         description="How Nimrah Qureshi collects, uses, and protects your personal information."
-        url="https://nimrah-qureshi-portfolio.vercel.app/privacy"
+        path="/privacy"
       />
       <LegalPage title="Privacy Policy" updated="June 2026">
         <p>

@@ -9,6 +9,11 @@ interface Particle {
   opacity: number;
 }
 
+/**
+ * Ambient particle field. Recolored to the champagne/graphite system,
+ * honors prefers-reduced-motion (renders a static frame), pauses when
+ * the tab is hidden, and scales particle count down on small screens.
+ */
 export default function NeuralNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -19,10 +24,13 @@ export default function NeuralNetwork() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let animationId = 0;
     let particles: Particle[] = [];
-    const particleCount = 80;
     const connectionDistance = 150;
+
+    const particleCount = () => (window.innerWidth < 768 ? 36 : 72);
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -30,34 +38,36 @@ export default function NeuralNetwork() {
     };
 
     const initParticles = () => {
-      particles = Array.from({ length: particleCount }, () => ({
+      particles = Array.from({ length: particleCount() }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.2
+        opacity: Math.random() * 0.5 + 0.2,
       }));
     };
 
-    const animate = () => {
+    const drawFrame = (advance: boolean) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
+        if (advance) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        }
 
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
+        // Champagne node with a soft graphite halo
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(124, 58, 237, ${p.opacity})`;
+        ctx.fillStyle = `rgba(225, 224, 204, ${p.opacity * 0.55})`;
         ctx.fill();
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 229, 255, ${p.opacity * 0.3})`;
+        ctx.fillStyle = `rgba(200, 182, 138, ${p.opacity * 0.12})`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -66,32 +76,55 @@ export default function NeuralNetwork() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDistance) {
-            const opacity = (1 - dist / connectionDistance) * 0.3;
+            const opacity = (1 - dist / connectionDistance) * 0.14;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`;
+            ctx.strokeStyle = `rgba(225, 224, 204, ${opacity})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       });
+    };
 
+    const animate = () => {
+      drawFrame(true);
       animationId = requestAnimationFrame(animate);
+    };
+
+    const handleResize = () => {
+      resize();
+      initParticles();
+      if (prefersReducedMotion) drawFrame(false);
+    };
+
+    const handleVisibility = () => {
+      if (prefersReducedMotion) return;
+      if (document.hidden) {
+        cancelAnimationFrame(animationId);
+      } else {
+        animationId = requestAnimationFrame(animate);
+      }
     };
 
     resize();
     initParticles();
-    animate();
 
-    window.addEventListener('resize', () => {
-      resize();
-      initParticles();
-    });
+    if (prefersReducedMotion) {
+      // A single static frame keeps the atmosphere without motion.
+      drawFrame(false);
+    } else {
+      animate();
+    }
+
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 
@@ -99,7 +132,8 @@ export default function NeuralNetwork() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 0.55 }}
+      aria-hidden="true"
     />
   );
 }

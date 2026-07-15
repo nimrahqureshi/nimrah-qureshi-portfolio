@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ArrowRight, Sparkles } from "lucide-react";
-import { WordsPullUpMultiStyle } from "./WordsPullUpMultiStyle";
+import { WordsPullUpMultiStyle } from "@/components/effects/WordsPullUpMultiStyle";
 
 interface FeatureCard {
   type: "video" | "feature";
@@ -74,22 +74,22 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
           delay: index * 0.15,
           ease: [0.22, 1, 0.36, 1],
         }}
-        className="relative overflow-hidden rounded-2xl min-h-[280px] sm:min-h-[320px] lg:h-full bg-gradient-to-br from-[#18181b] to-[#101012] border border-purple-500/20 p-6 flex flex-col justify-between shadow-xl group"
+        className="relative overflow-hidden rounded-2xl min-h-[280px] sm:min-h-[320px] lg:h-full bg-gradient-to-br from-[#18181b] to-[#101012] border border-[#E1E0CC]/15 p-6 flex flex-col justify-between shadow-xl group"
       >
         {/* Background Visual Shapes Replacing Video */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#7C3AED]/20 rounded-full blur-2xl group-hover:bg-[#7C3AED]/30 transition-colors duration-300" />
-          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-[#00E5FF]/10 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#E1E0CC]/10 rounded-full blur-2xl group-hover:bg-[#E1E0CC]/15 transition-colors duration-300" />
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-[#C8B68A]/10 rounded-full blur-2xl animate-pulse" />
           
           {/* Futuristic Grid Accent */}
           <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
         </div>
 
         <div className="relative z-10">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#7C3AED] to-[#00E5FF] flex items-center justify-center mb-6 shadow-md shadow-purple-500/20">
-            <Sparkles className="w-5 h-5 text-white" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#E1E0CC] to-[#C8B68A] flex items-center justify-center mb-6 shadow-md shadow-[#E1E0CC]/10">
+            <Sparkles className="w-5 h-5 text-black" />
           </div>
-          <span className="text-xs font-semibold tracking-widest text-[#00E5FF] uppercase block mb-2">
+          <span className="text-xs font-semibold tracking-widest text-[#C8B68A] uppercase block mb-2">
             Creative Canvas
           </span>
           <h3 className="text-[#F5F5F5] text-xl font-semibold leading-snug">
@@ -99,7 +99,7 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
 
         <div className="relative z-10 pt-4 border-t border-white/5">
           <p className="text-[#E1E0CC] text-sm font-medium flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-[#00E5FF] rounded-full inline-block animate-ping" />
+            <span className="w-1.5 h-1.5 bg-[#E1E0CC] rounded-full inline-block animate-ping" />
             {card.label}
           </p>
         </div>
@@ -117,7 +117,7 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
         delay: index * 0.15,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="bg-[#101012] border border-white/5 rounded-2xl p-4 sm:p-5 md:p-6 flex flex-col justify-between min-h-[280px] sm:min-h-[320px] lg:h-full group hover:border-[#7C3AED]/30 transition-all duration-300 shadow-xl"
+      className="bg-[#101012] border border-white/5 rounded-2xl p-4 sm:p-5 md:p-6 flex flex-col justify-between min-h-[280px] sm:min-h-[320px] lg:h-full group hover:border-[#E1E0CC]/25 transition-all duration-300 shadow-xl"
     >
       <div>
         {/* Small image icon preserved perfectly */}
@@ -129,7 +129,7 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
 
         {/* Title with number */}
         <div className="flex items-baseline gap-2 mb-4 sm:mb-6">
-          <span className="text-[#7C3AED] text-xs sm:text-sm font-bold">
+          <span className="text-[#E1E0CC] text-xs sm:text-sm font-bold">
             {card.number}
           </span>
           <h3 className="text-[#F5F5F5] text-base sm:text-lg md:text-xl font-semibold">
@@ -141,7 +141,7 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
         <ul className="space-y-2 sm:space-y-3">
           {card.checklist?.map((item) => (
             <li key={item} className="flex items-start gap-2 sm:gap-3">
-              <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#00E5FF] flex-shrink-0 mt-0.5" />
+              <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#E1E0CC] flex-shrink-0 mt-0.5" />
               <span className="text-[#D4D4D8] text-xs sm:text-sm">{item}</span>
             </li>
           ))}
@@ -149,7 +149,7 @@ function FeatureCardItem({ card, index }: { card: FeatureCard; index: number }) 
       </div>
 
       {/* Learn more trigger handles */}
-      <button className="flex items-center gap-2 text-[#7C3AED] font-medium text-xs sm:text-sm mt-6 sm:mt-8 group/btn hover:text-[#00E5FF] transition-colors w-fit">
+      <button className="flex items-center gap-2 text-[#E1E0CC] font-medium text-xs sm:text-sm mt-6 sm:mt-8 group/btn hover:text-white transition-colors w-fit">
         Learn more
         <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 -rotate-45 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
       </button>
@@ -164,8 +164,8 @@ export function Features() {
       <div className="bg-noise absolute inset-0 opacity-[0.04] pointer-events-none" />
 
       {/* Subtle Background Radial Shapes */}
-      <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-[#7C3AED]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[-10%] w-[45%] h-[50%] bg-[#00E5FF]/4 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-[#E1E0CC]/[0.04] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[-10%] w-[45%] h-[50%] bg-[#C8B68A]/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}

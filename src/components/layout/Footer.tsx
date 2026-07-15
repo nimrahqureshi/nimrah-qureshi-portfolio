@@ -1,9 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Mail, Heart, Send, Loader2 } from 'lucide-react';
 import { api, ApiError } from '@/lib/api';
+import Picture from '@/components/ui/Picture';
 import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
 import { SiFiverr } from 'react-icons/si';
 
@@ -37,12 +38,6 @@ const socialLinks = [
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
-  const navigate = useNavigate();
-
-  const handleLinkClick = (href: string) => {
-    navigate(href);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,10 +64,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-black border-t border-purple-500/10 overflow-hidden py-16 sm:py-20">
+    <footer className="relative bg-black border-t border-white/[0.06] overflow-hidden py-16 sm:py-20">
       <div className="absolute inset-0 bg-[#101010]/40" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#E1E0CC]/[0.04] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#C8B68A]/[0.03] rounded-full blur-[120px] pointer-events-none" />
       
       <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
       
@@ -89,10 +84,14 @@ export default function Footer() {
           >
             {/* Logo Container */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] border border-white/10 p-1.5 flex items-center justify-center shadow-lg shadow-purple-500/5 overflow-hidden">
-                <img 
-                  src="/images/logo.png" 
-                  alt="Nimrah Qureshi Logo" 
+              <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] border border-white/10 p-1.5 flex items-center justify-center shadow-lg shadow-black/40 overflow-hidden">
+                <Picture
+                  src="/images/logo.png"
+                  alt="Nimrah Qureshi logo"
+                  width={1024}
+                  height={1024}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -153,7 +152,7 @@ export default function Footer() {
                 <button
                   type="submit"
                   disabled={subscribing}
-                  className="px-4 py-2 bg-gradient-to-r from-purple-600 to-cyan-500 text-white rounded-lg font-medium text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all disabled:opacity-50 flex items-center gap-2"
+                  className="px-4 py-2 bg-[#E1E0CC] text-black rounded-lg font-medium text-sm hover:bg-[#D6D4BC] transition-all disabled:opacity-50 flex items-center gap-2"
                 >
                   {subscribing ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -177,18 +176,20 @@ export default function Footer() {
               className="space-y-4 lg:pl-8"
             >
               <h3 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h3>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <button
-                      onClick={() => handleLinkClick(link.href)}
-                      className="text-gray-400 hover:text-[#E1E0CC] transition-colors text-sm font-normal text-left block w-full"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <nav aria-label={`Footer ${title} links`}>
+                <ul className="space-y-2.5">
+                  {links.map((link) => (
+                    <li key={`${link.label}-${link.href}`}>
+                      <Link
+                        to={link.href}
+                        className="text-gray-400 hover:text-[#E1E0CC] transition-colors text-sm font-normal text-left block"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </motion.div>
           ))}
         </div>

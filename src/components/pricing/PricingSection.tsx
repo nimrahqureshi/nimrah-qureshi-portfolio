@@ -1,14 +1,11 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Star, Zap } from 'lucide-react';
 import SectionHeading from '@/components/effects/SectionHeading';
 import GlassCard from '@/components/effects/GlassCard';
 import { pricingPlans, addOns } from '@/data/pricing';
 
 export default function PricingSection() {
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section 
       id="pricing" 
@@ -94,8 +91,8 @@ export default function PricingSection() {
                     ))}
                   </ul>
 
-                  <button
-                    onClick={() => scrollTo('contact')}
+                  <Link
+                    to="/contact"
                     style={{ backgroundColor: plan.popular ? '#E1E0CC' : '#101010' }}
                     className={`w-full py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 group text-xs uppercase tracking-wider ${
                       plan.popular
@@ -105,7 +102,7 @@ export default function PricingSection() {
                   >
                     {plan.cta}
                     <ArrowRight className={`w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 ${plan.popular ? 'text-black' : 'text-[#E1E0CC]'}`} />
-                  </button>
+                  </Link>
                 </div>
               </GlassCard>
             </motion.div>

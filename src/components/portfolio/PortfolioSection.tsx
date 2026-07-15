@@ -1,16 +1,58 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ChevronRight, X, Sparkles } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import SectionHeading from '@/components/effects/SectionHeading';
 import GlassCard from '@/components/effects/GlassCard';
+import { useModalBehavior } from '@/hooks/useModalBehavior';
 import { projects, Project } from '@/data/projects';
+
+/**
+ * Project links come in three flavors:
+ * - "#..."  -> legacy in-page anchors (e.g. "#contact"); route to the Contact page
+ * - "/..."  -> internal routes; client-side <Link>, no new tab
+ * - full URL -> external; new tab with rel security attributes
+ */
+function ProjectLink({
+  url,
+  label,
+  className,
+  children,
+}: {
+  url: string;
+  label: string;
+  className: string;
+  children: ReactNode;
+}) {
+  if (url.startsWith('#')) {
+    return (
+      <Link to="/contact" className={className} aria-label={`${label} — go to contact page`}>
+        {children}
+      </Link>
+    );
+  }
+  if (url.startsWith('/')) {
+    return (
+      <Link to={url} className={className}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className={className}>
+      {children}
+    </a>
+  );
+}
 
 const categories = ['All', ...new Set(projects.map(p => p.category))];
 
 export default function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  useModalBehavior(!!selectedProject, () => setSelectedProject(null));
 
   const filtered = activeCategory === 'All' 
     ? projects 
@@ -127,11 +169,10 @@ export default function PortfolioSection() {
                     {/* Links Actions */}
                     <div className="flex items-center gap-4 pt-2 border-t border-neutral-900/60" onClick={(e) => e.stopPropagation()}>
                       {project.links.map((link) => (
-                        <a
+                        <ProjectLink
                           key={link.label}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          url={link.url}
+                          label={link.label}
                           className="text-xs text-gray-500 hover:text-[#E1E0CC] transition-colors flex items-center gap-1.5 font-medium tracking-wide"
                         >
                           {link.label === 'GitHub'
@@ -139,7 +180,7 @@ export default function PortfolioSection() {
                             : <ExternalLink className="w-3.5 h-3.5" />
                           }
                           {link.label}
-                        </a>
+                        </ProjectLink>
                       ))}
                     </div>
 
@@ -166,17 +207,25 @@ export default function PortfolioSection() {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10"
             >
-              <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setSelectedProject(null)} />
-              
+              <div
+                className="absolute inset-0 bg-black/95 backdrop-blur-md"
+                onClick={() => setSelectedProject(null)}
+                aria-hidden="true"
+              />
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 15 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 15 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                role="dialog"
+                aria-modal="true"
+                aria-label={`${selectedProject.title} — project details`}
                 className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#0A0A0A] border border-[#E1E0CC]/10 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl custom-scrollbar"
               >
                 <button
                   onClick={() => setSelectedProject(null)}
+                  aria-label="Close project details"
                   className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-neutral-900 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#101010] transition-all border border-neutral-800 z-20"
                 >
                   <X className="w-5 h-5" />
@@ -246,16 +295,15 @@ export default function PortfolioSection() {
 
                 <div className="flex flex-wrap gap-3 pt-2">
                   {selectedProject.links.map((link) => (
-                    <a
+                    <ProjectLink
                       key={link.label}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      url={link.url}
+                      label={link.label}
                       className="px-6 py-3 rounded-xl bg-[#E1E0CC] text-black font-semibold text-xs uppercase tracking-wider hover:opacity-90 transition-all flex items-center gap-2"
                     >
                       {link.label === 'GitHub' ? <FaGithub className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
                       {link.label}
-                    </a>
+                    </ProjectLink>
                   ))}
                 </div>
               </motion.div>

@@ -1,18 +1,15 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, Play, Sparkles } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Typewriter from './Typewriter';
 import FadeIn from '../effects/FadeIn';
 import Magnet from '../effects/Magnet';
+import Picture from '@/components/ui/Picture';
 
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const scrollToContent = () => {
+    window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' });
+  };
 
   return (
     <section 
@@ -91,14 +88,19 @@ export default function Hero() {
                   activeTransition="transform 0.25s ease-out"
                   inactiveTransition="transform 0.5s ease-in-out"
                 >
-                  <img
-                    src="/images/logo.png"
-                    alt="Nimrah Qureshi"
+                  <Picture
+                    src="/images/home.png"
+                    alt="Nimrah Qureshi — AI Engineer and Full-Stack Developer"
                     loading="eager"
                     fetchPriority="high"
-                    className="w-[200px] sm:w-[280px] md:w-[320px] lg:w-[360px] object-contain drop-shadow-[0_10px_50px_rgba(0,0,0,0.8)]
-                               transition-all duration-500 ease-out
-                               group-hover:opacity-0 group-hover:scale-95 group-hover:blur-md"
+                    width={1024}
+                    height={1024}
+                    className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] object-contain
+drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]
+transition-all duration-500 ease-out
+group-hover:opacity-0
+group-hover:scale-95
+group-hover:blur-md"
                   />
                 </Magnet>
               </FadeIn>
@@ -134,48 +136,54 @@ export default function Hero() {
             className="flex flex-wrap justify-center items-center gap-4 px-4 relative z-30 max-w-3xl mx-auto"
           >
             {/* Primary Hire Action */}
-            <button
-              onClick={() => navigate('/contact')}
+            <Link
+              to="/contact"
               style={{ backgroundColor: '#E1E0CC' }}
               className="group px-7 py-3.5 text-black rounded-full font-medium transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider w-full sm:w-auto justify-center hover:opacity-90"
             >
               Hire Me
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-            </button>
+            </Link>
             
             {/* Book Discovery Call */}
-            <button
-              onClick={() => navigate('/contact')}
+            <Link
+              to="/contact"
               className="px-7 py-3.5 bg-[#101010] border border-neutral-800 text-[#E1E0CC]/80 rounded-full font-medium hover:bg-neutral-900 hover:text-[#E1E0CC] hover:border-neutral-700 transition-all duration-200 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider w-full sm:w-auto justify-center backdrop-blur-sm"
             >
               <Play className="w-3.5 h-3.5 text-[#E1E0CC]" />
               Book Discovery Call
-            </button>
+            </Link>
             
             {/* View Projects */}
-            <button
-              onClick={() => navigate('/projects')}
+            <Link
+              to="/projects"
               className="px-7 py-3.5 bg-[#101010] border border-neutral-800 text-[#E1E0CC]/80 rounded-full font-medium hover:bg-neutral-900 hover:text-[#E1E0CC] hover:border-neutral-700 transition-all duration-200 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider w-full sm:w-auto justify-center backdrop-blur-sm"
             >
               View Projects
-            </button>
+            </Link>
             
-            {/* Download Resume */}
-            <button className="px-7 py-3.5 bg-[#101010] border border-neutral-800 text-[#E1E0CC]/80 rounded-full font-medium hover:bg-neutral-900 hover:text-[#E1E0CC] hover:border-neutral-700 transition-all duration-200 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider w-full sm:w-auto justify-center backdrop-blur-sm">
+            {/* Download Resume — serves /public/resume.pdf */}
+            <a
+              href="/resume.pdf"
+              download="Nimrah-Qureshi-Resume.pdf"
+              className="px-7 py-3.5 bg-[#101010] border border-neutral-800 text-[#E1E0CC]/80 rounded-full font-medium hover:bg-neutral-900 hover:text-[#E1E0CC] hover:border-neutral-700 transition-all duration-200 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider w-full sm:w-auto justify-center backdrop-blur-sm"
+            >
               <Download className="w-3.5 h-3.5 text-gray-500" />
               Download Resume
-            </button>
+            </a>
           </motion.div>
 
         </div>
       </div>
 
       {/* Modern Studio Scroll Indicator */}
-      <motion.div
+      <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block opacity-40"
+        onClick={scrollToContent}
+        aria-label="Scroll down to see more"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block opacity-40 hover:opacity-90 transition-opacity duration-300 cursor-pointer"
       >
         <motion.div
           animate={{ y: [0, 6, 0] }}
@@ -184,7 +192,7 @@ export default function Hero() {
         >
           <div className="w-1 h-1.5 rounded-full bg-[#E1E0CC]" />
         </motion.div>
-      </motion.div>
+      </motion.button>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import SEOHead from '@/components/seo/SEOHead';
@@ -36,6 +37,16 @@ const faqs = [
   },
 ];
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -44,8 +55,11 @@ export default function FAQ() {
       <SEOHead
         title="FAQ | Nimrah Qureshi"
         description="Frequently asked questions about working with Nimrah Qureshi on AI chatbots, automation, and full-stack development projects."
-        url="https://nimrah-qureshi-portfolio.vercel.app/faq"
+        path="/faq"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
       <section className="relative py-20 overflow-hidden">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
@@ -57,20 +71,26 @@ export default function FAQ() {
             {faqs.map((faq, i) => (
               <div key={i} className="glass-card rounded-xl overflow-hidden">
                 <button
+                  id={`faq-question-${i}`}
                   onClick={() => setOpen(open === i ? null : i)}
                   className="w-full flex items-center justify-between gap-4 text-left p-5"
                   aria-expanded={open === i}
+                  aria-controls={`faq-answer-${i}`}
                 >
                   <span className="font-medium text-white">{faq.q}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-purple-400 flex-shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-[#E1E0CC] flex-shrink-0 transition-transform ${
                       open === i ? 'rotate-180' : ''
                     }`}
+                    aria-hidden="true"
                   />
                 </button>
                 <AnimatePresence initial={false}>
                   {open === i && (
                     <motion.div
+                      id={`faq-answer-${i}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${i}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

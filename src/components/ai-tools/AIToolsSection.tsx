@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { Sparkles, Copy, Check, RefreshCw, FileText, MessageSquare, PenTool, Mail, Lightbulb, Bot } from 'lucide-react';
 import SectionHeading from '@/components/effects/SectionHeading';
@@ -88,10 +89,26 @@ export default function AIToolsSection() {
     }, 1000);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(output);
+      } else {
+        // Legacy fallback for browsers/contexts without the async Clipboard API
+        const textarea = document.createElement('textarea');
+        textarea.value = output;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error('Could not copy — please select the text manually.');
+    }
   };
 
   return (

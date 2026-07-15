@@ -8,7 +8,7 @@ export default function About() {
       <SEOHead
         title="About Nimrah Qureshi | AI Engineer & Full-Stack Developer"
         description="Learn about Nimrah Qureshi, an AI Engineer and Full-Stack Developer from Karachi, founder of Brain Link AI and Neuraloft, specializing in AI chatbots, agents, and automation."
-        url="https://nimrah-qureshi-portfolio.vercel.app/about"
+        path="/about"
       />
       <AboutSection />
     </PageShell>

@@ -8,7 +8,7 @@ export default function AITools() {
       <SEOHead
         title="AI Tools | Nimrah Qureshi"
         description="Free AI tools: blog generator, caption generator, prompt generator, email writer, and idea generator."
-        url="https://nimrah-qureshi-portfolio.vercel.app/ai-tools"
+        path="/ai-tools"
       />
       <AIToolsSection />
     </PageShell>

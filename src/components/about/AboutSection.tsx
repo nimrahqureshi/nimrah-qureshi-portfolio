@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Code2, Briefcase, Award, Users, Sparkles, GraduationCap, Terminal, MessageCircle, Mail } from 'lucide-react';
+import { Code2, Briefcase, Award, Users, Sparkles, GraduationCap, Terminal } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaUpwork, FaInstagram } from 'react-icons/fa6';
 import { SiFiverr } from 'react-icons/si';
+import Picture from '@/components/ui/Picture';
 
 const stats = [
   { icon: Briefcase, value: 2, suffix: '', label: 'Companies Founded', prefix: '' },
@@ -143,9 +144,13 @@ export default function AboutSection() {
           <h3 className="text-2xl text-[#E1E0CC] mb-6">
             Professional Upwork Presence
           </h3>
-          <img
+          <Picture
             src="/images/upwork-profile.png"
-            alt="Upwork Profile"
+            alt="Nimrah Qureshi's Upwork freelancer profile"
+            loading="lazy"
+            decoding="async"
+            width={1086}
+            height={1448}
             className="w-full rounded-2xl border border-neutral-800 shadow-2xl"
           />
         </motion.div>
@@ -169,9 +174,13 @@ export default function AboutSection() {
               transition={{ duration: 0.6 }}
               className="col-span-8 aspect-[4/5] rounded-2xl md:rounded-[1.5rem] overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl relative"
             >
-              <img 
-                src="/images/about.png" 
-                alt="Nimrah Qureshi Profile" 
+              <Picture
+                src="/images/about.png"
+                alt="Portrait of Nimrah Qureshi"
+                loading="lazy"
+                decoding="async"
+                width={1086}
+                height={1448}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
@@ -185,9 +194,13 @@ export default function AboutSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg mt-6"
             >
-              <img 
-                src="/images/about.png" 
-                alt="AI Development Workspace" 
+              <Picture
+                src="/images/about.png"
+                alt="AI development workspace"
+                loading="lazy"
+                decoding="async"
+                width={1086}
+                height={1448}
                 className={`w-full h-full object-cover scale-110 transition-all duration-700 ease-out ${isTouched ? 'grayscale-0 brightness-100' : 'grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100'}`}
               />
             </motion.div>
@@ -200,9 +213,13 @@ export default function AboutSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg -mt-12 z-20"
             >
-              <img 
-                src="/images/about.png" 
-                alt="Neural Operations" 
+              <Picture
+                src="/images/about.png"
+                alt="Detail of Nimrah Qureshi at work"
+                loading="lazy"
+                decoding="async"
+                width={1086}
+                height={1448}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale contrast-125 group-hover:grayscale-0'}`}
               />
             </motion.div>
@@ -215,9 +232,13 @@ export default function AboutSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="col-span-8 aspect-[16/10] rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-xl -mt-4"
             >
-              <img 
-                src="/images/about.png" 
-                alt="System Architecture Hub" 
+              <Picture
+                src="/images/about.png"
+                alt="Wide view of the development workspace"
+                loading="lazy"
+                decoding="async"
+                width={1086}
+                height={1448}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-neutral-950/10 mix-blend-multiply" />

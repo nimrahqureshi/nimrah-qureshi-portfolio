@@ -11,7 +11,7 @@ export default function Terms() {
       <SEOHead
         title="Terms of Service | Nimrah Qureshi"
         description="The terms that govern your use of this website and services."
-        url="https://nimrah-qureshi-portfolio.vercel.app/terms"
+        path="/terms"
       />
       <LegalPage title="Terms of Service" updated="June 2026">
         <p>

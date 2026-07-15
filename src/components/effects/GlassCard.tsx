@@ -23,7 +23,7 @@ export default function GlassCard({ children, className, hover = true, glow = fa
       className={cn(
         // Modern minimalist glassmorphism style framework matching Neuraloft layout blueprints
         'relative overflow-hidden rounded-2xl border border-white/[0.04] bg-[#121212]/60 backdrop-blur-xl p-6 transition-all duration-300 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]',
-        glow && 'before:absolute before:inset-0 before:bg-gradient-to-r before:from-purple-500/10 before:via-fuchsia-500/10 before:to-cyan-500/10 before:opacity-100 shadow-[0_0_25px_rgba(168,85,247,0.15)] animate-pulse-glow',
+        glow && 'before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#E1E0CC]/10 before:via-[#C8B68A]/10 before:to-[#E1E0CC]/5 before:opacity-100 shadow-[0_0_25px_rgba(225,224,204,0.12)] animate-pulse-glow',
         className
       )}
     >

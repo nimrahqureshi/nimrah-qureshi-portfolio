@@ -24,7 +24,7 @@ export const services: Service[] = [
       'Multilingual Support',
       'Custom Knowledge Base Training'
     ],
-    gradient: 'from-purple-500 to-cyan-400'
+    gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]'
   },
   {
     id: 'ai-agents',
@@ -39,7 +39,7 @@ export const services: Service[] = [
       'Data Extraction & Processing',
       'Multi-Agent Collaboration Systems'
     ],
-    gradient: 'from-cyan-400 to-blue-500'
+    gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]'
   },
   {
     id: 'automation',
@@ -54,7 +54,7 @@ export const services: Service[] = [
       'Social Media Scheduling',
       'Custom Workflow Design'
     ],
-    gradient: 'from-pink-500 to-purple-500'
+    gradient: 'from-[#2e2e2e] via-[#1c1c1c] to-[#0d0d0d]'
   },
   {
     id: 'fullstack',
@@ -69,7 +69,7 @@ export const services: Service[] = [
       'Subscription & Payment Systems',
       'Admin Dashboards & Analytics'
     ],
-    gradient: 'from-orange-500 to-pink-500'
+    gradient: 'from-[#33302a] via-[#1e1c18] to-[#121110]'
   }
 ];
 
@@ -78,24 +78,24 @@ export const serviceHighlights = [
     icon: Bot,
     count: '10+',
     label: 'Projects Completed',
-    gradient: 'from-purple-500 to-cyan-400'
+    gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]'
   },
   {
     icon: Brain,
     count: '2',
     label: 'AI Brands Founded',
-    gradient: 'from-cyan-400 to-blue-500'
+    gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]'
   },
   {
     icon: Workflow,
     count: 'AI + Web3',
     label: 'Specializations',
-    gradient: 'from-pink-500 to-purple-500'
+    gradient: 'from-[#2e2e2e] via-[#1c1c1c] to-[#0d0d0d]'
   },
   {
     icon: BarChart3,
     count: 'Worldwide',
     label: 'Available Remotely',
-    gradient: 'from-orange-500 to-pink-500'
+    gradient: 'from-[#33302a] via-[#1e1c18] to-[#121110]'
   }
 ];

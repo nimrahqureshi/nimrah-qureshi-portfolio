@@ -8,7 +8,7 @@ export default function Projects() {
       <SEOHead
         title="Projects | Nimrah Qureshi — AI & Full-Stack Portfolio"
         description="Explore projects by Nimrah Qureshi: Neuraloft, Brain Link AI, AI Chatbot Assistant, PDF Chatbot, WhatsApp Business Bot, AI Automation Dashboard, and a SaaS platform."
-        url="https://nimrah-qureshi-portfolio.vercel.app/projects"
+        path="/projects"
       />
       <PortfolioSection />
     </PageShell>

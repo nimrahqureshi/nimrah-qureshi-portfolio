@@ -8,7 +8,7 @@ export default function Home() {
       <SEOHead
         title="Nimrah Qureshi | AI Engineer & Full-Stack Developer"
         description="AI Engineer & Full-Stack Developer in Karachi. Building AI chatbots, AI agents, RAG apps, automation systems, and modern web applications with OpenAI, LangChain, React & Next.js."
-        url="https://nimrah-qureshi-portfolio.vercel.app/"
+        path="/"
       />
       <Hero />
       <Stats />

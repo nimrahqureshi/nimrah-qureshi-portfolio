@@ -1,39 +1,50 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
+import RouteLoader from '@/components/layout/RouteLoader';
 
-import Home from '@/pages/Home';
-import About from '@/pages/About';
-import Services from '@/pages/Services';
-import Projects from '@/pages/Projects';
-import CaseStudies from '@/pages/CaseStudies';
-import AITools from '@/pages/AITools';
-import Blog from '@/pages/Blog';
-import Pricing from '@/pages/Pricing';
-import FAQ from '@/pages/FAQ';
-import Contact from '@/pages/Contact';
-import Privacy from '@/pages/Privacy';
-import Terms from '@/pages/Terms';
-import Cookies from '@/pages/Cookies';
-import NotFound from '@/pages/NotFound';
+// Route-level code splitting: each page ships as its own chunk, so the
+// first paint only downloads the code it needs.
+const Home = lazy(() => import('@/pages/Home'));
+const About = lazy(() => import('@/pages/About'));
+const Services = lazy(() => import('@/pages/Services'));
+const Projects = lazy(() => import('@/pages/Projects'));
+const CaseStudies = lazy(() => import('@/pages/CaseStudies'));
+const AITools = lazy(() => import('@/pages/AITools'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const Pricing = lazy(() => import('@/pages/Pricing'));
+const FAQ = lazy(() => import('@/pages/FAQ'));
+const Contact = lazy(() => import('@/pages/Contact'));
+const Privacy = lazy(() => import('@/pages/Privacy'));
+const Terms = lazy(() => import('@/pages/Terms'));
+const Cookies = lazy(() => import('@/pages/Cookies'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="services" element={<Services />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="case-studies" element={<CaseStudies />} />
-        <Route path="ai-tools" element={<AITools />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="pricing" element={<Pricing />} />
-        <Route path="faq" element={<FAQ />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="privacy" element={<Privacy />} />
-        <Route path="terms" element={<Terms />} />
-        <Route path="cookies" element={<Cookies />} />
-        <Route path="*" element={<NotFound />} />
+        <Route
+          index
+          element={
+            <Suspense fallback={<RouteLoader />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route path="about" element={<Suspense fallback={<RouteLoader />}><About /></Suspense>} />
+        <Route path="services" element={<Suspense fallback={<RouteLoader />}><Services /></Suspense>} />
+        <Route path="projects" element={<Suspense fallback={<RouteLoader />}><Projects /></Suspense>} />
+        <Route path="case-studies" element={<Suspense fallback={<RouteLoader />}><CaseStudies /></Suspense>} />
+        <Route path="ai-tools" element={<Suspense fallback={<RouteLoader />}><AITools /></Suspense>} />
+        <Route path="blog" element={<Suspense fallback={<RouteLoader />}><Blog /></Suspense>} />
+        <Route path="pricing" element={<Suspense fallback={<RouteLoader />}><Pricing /></Suspense>} />
+        <Route path="faq" element={<Suspense fallback={<RouteLoader />}><FAQ /></Suspense>} />
+        <Route path="contact" element={<Suspense fallback={<RouteLoader />}><Contact /></Suspense>} />
+        <Route path="privacy" element={<Suspense fallback={<RouteLoader />}><Privacy /></Suspense>} />
+        <Route path="terms" element={<Suspense fallback={<RouteLoader />}><Terms /></Suspense>} />
+        <Route path="cookies" element={<Suspense fallback={<RouteLoader />}><Cookies /></Suspense>} />
+        <Route path="*" element={<Suspense fallback={<RouteLoader />}><NotFound /></Suspense>} />
       </Route>
     </Routes>
   );

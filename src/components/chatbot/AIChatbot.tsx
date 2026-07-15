@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X, MessageCircle, HelpCircle, Sparkles } from 'lucide-react';
 import { FlabbyMonster, FlabbyMini, UserAvatar, SpeechBubble } from './FlabbyMonster';
 import { knowledgeBase, quickActions, getGreeting}  from '@/data/chathknowledge';
+import { useUI } from '@/context/UIContext';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -63,7 +64,10 @@ function getTime() {
 }
 
 export default function AIChatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { activeOverlay, isOpen: isOverlayOpen, toggleOverlay, closeOverlay } = useUI();
+  const isOpen = isOverlayOpen('chat');
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [showWelcome, setShowWelcome] = useState(true);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -79,8 +83,17 @@ export default function AIChatbot() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, isTyping]);
+
+  // Move focus into the chat when it opens; return it to the launcher on close.
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    } else if (document.activeElement === document.body) {
+      launcherRef.current?.focus({ preventScroll: true });
+    }
+  }, [isOpen]);
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || isTyping) return;
@@ -121,14 +134,20 @@ export default function AIChatbot() {
 
   return (
     <>
-      {/* Floating launcher button */}
+      {/* Floating launcher button — hidden while the mobile menu is open */}
       <motion.button
+        ref={launcherRef}
         initial={{ scale: 0, rotate: -30 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-        onClick={() => setIsOpen(!isOpen)}
+        animate={{
+          scale: activeOverlay === 'menu' ? 0 : 1,
+          rotate: 0,
+        }}
+        transition={{ delay: activeOverlay === 'menu' ? 0 : 0.4, type: 'spring', stiffness: 200 }}
+        onClick={() => toggleOverlay('chat')}
         className="fixed bottom-6 right-6 z-40 group"
-        aria-label="Open chat"
+        aria-label={isOpen ? 'Close chat' : 'Open chat with Flabby, the AI assistant'}
+        aria-expanded={isOpen}
+        aria-controls="flabby-chat-window"
       >
         <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-[#F2EFD9] via-[#E1E0CC] to-[#C8B68A] flex items-center justify-center shadow-2xl shadow-black/40 group-hover:scale-110 transition-all duration-300 border-2 border-[#E1E0CC]/40">
           {isOpen ? (
@@ -165,11 +184,15 @@ export default function AIChatbot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="flabby-chat-window"
+            role="dialog"
+            aria-modal="false"
+            aria-label="Chat with Flabby, Nimrah's AI assistant"
             initial={{ opacity: 0, scale: 0.85, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 30 }}
             transition={{ type: 'spring', stiffness: 250, damping: 25 }}
-            className="fixed bottom-28 right-6 z-40 w-[92vw] sm:w-[420px] h-[600px] max-h-[82vh]"
+            className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 z-40 w-[calc(100vw-2rem)] sm:w-[420px] h-[600px] max-h-[calc(100dvh-8.5rem)]"
           >
             <div className="relative w-full h-full bg-[#0a0a0a]/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-black/60 overflow-hidden border border-[#E1E0CC]/15 flex flex-col">
               {/* Decorative ambient orbs */}
@@ -206,7 +229,7 @@ export default function AIChatbot() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => closeOverlay('chat')}
                     className="w-8 h-8 rounded-full hover:bg-[#E1E0CC]/10 flex items-center justify-center text-[#E1E0CC]/50 hover:text-[#E1E0CC] transition-colors"
                     aria-label="Close chat"
                   >
@@ -215,11 +238,10 @@ export default function AIChatbot() {
                 </div>
 
                 {/* Quick actions row */}
-                <div 
-                  className="mt-4 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"
-                  style={{ maskImage: 'linear-gradient(to right, transparent, white 4px, white 95%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, white 4px, white 95%, transparent)', msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+                <div
+                  className="mt-4 flex gap-2 overflow-x-auto scrollbar-none pb-1 -mx-1 px-1"
+                  style={{ maskImage: 'linear-gradient(to right, transparent, white 4px, white 95%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, white 4px, white 95%, transparent)' }}
                 >
-                  <style>{`.overflow-x-auto::-webkit-scrollbar { display: none; }`}</style>
                   {quickActions.map((action) => (
                     <button
                       key={action.label}
@@ -233,7 +255,7 @@ export default function AIChatbot() {
               </div>
 
               {/* MESSAGES LAYER */}
-              <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-gradient-to-b from-[#0a0a0a] to-[#111]/80">
+              <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-gradient-to-b from-[#0a0a0a] to-[#111]/80" aria-live="polite">
                 <AnimatePresence>
                   {showWelcome && messages.length <= 1 && (
                     <motion.div
@@ -353,7 +375,9 @@ export default function AIChatbot() {
                   </button>
 
                   <input
+                    ref={inputRef}
                     type="text"
+                    aria-label="Type your message"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}

@@ -21,8 +21,8 @@ export default function LegalPage({ title, updated, children }: LegalPageProps) 
         <div className="absolute inset-0 bg-noise opacity-[0.12] pointer-events-none mix-blend-overlay" />
 
         {/* Dynamic Ambient Background Shapes (No Videos) */}
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-cyan-500/5 blur-[150px] pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#E1E0CC]/[0.05] blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-[#C8B68A]/[0.04] blur-[150px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto">
           {/* Card Wrapper Container matching the layout references */}
@@ -34,7 +34,7 @@ export default function LegalPage({ title, updated, children }: LegalPageProps) 
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Over-headline element style detail */}
-              <p className="text-purple-400 text-[10px] sm:text-xs tracking-widest uppercase mb-4">
+              <p className="text-[#C8B68A] text-[10px] sm:text-xs tracking-widest uppercase mb-4">
                 Legal Framework
               </p>
 

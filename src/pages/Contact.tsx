@@ -8,7 +8,7 @@ export default function Contact() {
       <SEOHead
         title="Contact | Nimrah Qureshi"
         description="Get in touch with Nimrah Qureshi to discuss your AI chatbot, automation, or full-stack project. Available worldwide, remote-friendly."
-        url="https://nimrah-qureshi-portfolio.vercel.app/contact"
+        path="/contact"
       />
       <ContactSection />
     </PageShell>

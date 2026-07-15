@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Tag } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Tag, Sparkles } from 'lucide-react';
 import { WordsPullUpMultiStyle } from "@/components/effects/WordsPullUpMultiStyle";
 import GlassCard from '@/components/effects/GlassCard';
 import { blogPosts, blogCategories } from '@/data/blogPosts';
@@ -17,28 +17,55 @@ export default function BlogSection() {
   const hasMore = visibleCount < filtered.length;
 
   return (
-    <section id="blog" className="relative min-h-screen bg-black py-20 sm:py-28 md:py-36 px-4 sm:px-6 md:px-10 overflow-hidden">
-      {/* Visual Arts Aesthetic Elements */}
-      {/* 1. Fine Noise Overlay */}
-      <div className="bg-noise absolute inset-0 opacity-[0.15] pointer-events-none z-0" />
-      
-      {/* 2. Premium Ambient Backdrop Shapes */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#E1E0CC]/[0.03] blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="absolute bottom-1/4 right-10 w-[350px] h-[350px] bg-[#212121]/50 blur-[100px] rounded-full pointer-events-none z-0" />
+    <section 
+      id="blog" 
+      className="relative min-h-screen py-24 bg-black overflow-hidden"
+      style={{ overflowX: 'clip' }}
+    >
+      {/* PRISMA INSPIRED LUXURY BACKGROUND SYSTEM (Matched with About Section) */}
+      {/* Studio Noise & Texture Map Layer */}
+      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      {/* High-End Tech Grid Mask Overlay */}
+      <div 
+        className="absolute inset-0 bg-[linear-gradient(to_right,#E1E0CC05_1px,transparent_1px),linear-gradient(to_bottom,#E1E0CC05_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_80%,transparent_100%)] pointer-events-none" 
+      />
+      
+      {/* Ambient Premium Soft Light Radiance Orbs */}
+      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-[#E1E0CC]/5 rounded-full blur-[140px] animate-pulse pointer-events-none" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-slate-800/40 rounded-full blur-[120px] animate-pulse pointer-events-none" style={{ animationDelay: '2.5s' }} />
+      
+      {/* Micro-Flares and Cinematic Structural Anchors */}
+      <div className="absolute top-36 right-24 w-1.5 h-1.5 bg-[#E1E0CC] rounded-full animate-float opacity-30" style={{ animationDelay: '0.5s' }} />
+      <div className="absolute top-16 left-12 w-1 h-1 bg-gray-400 rounded-full animate-float opacity-40" style={{ animationDelay: '1.2s' }} />
+      <div className="absolute bottom-36 left-36 w-2 h-2 bg-slate-600 rounded-full animate-float opacity-20" style={{ animationDelay: '2.2s' }} />
+      <div className="absolute bottom-16 right-16 w-1.5 h-1.5 bg-gray-500 rounded-full animate-float opacity-30" style={{ animationDelay: '1.7s' }} />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
-        {/* Studio-Grade Header Section */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20 max-w-3xl mx-auto">
-          {/* Small Label tag */}
-          <p className="text-[#E1E0CC]/60 text-[10px] sm:text-xs tracking-widest uppercase mb-3 font-medium">
-            Publications
-          </p>
-          
-          {/* Main Bold Section Title */}
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
+        {/* Studio Section Title Badge */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#101010] border border-[#E1E0CC]/10 mb-4 backdrop-blur-md"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#E1E0CC]" />
+            <span className="text-xs font-medium tracking-[0.2em] uppercase text-[#E1E0CC]/80">
+              Publications
+            </span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-medium tracking-tight text-white uppercase mb-6"
+          >
             Blog
-          </h2>
+          </motion.h2>
 
           {/* Descriptive Animated Subtitle */}
           <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed tracking-normal max-w-2xl mx-auto text-gray-400">
@@ -62,7 +89,7 @@ export default function BlogSection() {
               className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-300 ${
                 activeCategory === cat
                   ? 'bg-[#E1E0CC] text-black shadow-sm'
-                  : 'bg-[#212121] text-gray-400 hover:text-[#E1E0CC] hover:bg-[#2a2a2a]'
+                  : 'bg-[#101010] text-gray-400 border border-neutral-900 hover:text-[#E1E0CC] hover:bg-white/[0.02] hover:border-[#E1E0CC]/20'
               }`}
             >
               {cat}
@@ -84,18 +111,24 @@ export default function BlogSection() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <GlassCard className="h-full bg-[#101010] border border-white/[0.03] hover:border-white/[0.08] p-5 sm:p-6 rounded-2xl md:rounded-[1.5rem] flex flex-col justify-between group cursor-pointer transition-all duration-300">
+              <GlassCard className="h-full bg-[#101010] border border-neutral-900 hover:border-[#E1E0CC]/20 p-5 sm:p-6 rounded-2xl md:rounded-[1.5rem] flex flex-col justify-between group cursor-pointer transition-all duration-300">
                 <div>
                   {/* Image Canvas Container */}
                   <div className="relative h-48 sm:h-56 rounded-xl overflow-hidden mb-6 bg-[#212121]">
                     <img
                       src={post.image}
                       alt={post.title}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        // Broken/offline image fallback
+                        e.currentTarget.style.display = 'none';
+                      }}
                       className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
                     />
                     {/* Floating Category Label */}
                     <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 rounded-md text-[11px] font-medium tracking-wide bg-black/70 text-[#E1E0CC] backdrop-blur-md border border-white/[0.05]">
+                      <span className="px-3 py-1 rounded-md text-[11px] font-medium tracking-wide bg-black/70 text-[#E1E0CC] backdrop-blur-md border border-[#E1E0CC]/10">
                         {post.category}
                       </span>
                     </div>
@@ -126,14 +159,14 @@ export default function BlogSection() {
                 <div>
                   <div className="flex flex-wrap gap-2 mb-5">
                     {post.tags.slice(0, 3).map((tag) => (
-                      <span key={tag} className="flex items-center gap-1 px-2.5 py-1 rounded text-[11px] bg-[#1c1c1c] text-gray-400 border border-white/[0.02]">
+                      <span key={tag} className="flex items-center gap-1 px-2.5 py-1 rounded text-[11px] bg-[#1c1c1c] text-gray-400 border border-neutral-900">
                         <Tag className="w-3 h-3 text-gray-600" />
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="inline-flex items-center gap-2 text-[#E1E0CC]/80 group-hover:text-[#E1E0CC] font-medium transition-colors text-sm pt-2 border-t border-white/[0.03] w-full">
+                  <div className="inline-flex items-center gap-2 text-[#E1E0CC]/80 group-hover:text-[#E1E0CC] font-medium transition-colors text-sm pt-4 border-t border-neutral-900 w-full">
                     Read More 
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </div>
@@ -148,7 +181,7 @@ export default function BlogSection() {
           <div className="text-center mt-16">
             <button
               onClick={() => setVisibleCount(prev => prev + 4)}
-              className="px-8 py-3 bg-[#101010] border border-white/[0.05] text-[#E1E0CC] hover:text-white hover:bg-[#161616] hover:border-white/[0.1] rounded-xl text-sm font-medium tracking-wide transition-all duration-300"
+              className="px-8 py-3 bg-[#101010] border border-neutral-900 text-[#E1E0CC] hover:text-white hover:bg-white/[0.02] hover:border-[#E1E0CC]/20 rounded-xl text-sm font-medium tracking-wide transition-all duration-300"
             >
               Load More Articles
             </button>

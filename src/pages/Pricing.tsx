@@ -8,7 +8,7 @@ export default function Pricing() {
       <SEOHead
         title="Pricing | Nimrah Qureshi"
         description="Transparent pricing for AI chatbot development, automation systems, and full-stack projects."
-        url="https://nimrah-qureshi-portfolio.vercel.app/pricing"
+        path="/pricing"
       />
       <PricingSection />
     </PageShell>

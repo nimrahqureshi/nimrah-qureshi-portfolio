@@ -8,7 +8,7 @@ export default function Blog() {
       <SEOHead
         title="Blog | Nimrah Qureshi — AI Engineering & Automation"
         description="Articles on AI engineering, chatbots, RAG, LangChain, automation, and full-stack development by Nimrah Qureshi."
-        url="https://nimrah-qureshi-portfolio.vercel.app/blog"
+        path="/blog"
       />
       <BlogSection />
     </PageShell>

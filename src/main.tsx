@@ -11,14 +11,15 @@ createRoot(document.getElementById("root")!).render(
     <HelmetProvider>
       <BrowserRouter>
         <App />
-        <Toaster 
+        <Toaster
           position="bottom-right"
           toastOptions={{
             style: {
-              background: '#0B1220',
-              color: '#F8FAFC',
-              border: '1px solid rgba(124, 58, 237, 0.2)',
+              background: '#101010',
+              color: '#F5F5F5',
+              border: '1px solid rgba(225, 224, 204, 0.2)',
             },
+            success: { iconTheme: { primary: '#E1E0CC', secondary: '#0a0a0a' } },
           }}
         />
       </BrowserRouter>

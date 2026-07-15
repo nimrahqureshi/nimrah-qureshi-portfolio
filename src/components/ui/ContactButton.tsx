@@ -27,11 +27,11 @@ export default function ContactButton({
         rounded-xl
         font-medium
         bg-gradient-to-r
-        from-purple-600
-        to-cyan-500
-        text-white
+        from-[#E1E0CC]
+        to-[#C8B68A]
+        text-black
         hover:scale-105
-        hover:shadow-[0_0_25px_rgba(168,85,247,0.4)]
+        hover:shadow-[0_0_25px_rgba(225,224,204,0.25)]
         transition-all
         duration-300
         shadow-lg

@@ -49,7 +49,7 @@ export default function Timeline() {
       
       <div className="relative max-w-5xl mx-auto px-2">
         {/* Center Guide Line with Muted Minimalist Gradient */}
-        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 transform md:-translate-x-px w-[1px] bg-gradient-to-b from-purple-500/40 via-white/10 to-purple-500/40" />
+        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 transform md:-translate-x-px w-[1px] bg-gradient-to-b from-[#E1E0CC]/30 via-white/10 to-[#E1E0CC]/30" />
         
         <div className="space-y-10 md:space-y-14">
           {timeline.map((item, i) => (
@@ -66,7 +66,7 @@ export default function Timeline() {
               {/* Content Box */}
               <div className={`w-full md:flex-1 pl-12 md:pl-0 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                 <GlassCard className="bg-[#101010] border border-white/[0.04] p-5 sm:p-6 rounded-2xl hover:border-white/[0.08] transition-all duration-300 group inline-block text-left w-full">
-                  <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] sm:text-xs font-mono font-medium bg-white/[0.04] text-purple-300 border border-white/[0.03] mb-3 transition-colors group-hover:bg-[#E1E0CC] group-hover:text-black">
+                  <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] sm:text-xs font-mono font-medium bg-white/[0.04] text-[#E1E0CC]/80 border border-white/[0.03] mb-3 transition-colors group-hover:bg-[#E1E0CC] group-hover:text-black">
                     {item.year}
                   </span>
                   <h4 style={{ color: '#E1E0CC' }} className="text-base sm:text-lg font-medium mb-1.5 tracking-tight">

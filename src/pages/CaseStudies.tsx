@@ -8,7 +8,7 @@ export default function CaseStudies() {
       <SEOHead
         title="Case Studies | Nimrah Qureshi"
         description="In-depth case studies of AI chatbot, automation, and full-stack projects delivered by Nimrah Qureshi."
-        url="https://nimrah-qureshi-portfolio.vercel.app/case-studies"
+        path="/case-studies"
       />
       <CaseStudiesSection />
     </PageShell>

@@ -8,4 +8,3 @@ Sitemap: https://nimrahqureshi.com/sitemap.xml
 # Disallow admin pages
 Disallow: /admin
 Disallow: /api/
-Disallow: /_next/

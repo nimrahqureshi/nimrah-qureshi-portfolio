@@ -11,7 +11,7 @@ export default function Cookies() {
       <SEOHead
         title="Cookie Policy | Nimrah Qureshi"
         description="How this website uses cookies and similar technologies."
-        url="https://nimrah-qureshi-portfolio.vercel.app/cookies"
+        path="/cookies"
       />
       <LegalPage title="Cookie Policy" updated="June 2026">
         <p>
