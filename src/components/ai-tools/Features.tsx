@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ArrowRight, Sparkles } from "lucide-react";
-import { WordsPullUpMultiStyle } from "@/components/effects/WordsPullUpMultiStyle";
+import { WordsPullUpMultiStyle } from "../effects/WordsPullUpMultiStyle";
 
 interface FeatureCard {
   type: "video" | "feature";
