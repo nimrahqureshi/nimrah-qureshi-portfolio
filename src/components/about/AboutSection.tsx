@@ -263,7 +263,7 @@ export default function AboutSection() {
                 My goal is to help startups, businesses and entrepreneurs build intelligent products that automate tasks, improve customer experience and increase productivity.
               </p>
               <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal tracking-wide">
-                I am the founder of Brain Link AI and Neuraloft. I work with clients worldwide to build AI-powered solutions including GPT Chatbots, WhatsApp Automation, AI Agents, SaaS Platforms and custom business automation systems.
+                I am the founder of  Neuraloft. I work with clients worldwide to build AI-powered solutions including GPT Chatbots, WhatsApp Automation, AI Agents, SaaS Platforms and custom business automation systems.
               </p>
               <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal tracking-wide mt-4">
                 I enjoy turning complex ideas into scalable digital products with clean design, modern technologies and real business impact.

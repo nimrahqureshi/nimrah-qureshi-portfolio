@@ -6,13 +6,12 @@ const router = express.Router();
 // Submit contact form
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, company, projectType, budget, message } = req.body;
+    const { name, email, company, projectType, budget, message } = req.body;
 
     // Save lead to database
     const lead = await Lead.create({
       name,
       email,
-      phone,
       company,
       projectType,
       budget,
@@ -29,13 +28,12 @@ router.post('/', async (req, res) => {
         // Send notification to admin
         await resend.emails.send({
           from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-          to: process.env.CONTACT_EMAIL || 'brainlinkai13@gmail.com',
+          to: process.env.CONTACT_EMAIL || 'nimrahqureshi013@gmail.com',
           subject: `New Lead: ${name} - ${projectType || 'General Inquiry'}`,
           html: `
             <h2>New Contact Form Submission</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
             <p><strong>Company:</strong> ${company || 'N/A'}</p>
             <p><strong>Project Type:</strong> ${projectType || 'N/A'}</p>
             <p><strong>Budget:</strong> ${budget || 'N/A'}</p>

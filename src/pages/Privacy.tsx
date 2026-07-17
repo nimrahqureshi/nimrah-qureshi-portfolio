@@ -23,7 +23,7 @@ export default function Privacy() {
         <H>Information We Collect</H>
         <p>
           When you submit the contact form or subscribe to the newsletter, we collect
-          the information you provide — such as your name, email address, phone number,
+          the information you provide — such as your name, email address,
           company, and message. We may also collect basic, non-identifying analytics
           about how the site is used.
         </p>
@@ -52,12 +52,12 @@ export default function Privacy() {
         <H>Your Rights</H>
         <p>
           You may request access to, correction of, or deletion of your personal
-          information at any time by contacting us at brainlinkai13@gmail.com.
+          information at any time by contacting us at nimrahqureshi013@gmail.com.
         </p>
 
         <H>Contact</H>
         <p>
-          For any privacy-related questions, email brainlinkai13@gmail.com.
+          For any privacy-related questions, email nimrahqureshi013@gmail.com.
         </p>
       </LegalPage>
     </>

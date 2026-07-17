@@ -38,7 +38,7 @@ export default function Cookies() {
         </p>
 
         <H>Contact</H>
-        <p>For questions about this policy, email brainlinkai13@gmail.com.</p>
+        <p>For questions about this policy, email nimrahqureshi013@gmail.com.</p>
       </LegalPage>
     </>
   );

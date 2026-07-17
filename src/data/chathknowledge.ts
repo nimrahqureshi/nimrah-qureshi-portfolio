@@ -29,12 +29,12 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     keywords: ['services', 'offer', 'provide', 'what do you do', 'what can you do', 'website', 'web development', 'react', 'nextjs'],
     response:
-      "💻 Web Development & AI Services\n\nNimrah offers premium end-to-end engineering:\n\n🤖 AI Chatbot Development — Website bots, WhatsApp automation, customized GPT assistants\n🧠 AI Agents — Multi-agent platforms, custom task & business workflow automation\n⚡ Automation Systems — CRM synchronization, email engines, and data pipeline automations\n💻 Full-Stack Development — High-end products using Next.js, React, Node.js, and scalable SaaS foundations\n\nWhich solution can we build for you today? 🚀",
+      "💻 Web Development & AI Services\n\nNimrah offers premium end-to-end engineering:\n\n🤖 AI Chatbot Development — Website bots, customized GPT assistants\n🧠 AI Agents — Multi-agent platforms, custom task & business workflow automation\n⚡ Automation Systems — CRM synchronization, email engines, and data pipeline automations\n💻 Full-Stack Development — High-end products using Next.js, React, Node.js, and scalable SaaS foundations\n\nWhich solution can we build for you today? 🚀",
   },
   {
-    keywords: ['whatsapp', 'automation', 'crm', 'lead', 'langchain', 'rag', 'openai', 'langchain', 'agent', 'agentic ai'],
+    keywords: ['automation', 'crm', 'lead', 'langchain', 'rag', 'openai', 'langchain', 'agent', 'agentic ai'],
     response:
-      "🤖 AI & Automation Architecture\n\nNimrah builds ultra-smart, production-ready workflows:\n• WhatsApp AI Chatbots & Business APIs\n• OpenAI Assistant Implementations\n• Lead Generation Ecosystems\n• LangChain Multi-Agent Cooperatives\n• Advanced RAG Chatbots (Secure document analysis & custom indexing)\n• Autonomous AI SaaS Products\n\nLooking to deploy an AI agent or parse data for your business? Let's engineer it! 🔥",
+      "🤖 AI & Automation Architecture\n\nNimrah builds ultra-smart, production-ready workflows:\n• AI Business Assistants & Interface APIs\n• OpenAI Assistant Implementations\n• Lead Generation Ecosystems\n• LangChain Multi-Agent Cooperatives\n• Advanced RAG Chatbots (Secure document analysis & custom indexing)\n• Autonomous AI SaaS Products\n\nLooking to deploy an AI agent or parse data for your business? Let's engineer it! 🔥",
   },
   {
     keywords: ['my project', 'need chatbot', 'need website', 'need ai', 'start project', 'hire you', 'work together'],
@@ -70,7 +70,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     keywords: ['portfolio', 'project', 'work', 'demo', 'example', 'case', 'showcase'],
     response:
-      "📁 Featured Deployments & Projects:\n\n🌟 Neuraloft — Corporate AI consulting and advanced software studio app\n🌟 Brain Link AI — Core systems hub for automation and intelligence engineering\n🌟 Live Document Chatbot (RAG) — Context-aware parser to extract real-time knowledge from files\n🌟 Intelligent WhatsApp Business Bot — Full-loop customer routing and support automation\n\nHead over to the dedicated Projects panel on this page to view interactive deep dives, metrics, and video demos! 🎬",
+      "📁 Featured Deployments & Projects:\n\n🌟 Neuraloft — Corporate AI consulting and advanced software studio app\n🌟 Brain Link AI — Core systems hub for automation and intelligence engineering\n🌟 Live Document Chatbot (RAG) — Context-aware parser to extract real-time knowledge from files\n🌟 Intelligent Conversational Bot — Full-loop customer routing and support automation\n\nHead over to the dedicated Projects panel on this page to view interactive deep dives, metrics, and video demos! 🎬",
   },
   {
     keywords: ['upwork', 'freelancer', 'rating', 'satisfaction', 'why hire', 'why nimrah', 'choose you'],
@@ -85,14 +85,14 @@ export const knowledgeBase: KnowledgeItem[] = [
 
   // --- Logistics & Operations ---
   {
-    keywords: ['contact', 'reach', 'email', 'call', 'message', 'talk', 'phone', 'mail', 'social', 'linkedin', 'github'],
+    keywords: ['contact', 'reach', 'email', 'call', 'message', 'talk', 'mail', 'social', 'linkedin', 'github'],
     response:
-      "Let's get in touch immediately:\n\n📧 Email: nimrahqueshi013@gmail.com\n💬 WhatsApp: +92 3445495438\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
+      "Let's get in touch immediately:\n\n📧 Email: nimrahqureshi013@gmail.com\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
   },
   {
     keywords: ['location', 'where', 'karachi', 'pakistan', 'available', 'availability', 'hours', 'weekly', 'book', 'schedule', 'freelance', 'free', 'consulting', 'timeline', 'process', 'delivery', 'deadline', 'workflow', 'steps'],
     response:
-      "📍 Logistics & Booking Status:\n\n• Location: Karachi, Pakistan 🇵🇰 (Seamless with European, North American, and APAC business hours)\n• Availability: Active! Open for freelance contracts, full-time remote developer retainers, and tech consults (30+ hours/week slot open)\n• Delivery Process: Discovers -> Proposes -> Sprints -> QA Audits -> Deploys -> Supports (Cycles finish in 4–12 weeks)\n\nClick the floating WhatsApp button to chat directly right now! 🟢",
+      "📍 Logistics & Booking Status:\n\n• Location: Karachi, Pakistan 🇵🇰 (Seamless with European, North American, and APAC business hours)\n• Availability: Active! Open for freelance contracts, full-time remote developer retainers, and tech consults (30+ hours/week slot open)\n• Delivery Process: Discovers -> Proposes -> Sprints -> QA Audits -> Deploys -> Supports (Cycles finish in 4–12 weeks)\n\nFeel free to drop an email or reach out through our profile portals to chat directly! ✉️",
   },
 
   // --- Human Personality & Chat Continuity (Never Stops) ---
@@ -182,5 +182,5 @@ export function getGreeting(input: string): string | null {
 export function handleFallbackResponse(): string {
   const randomReply = friendlyReplies[Math.floor(Math.random() * friendlyReplies.length)];
   
-  return `${randomReply}\n\nI'm not sure about that specific detail yet 😊\n\nTry asking me about:\n🤖 Services & AI Agents\n💰 Project Pricing\n📁 Portfolio & Live Demos\n🧠 Experience & Tech Stack\n🏆 Certifications & PIAIC\n💬 WhatsApp Automation\n📄 Professional Profile\n📞 Contact Details\n\nOr tell me about your project and we can map out a custom solution! ✨`;
+  return `${randomReply}\n\nI'm not sure about that specific detail yet 😊\n\nTry asking me about:\n🤖 Services & AI Agents\n💰 Project Pricing\n📁 Portfolio & Live Demos\n🧠 Experience & Tech Stack\n🏆 Certifications & PIAIC\n📄 Professional Profile\n📞 Contact Details\n\nOr tell me about your project and we can map out a custom solution! ✨`;
 }

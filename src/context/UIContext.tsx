@@ -4,12 +4,12 @@ import type { ReactNode } from 'react';
 /**
  * Global overlay coordinator.
  *
- * Exactly one floating overlay (mobile menu, AI chatbot, WhatsApp popup)
+ * Exactly one floating overlay (mobile menu, AI chatbot, )
  * may be open at a time. Opening one closes the others. Escape closes
  * whatever is open. While the mobile menu is open, page scrolling is
  * locked (with scrollbar-width compensation so the layout never shifts).
  */
-export type OverlayId = 'menu' | 'chat' | 'whatsapp';
+export type OverlayId = 'menu' | 'chat';
 
 interface UIContextValue {
   activeOverlay: OverlayId | null;

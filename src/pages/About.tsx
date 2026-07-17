@@ -7,7 +7,7 @@ export default function About() {
     <PageShell>
       <SEOHead
         title="About Nimrah Qureshi | AI Engineer & Full-Stack Developer"
-        description="Learn about Nimrah Qureshi, an AI Engineer and Full-Stack Developer from Karachi, founder of Brain Link AI and Neuraloft, specializing in AI chatbots, agents, and automation."
+        description="Learn about Nimrah Qureshi, an AI Engineer and Full-Stack Developer from Karachi, founder of Neuraloft, specializing in AI chatbots, agents, and automation."
         path="/about"
       />
       <AboutSection />

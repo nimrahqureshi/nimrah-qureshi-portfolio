@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: 'How do we get started?',
-    a: 'Send a message through the contact form or WhatsApp with a short description of your project. We will discuss your goals, scope, and timeline, then move forward from there.',
+    a: 'Send a message through the Contact Form or Email with a short description of your project. We will discuss your goals, scope, and timeline, then move forward from there.',
   },
   {
     q: 'How long does a typical project take?',

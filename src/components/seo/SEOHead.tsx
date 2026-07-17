@@ -65,7 +65,7 @@ export default function SEOHead({
       addressLocality: 'Karachi',
       addressCountry: 'PK',
     },
-    email: 'brainlinkai13@gmail.com',
+    email: 'nimrahqureshi013@gmail.com',
     worksFor: {
       '@type': 'Organization',
       name: 'Brain Link AI',

@@ -67,7 +67,6 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 export interface ContactPayload {
   name: string;
   email: string;
-  phone?: string;
   company?: string;
   projectType?: string;
   budget?: string;

@@ -5,7 +5,7 @@ import { UIProvider } from '@/context/UIContext';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import NeuralNetwork from '@/components/effects/NeuralNetwork';
-import WhatsAppButton from '@/components/whatsapp/WhatsAppButton';
+
 
 // The chatbot (Flabby + its knowledge base) isn't needed for first paint,
 // so it loads in its own chunk after the page is interactive.
@@ -67,7 +67,6 @@ export default function Layout() {
         </main>
 
         <Footer />
-        <WhatsAppButton />
         <Suspense fallback={null}>
           <AIChatbot />
         </Suspense>
