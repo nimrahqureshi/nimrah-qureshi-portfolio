@@ -82,9 +82,9 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-2 space-y-6"
           >
-            {/* Logo Container */}
+            {/* Logo Container - Changed rounded-xl to rounded-full */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] border border-white/10 p-1.5 flex items-center justify-center shadow-lg shadow-black/40 overflow-hidden">
+              <div className="w-10 h-10 rounded-full bg-[#0A0A0A] border border-white/10 p-1.5 flex items-center justify-center shadow-lg shadow-black/40 overflow-hidden">
                 <Picture
                   src="/images/logo.png"
                   alt="Nimrah Qureshi logo"

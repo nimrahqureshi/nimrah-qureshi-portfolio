@@ -24,11 +24,11 @@ const navLinks: NavLink[] = [
 
 export default function Navbar() {
   const {
-  activeOverlay,
-  isOpen: isOverlayOpen,
-  toggleOverlay,
-  closeOverlay,
-} = useUI();
+    activeOverlay,
+    isOpen: isOverlayOpen,
+    toggleOverlay,
+    closeOverlay,
+  } = useUI();
   const isOpen = isOverlayOpen('menu');
 
   const [scrolled, setScrolled] = useState(false);
@@ -47,12 +47,12 @@ export default function Navbar() {
       setScrolled(currentScrollY > 50);
 
       // Scroll down to hide, scroll up to show — never hide while menu is open
-   // Don't allow scrolling to change navbar while overlay is open
-if (!activeOverlay) {
-  setIsVisible(
-    !(currentScrollY > lastScrollY.current && currentScrollY > 80)
-  );
-}
+      // Don't allow scrolling to change navbar while overlay is open
+      if (!activeOverlay) {
+        setIsVisible(
+          !(currentScrollY > lastScrollY.current && currentScrollY > 80)
+        );
+      }
 
       lastScrollY.current = currentScrollY;
     };
@@ -61,13 +61,15 @@ if (!activeOverlay) {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen, activeOverlay]);
-useEffect(() => {
-  if (activeOverlay) {
-    setIsVisible(false);
-  } else {
-    setIsVisible(true);
-  }
-}, [activeOverlay]);
+
+  useEffect(() => {
+    if (activeOverlay) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  }, [activeOverlay]);
+
   // Focus management: move focus into the drawer on open,
   // return it to the toggle button on close.
   useEffect(() => {
@@ -89,10 +91,10 @@ useEffect(() => {
     <>
       <motion.nav
         initial={{ y: -100 }}
-       animate={{
-  y: isVisible ? 0 : -120,
-  opacity: isVisible ? 1 : 0,
-}}
+        animate={{
+          y: isVisible ? 0 : -120,
+          opacity: isVisible ? 1 : 0,
+        }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         aria-label="Primary"
         className={cn(
@@ -115,8 +117,8 @@ useEffect(() => {
               className="flex items-center gap-2 group rounded-lg"
               aria-label="Nimrah Qureshi — Home"
             >
-              {/* Image Logo Container */}
-              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              {/* Image Logo Container - Changed rounded-lg to rounded-full */}
+              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                 <Picture
                   src="/images/logo.png"
                   alt="Nimrah Qureshi logo"

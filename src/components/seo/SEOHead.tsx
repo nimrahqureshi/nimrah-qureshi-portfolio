@@ -47,6 +47,7 @@ export default function SEOHead({
           { name: title.split('|')[0].trim(), path: path || '/' },
         ]);
 
+  // Enhanced & Stronger Person Schema for an Independent AI Specialist Portfolio
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -54,6 +55,11 @@ export default function SEOHead({
     jobTitle: 'AI Engineer & Full-Stack Developer',
     description,
     url: SITE_URL,
+    brand: {
+      '@type': 'Brand',
+      name: 'Nimrah Qureshi',
+      url: SITE_URL
+    },
     sameAs: [
       'https://github.com/nimrahqureshi',
       'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb',
@@ -68,9 +74,8 @@ export default function SEOHead({
     email: 'nimrahqureshi013@gmail.com',
     worksFor: {
       '@type': 'Organization',
-      name: 'Brain Link AI',
+      name: 'Freelance AI Engineer & Full-Stack Developer (Self-Employed)',
       url: SITE_URL,
-      founder: { '@type': 'Person', name: 'Nimrah Qureshi' },
     },
     knowsAbout: [
       'Artificial Intelligence',
@@ -83,6 +88,10 @@ export default function SEOHead({
       'Automation',
       'SaaS Development',
       'Web3 Development',
+      'Large Language Models (LLMs)',
+      'Agentic Workflows',
+      'Next.js',
+      'TypeScript'
     ],
   };
 
@@ -134,7 +143,7 @@ export default function SEOHead({
       {/* Additional SEO */}
       <meta
         name="keywords"
-        content="AI Chatbot Developer, AI Engineer, Full Stack Developer, AI Agent Developer, Automation Specialist, OpenAI Developer, LangChain Developer, Next.js Developer"
+        content="AI Chatbot Developer, AI Engineer, Full Stack Developer, AI Agent Developer, Automation Specialist, OpenAI Developer, LangChain Developer, Next.js Developer, Nimrah Qureshi"
       />
       <meta name="author" content="Nimrah Qureshi" />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
