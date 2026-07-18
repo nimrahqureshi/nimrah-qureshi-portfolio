@@ -195,7 +195,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg mt-6"
             >
               <Picture
-                src="/images/about.png"
+                src="/images/about-1.png"
                 alt="AI development workspace"
                 loading="lazy"
                 decoding="async"
@@ -214,7 +214,7 @@ export default function AboutSection() {
               className="col-span-4 aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-[#101010] border border-neutral-900 shadow-lg -mt-12 z-20"
             >
               <Picture
-                src="/images/about.png"
+                src="/images/about-1.png"
                 alt="Detail of Nimrah Qureshi at work"
                 loading="lazy"
                 decoding="async"
