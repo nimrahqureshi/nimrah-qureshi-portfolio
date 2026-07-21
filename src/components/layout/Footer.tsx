@@ -84,20 +84,23 @@ export default function Footer() {
           >
             {/* Logo Container - Changed rounded-xl to rounded-full */}
             <div className="flex items-center gap-3">
-  <div className="w-12 h-12 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center justify-center overflow-hidden shadow-xl shadow-black/40 transition-all duration-300 hover:scale-105 hover:border-[#E1E0CC]/30">
+  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
     <Picture
       src="/images/logo.png"
       alt="Nimrah Qureshi logo"
-      width={48}
-      height={48}
+      width={32}
+      height={32}
       loading="lazy"
       decoding="async"
-      className="w-10 h-10 object-contain"
+      className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110"
+      onError={(e) => {
+        e.currentTarget.style.display = "none";
+      }}
     />
   </div>
 
   <span className="text-xl font-bold tracking-tight text-[#E1E0CC]">
-    Nimrah <span className="text-[#C8B68A]">Qureshi</span>
+    Nimrah Qureshi
   </span>
 </div>
             
