@@ -133,10 +133,11 @@ export default function AboutSection() {
           >
             About Me
           </motion.h2>
-        </div>
-        <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex justify-center">
   <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#E1E0CC] to-transparent" />
 </div>
+        </div>
+        
          <motion.div
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}

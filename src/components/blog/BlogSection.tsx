@@ -77,11 +77,13 @@ export default function BlogSection() {
                 },
               ]}
             />
-          </div>
-        </div>
-        <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex justify-center">
   <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#E1E0CC] to-transparent" />
 </div>
+            
+          </div>
+        </div>
+       
 
         {/* Categories (Minimalist Warm Tint Active States) */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-16 relative z-20">
