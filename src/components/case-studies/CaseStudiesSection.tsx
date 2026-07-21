@@ -73,6 +73,9 @@ export default function CaseStudiesSection() {
             />
           </div>
         </div>
+        <div className="mt-6 flex justify-center">
+  <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#E1E0CC] to-transparent" />
+</div>
 
         {/* Case Studies Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
