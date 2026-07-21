@@ -138,21 +138,23 @@ export default function AboutSection() {
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
-  className="mt-12 mb-20 flex flex-col items-center"
+  className="mt-12 mb-20"
 >
-  <h3 className="text-2xl text-[#E1E0CC] mb-6 text-center">
-    Professional Upwork Presence
-  </h3>
+  <div className="w-full max-w-3xl mx-auto">
+    <h3 className="text-2xl text-[#E1E0CC] mb-6 text-center">
+      Professional Upwork Presence
+    </h3>
 
-  <Picture
-    src="/images/upwork-profile.png"
-    alt="Nimrah Qureshi's Upwork freelancer profile"
-    loading="lazy"
-    decoding="async"
-    width={1086}
-    height={1448}
-    className="w-full max-w-sm rounded-2xl border border-neutral-800 shadow-2xl"
-  />
+    <Picture
+      src="/images/upwork-profile.png"
+      alt="Nimrah Qureshi's Upwork freelancer profile"
+      loading="lazy"
+      decoding="async"
+      width={1086}
+      height={1448}
+      className="w-full rounded-2xl border border-neutral-800 shadow-2xl transition-transform duration-300 hover:scale-[1.02]"
+    />
+  </div>
 </motion.div>
 
         {/* MAIN PROFILE INFRASTRUCTURE */}
