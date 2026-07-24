@@ -29,10 +29,10 @@ const footerLinks = {
 const socialLinks = [
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
   { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~010d340d7ed5f5c501?mp_source=share', label: 'Upwork' },
-  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
+  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrahqureshi13', label: 'Fiverr' },
   { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
-  { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi013', label: 'Instagram' },
-  { icon: Mail, href: 'mailto:nimrahqureshi013@gmail.com', label: 'Email' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi13', label: 'Instagram' },
+  { icon: Mail, href: 'mailto:nimrahqureshi13@gmail.com', label: 'Email' },
 ];
 
 export default function Footer() {
@@ -116,7 +116,7 @@ export default function Footer() {
 
             {/* Direct Contact Stack */}
             <div className="space-y-2 text-sm text-gray-400 pt-2 border-t border-white/[0.03]">
-              <p className="flex items-center gap-2">📧 nimrahqureshi013@gmail.com</p>
+              <p className="flex items-center gap-2">📧 nimrahqureshi13@gmail.com</p>
               <p className="flex items-center gap-2">📍 Karachi, Pakistan</p>
             </div>
             

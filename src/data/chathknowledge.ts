@@ -87,7 +87,7 @@ export const knowledgeBase: KnowledgeItem[] = [
   {
     keywords: ['contact', 'reach', 'email', 'call', 'message', 'talk', 'mail', 'social', 'linkedin', 'github'],
     response:
-      "Let's get in touch immediately:\n\n📧 Email: nimrahqureshi013@gmail.com\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
+      "Let's get in touch immediately:\n\n📧 Email: nimrahqureshi13@gmail.com\n🔗 Professional profiles (LinkedIn & GitHub) are mapped via direct icon actions at the footer of our layout!\n\nStandard response loop is under 24 hours. Let's make something historic! ⏱️🔥",
   },
   {
     keywords: ['location', 'where', 'karachi', 'pakistan', 'available', 'availability', 'hours', 'weekly', 'book', 'schedule', 'freelance', 'free', 'consulting', 'timeline', 'process', 'delivery', 'deadline', 'workflow', 'steps'],

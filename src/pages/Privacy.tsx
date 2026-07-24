@@ -52,12 +52,12 @@ export default function Privacy() {
         <H>Your Rights</H>
         <p>
           You may request access to, correction of, or deletion of your personal
-          information at any time by contacting us at nimrahqureshi013@gmail.com.
+          information at any time by contacting us at nimrahqureshi13@gmail.com.
         </p>
 
         <H>Contact</H>
         <p>
-          For any privacy-related questions, email nimrahqureshi013@gmail.com.
+          For any privacy-related questions, email nimrahqureshi13@gmail.com.
         </p>
       </LegalPage>
     </>

@@ -51,7 +51,7 @@ export default function Terms() {
         </p>
 
         <H>Contact</H>
-        <p>For questions about these Terms, email nimrahqureshi013@gmail.com.</p>
+        <p>For questions about these Terms, email nimrahqureshi13@gmail.com.</p>
       </LegalPage>
     </>
   );

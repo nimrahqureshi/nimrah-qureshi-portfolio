@@ -167,8 +167,8 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 uppercase tracking-wider">Email Me</p>
-                      <a href="mailto:nimrahqureshi013@gmail.com" className="text-sm text-gray-200 hover:text-[#E1E0CC] transition-colors break-all">
-                        nimrahqureshi013@gmail.com
+                      <a href="mailto:nimrahqureshi13@gmail.com" className="text-sm text-gray-200 hover:text-[#E1E0CC] transition-colors break-all">
+                        nimrahqureshi13@gmail.com
                       </a>
                     </div>
                   </div>
@@ -291,7 +291,7 @@ export default function ContactSection() {
 
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com/nimrahqureshi_013"
+                  href="https://instagram.com/nimrahqureshi13"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
@@ -305,7 +305,7 @@ export default function ContactSection() {
 
                 {/* Pinterest */}
                 <a
-                  href="https://pinterest.com/nimrahqureshi013"
+                  href="https://pinterest.com/nimrahqureshi13"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"

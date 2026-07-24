@@ -35,8 +35,8 @@ const socialLinks = [
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
   { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~nimrahqureshi', label: 'Upwork' },
-  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
-  { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi013', label: 'Instagram' },
+  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrahqureshi13', label: 'Fiverr' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi13', label: 'Instagram' },
 ];
 
 function AnimatedCounter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {

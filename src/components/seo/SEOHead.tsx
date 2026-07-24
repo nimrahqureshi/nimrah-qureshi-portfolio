@@ -64,14 +64,14 @@ export default function SEOHead({
       'https://github.com/nimrahqureshi',
       'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb',
       'https://www.fiverr.com/nimrah_013',
-      'https://www.instagram.com/nimrahqureshi013',
+      'https://www.instagram.com/nimrahqureshi13',
     ],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Karachi',
       addressCountry: 'PK',
     },
-    email: 'nimrahqureshi013@gmail.com',
+    email: 'nimrahqureshi13@gmail.com',
     worksFor: {
       '@type': 'Organization',
       name: 'Freelance AI Engineer & Full-Stack Developer (Self-Employed)',

@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         // Send notification to admin
         await resend.emails.send({
           from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-          to: process.env.CONTACT_EMAIL || 'nimrahqureshi013@gmail.com',
+          to: process.env.CONTACT_EMAIL || 'nimrahqureshi13@gmail.com',
           subject: `New Lead: ${name} - ${projectType || 'General Inquiry'}`,
           html: `
             <h2>New Contact Form Submission</h2>
