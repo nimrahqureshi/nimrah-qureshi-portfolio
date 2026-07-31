@@ -1,26 +1,30 @@
 import express from 'express';
 import Subscriber from '../models/Subscriber.js';
+import { requireAdmin } from '../middleware/auth.js';
+import { writeLimiter } from '../middleware/limiters.js';
+import { isEmail, clampStr, asPlainString } from '../middleware/validate.js';
 
 const router = express.Router();
 
-// Get all subscribers
-router.get('/', async (req, res) => {
+// Admin-only: the subscriber list is private personal data.
+router.get('/', requireAdmin, async (req, res, next) => {
   try {
     const { active } = req.query;
     const query = {};
     if (active !== undefined) query.active = active === 'true';
-
     const subscribers = await Subscriber.find(query).sort('-createdAt');
     res.json(subscribers);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  } catch (err) { next(err); }
 });
 
-// Subscribe (public)
-router.post('/', async (req, res) => {
+// Public subscribe with validation + allowlisted fields.
+router.post('/', writeLimiter, async (req, res, next) => {
   try {
-    const existing = await Subscriber.findOne({ email: req.body.email });
+    const email = clampStr(asPlainString(req.body.email), 254).toLowerCase();
+    const name = clampStr(asPlainString(req.body.name), 100);
+    if (!isEmail(email)) return res.status(400).json({ message: 'Please enter a valid email address.' });
+
+    const existing = await Subscriber.findOne({ email });
     if (existing) {
       if (!existing.active) {
         existing.active = true;
@@ -30,28 +34,22 @@ router.post('/', async (req, res) => {
       }
       return res.status(400).json({ message: 'Already subscribed' });
     }
-
-    await Subscriber.create(req.body);
+    await Subscriber.create({ email, name });
     res.status(201).json({ message: 'Subscribed successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+  } catch (err) { next(err); }
 });
 
-// Unsubscribe
-router.post('/unsubscribe', async (req, res) => {
+router.post('/unsubscribe', writeLimiter, async (req, res, next) => {
   try {
-    const subscriber = await Subscriber.findOne({ email: req.body.email });
+    const email = clampStr(asPlainString(req.body.email), 254).toLowerCase();
+    if (!isEmail(email)) return res.status(400).json({ message: 'Please enter a valid email address.' });
+    const subscriber = await Subscriber.findOne({ email });
     if (!subscriber) return res.status(404).json({ message: 'Subscriber not found' });
-    
     subscriber.active = false;
     subscriber.unsubscribedAt = new Date();
     await subscriber.save();
-    
     res.json({ message: 'Unsubscribed successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  } catch (err) { next(err); }
 });
 
 export default router;

@@ -5,7 +5,7 @@ import { writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
 
-const BASE_URL = process.env.VITE_SITE_URL?.replace(/\/$/, "") || "https://nimrahqureshi.com";
+const BASE_URL = process.env.VITE_SITE_URL?.replace(/\/$/, "") || "https://nimrah-qureshi-portfolio.vercel.app";
 
 // Every indexable route in src/App.tsx (404 intentionally excluded).
 const routes = [
@@ -16,6 +16,17 @@ const routes = [
   { path: "/case-studies", priority: "0.8", changefreq: "monthly" },
   { path: "/ai-tools",     priority: "0.7", changefreq: "monthly" },
   { path: "/blog",         priority: "0.7", changefreq: "weekly" },
+  // Individual articles — keep in sync with src/data/blogPosts.ts slugs.
+  ...[
+    "ai-chatbots-transforming-customer-support",
+    "building-production-ready-ai-agents",
+    "practical-guide-whatsapp-business-automation",
+    "zero-to-saas-realistic-mvp-playbook",
+    "why-every-business-needs-ai-strategy",
+    "modern-react-performance-checklist",
+    "future-of-work-ai-automation-human-collaboration",
+    "freelancing-ai-development-career-guide",
+  ].map((slug) => ({ path: `/blog/${slug}`, priority: "0.6", changefreq: "monthly" })),
   { path: "/pricing",      priority: "0.8", changefreq: "monthly" },
   { path: "/faq",          priority: "0.6", changefreq: "monthly" },
   { path: "/contact",      priority: "0.9", changefreq: "monthly" },
