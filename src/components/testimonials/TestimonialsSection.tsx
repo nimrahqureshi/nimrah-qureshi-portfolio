@@ -3,11 +3,17 @@ import { motion } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionHeading from '@/components/effects/SectionHeading';
 import GlassCard from '@/components/effects/GlassCard';
-import { testimonials } from '@/data/testimonials';
+import { testimonials as allTestimonials } from '@/data/testimonials';
+
+// Placeholder entries (isSample) are never rendered; the section disappears
+// entirely until at least one real testimonial exists.
+const testimonials = allTestimonials.filter((t) => !t.isSample);
 
 export default function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const current = testimonials[activeIndex];
+
+  if (testimonials.length === 0) return null;
 
   const next = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
   const prev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);

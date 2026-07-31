@@ -185,8 +185,8 @@ export default function AboutSection() {
                 alt="Portrait of Nimrah Qureshi"
                 loading="lazy"
                 decoding="async"
-                width={1086}
-                height={1448}
+                width={880}
+                height={1320}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
@@ -205,8 +205,8 @@ export default function AboutSection() {
                 alt="AI development workspace"
                 loading="lazy"
                 decoding="async"
-                width={1086}
-                height={1448}
+                width={880}
+                height={1564}
                 className={`w-full h-full object-cover scale-110 transition-all duration-700 ease-out ${isTouched ? 'grayscale-0 brightness-100' : 'grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100'}`}
               />
             </motion.div>
@@ -224,8 +224,8 @@ export default function AboutSection() {
                 alt="Detail of Nimrah Qureshi at work"
                 loading="lazy"
                 decoding="async"
-                width={1086}
-                height={1448}
+                width={880}
+                height={1564}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale contrast-125 group-hover:grayscale-0'}`}
               />
             </motion.div>
@@ -243,8 +243,8 @@ export default function AboutSection() {
                 alt="Wide view of the development workspace"
                 loading="lazy"
                 decoding="async"
-                width={1086}
-                height={1448}
+                width={880}
+                height={1320}
                 className={`w-full h-full object-cover transition-all duration-700 ease-out ${isTouched ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
               />
               <div className="absolute inset-0 bg-neutral-950/10 mix-blend-multiply" />

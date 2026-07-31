@@ -50,13 +50,23 @@ const categories = ['All', ...new Set(projects.map(p => p.category))];
 
 export default function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [query, setQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useModalBehavior(!!selectedProject, () => setSelectedProject(null));
 
-  const filtered = activeCategory === 'All' 
-    ? projects 
+  const byCategory = activeCategory === 'All'
+    ? projects
     : projects.filter(p => p.category === activeCategory);
+  const q = query.trim().toLowerCase();
+  const filtered = q
+    ? byCategory.filter(p =>
+        [p.title, p.subtitle, p.description, ...p.technologies]
+          .join(' ')
+          .toLowerCase()
+          .includes(q),
+      )
+    : byCategory;
 
   return (
     <section 
@@ -96,6 +106,7 @@ export default function PortfolioSection() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
+                aria-pressed={activeCategory === cat}
                 className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 uppercase tracking-wider ${
                   activeCategory === cat
                     ? 'bg-[#E1E0CC] text-black shadow-lg font-semibold'
@@ -107,6 +118,25 @@ export default function PortfolioSection() {
             ))}
           </div>
         </div>
+
+        {/* Project search */}
+        <div className="max-w-md mx-auto mb-10">
+          <label htmlFor="project-search" className="sr-only">Search projects</label>
+          <input
+            id="project-search"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search projects by name or technology…"
+            className="w-full bg-[#101010] border border-neutral-900 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/20 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300"
+          />
+        </div>
+
+        {filtered.length === 0 && (
+          <p className="text-center text-sm text-gray-500 mb-10" role="status">
+            No projects match "{query}". Try a different keyword.
+          </p>
+        )}
 
         {/* Project Grid Display with Clean Aesthetic Proportions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

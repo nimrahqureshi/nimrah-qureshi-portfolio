@@ -49,7 +49,7 @@ export default function CaseStudiesSection() {
           >
             <Sparkles className="w-3.5 h-3.5 text-[#E1E0CC]" />
             <span className="text-xs font-medium tracking-[0.2em] uppercase text-[#E1E0CC]/80">
-              Proven Performance
+              Engagement Blueprints
             </span>
           </motion.div>
           <motion.h2 
@@ -66,11 +66,16 @@ export default function CaseStudiesSection() {
             <WordsPullUpMultiStyle
               segments={[
                 { 
-                  text: "Real projects, real results. See how I've helped businesses transform with AI and automation.", 
+                  text: "How I approach real engagements — the problem, the build, and the outcomes I design for, mapped end to end.", 
                   className: "font-normal text-gray-400 text-center" 
                 },
               ]}
             />
+            <p className="mt-4 text-xs text-gray-500 max-w-xl mx-auto">
+              These are illustrative concept studies — representative of the systems I build,
+              with modeled target metrics rather than client-reported results. Client references
+              are available on request.
+            </p>
             <div className="mt-6 flex justify-center">
   <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#E1E0CC] to-transparent" />
 </div>

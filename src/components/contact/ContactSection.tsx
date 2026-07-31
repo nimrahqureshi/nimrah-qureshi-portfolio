@@ -34,6 +34,10 @@ export default function ContactSection() {
       toast.error('Please enter a valid email address.');
       return;
     }
+    if (!formData.subject.trim()) {
+      toast.error('Please add a short subject.');
+      return;
+    }
     if (message.length < 10) {
       toast.error('Please tell me a little more about your project (at least 10 characters).');
       return;
@@ -44,7 +48,7 @@ export default function ContactSection() {
       const res = await api.submitContact({
         name,
         email,
-        projectType: formData.subject.trim() || undefined,
+        subject: formData.subject.trim() || undefined,
         message,
       });
       setSubmitted(true);
@@ -137,8 +141,8 @@ export default function ContactSection() {
   <Picture
     src="/images/contact.png"
     alt="Get in touch with Nimrah Qureshi"
-    width={1254}
-    height={1254}
+    width={768}
+    height={1152}
     loading="lazy"
     decoding="async"
     className="
@@ -235,7 +239,7 @@ export default function ContactSection() {
 
                 {/* Fiverr */}
                 <a
-                  href="https://fiverr.com/sellers/nimrah_013"
+                  href="https://www.fiverr.com/nimrah_013"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
@@ -275,19 +279,6 @@ export default function ContactSection() {
                   </svg>
                 </a>
 
-                {/* Facebook */}
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-[#101010] border border-white/[0.03] flex items-center justify-center text-gray-400 hover:text-[#E1E0CC] hover:border-[#E1E0CC]/20 transition-all duration-300"
-                  title="Facebook"
-                  aria-label="Nimrah Qureshi on Facebook"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                  </svg>
-                </a>
 
                 {/* Instagram */}
                 <a

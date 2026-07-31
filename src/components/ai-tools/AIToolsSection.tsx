@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { api, ApiError } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { Sparkles, Copy, Check, RefreshCw, FileText, MessageSquare, PenTool, Mail, Lightbulb, Bot } from 'lucide-react';
 import SectionHeading from '@/components/effects/SectionHeading';
@@ -23,7 +24,7 @@ const tools: Tool[] = [
     icon: FileText,
     gradient: 'from-[#E1E0CC]/20 to-[#E1E0CC]/5',
     placeholder: 'Enter a blog topic (e.g., "Benefits of AI Chatbots for E-commerce")',
-    generate: (topic) => `# ${topic}\n\n## Introduction\nIn today's rapidly evolving digital landscape, ${topic.toLowerCase()} has become a critical consideration for businesses looking to stay competitive.\n\n## Why This Matters\nThe adoption of AI-powered solutions is no longer optional—it's a necessity for businesses that want to thrive in the modern marketplace.\n\n## Key Benefits\n1. **Increased Efficiency**: Automate repetitive tasks and free up human resources\n2. **Cost Reduction**: Reduce operational costs by up to 60%\n3. **24/7 Availability**: Provide round-the-clock service to customers\n4. **Scalability**: Handle growing demand without proportional resource increases\n\n## Implementation Strategy\nSuccessful implementation requires careful planning, the right technology stack, and a clear understanding of your business objectives.\n\n## Conclusion\nEmbracing ${topic.toLowerCase()} is a strategic move that can transform your business operations and drive significant growth.\n\n---\n*This article was AI-generated. For expert implementation, contact Nimrah Qureshi.*`
+    generate: (topic) => `# ${topic}\n\n## Introduction\nIn today's rapidly evolving digital landscape, ${topic.toLowerCase()} has become a critical consideration for businesses looking to stay competitive.\n\n## Why This Matters\nThe adoption of AI-powered solutions is no longer optional—it's a necessity for businesses that want to thrive in the modern marketplace.\n\n## Key Benefits\n1. **Increased Efficiency**: Automate repetitive tasks and free up human resources\n2. **Cost Reduction**: Reduce operational costs by up to 60%\n3. **24/7 Availability**: Provide round-the-clock service to customers\n4. **Scalability**: Handle growing demand without proportional resource increases\n\n## Implementation Strategy\nSuccessful implementation requires careful planning, the right technology stack, and a clear understanding of your business objectives.\n\n## Conclusion\nEmbracing ${topic.toLowerCase()} is a strategic move that can transform your business operations and drive significant growth.\n\n---\n*Starter outline template — for a tailored, in-depth draft, contact Nimrah Qureshi.*`
   },
   {
     id: 'caption',
@@ -72,21 +73,60 @@ const tools: Tool[] = [
   }
 ];
 
+// UI tool id → backend /api/ai/generate tool key.
+const TOOL_API_KEYS: Record<string, string> = {
+  blog: 'article-outline',
+  caption: 'social-post',
+  prompt: 'prompt-optimizer',
+  email: 'email-draft',
+  idea: 'idea-generator',
+  content: 'content-brief',
+};
+
 export default function AIToolsSection() {
   const [activeTool, setActiveTool] = useState(tools[0]);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  // null = probing, true = a real LLM is configured server-side,
+  // false = template mode (clearly labeled — nothing is presented as AI).
+  const [liveAI, setLiveAI] = useState<boolean | null>(null);
+  const [outputMode, setOutputMode] = useState<'live' | 'template'>('template');
 
-  const handleGenerate = () => {
-    if (!input.trim()) return;
+  useEffect(() => {
+    let cancelled = false;
+    api.aiStatus()
+      .then((r) => { if (!cancelled) setLiveAI(r.configured); })
+      .catch(() => { if (!cancelled) setLiveAI(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  const handleGenerate = async () => {
+    if (!input.trim() || isGenerating) return;
     setIsGenerating(true);
-    
-    setTimeout(() => {
-      setOutput(activeTool.generate(input));
+    try {
+      if (liveAI) {
+        const res = await api.aiGenerate(TOOL_API_KEYS[activeTool.id] ?? activeTool.id, input.trim());
+        setOutput(res.output);
+        setOutputMode('live');
+      } else {
+        // Instant structured template — labeled as such below the output.
+        setOutput(activeTool.generate(input));
+        setOutputMode('template');
+      }
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 503) {
+        // Provider not configured on this deployment — fall back honestly.
+        setLiveAI(false);
+        setOutput(activeTool.generate(input));
+        setOutputMode('template');
+      } else {
+        toast.error(err instanceof ApiError ? err.message : 'Generation failed — please try again.');
+      }
+    } finally {
       setIsGenerating(false);
-    }, 1000);
+    }
   };
 
   const handleCopy = async () => {
@@ -139,7 +179,9 @@ export default function AIToolsSection() {
       <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading 
           title="AI Tools"
-          subtitle="Free AI-powered tools to help you generate content, ideas, and more. Powered by cutting-edge AI."
+          subtitle={liveAI
+            ? 'Free AI tools — outlines, posts, prompts, emails, and ideas, generated live by a large language model.'
+            : 'Free generator tools with instant structured templates. Live AI generation is available when an LLM provider is enabled on the backend.'}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12 sm:mt-16">
@@ -213,7 +255,7 @@ export default function AIToolsSection() {
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4" />
-                    <span>Generate with AI</span>
+                    <span>{liveAI ? 'Generate with AI' : 'Generate Template'}</span>
                   </>
                 )}
               </button>
@@ -227,6 +269,9 @@ export default function AIToolsSection() {
                   className="relative mt-4"
                 >
                   <div className="bg-black/50 border border-[#E1E0CC]/10 rounded-xl p-5 shadow-inner">
+                    <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-3">
+                      {outputMode === 'live' ? 'Generated by live AI' : 'Structured template preview'}
+                    </p>
                     <pre className="text-sm text-gray-300 whitespace-pre-wrap font-sans leading-relaxed selection:bg-[#E1E0CC]/20">{output}</pre>
                   </div>
                   <button

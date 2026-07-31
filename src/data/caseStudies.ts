@@ -11,14 +11,16 @@ export interface CaseStudy {
   businessImpact: string;
   timeline: string;
   gradient: string;
-  image: string;
+  /** All current entries are illustrative concept engagements, not client work. */
+  isConcept: boolean;
 }
 
 export const caseStudies: CaseStudy[] = [
   {
     id: 'ecommerce-ai-support',
     title: 'AI-Powered Customer Support for E-commerce Giant',
-    client: 'ShopFlow (E-commerce Platform)',
+    client: 'Concept study · mid-size e-commerce platform',
+    isConcept: true,
     industry: 'E-commerce',
     problem: 'ShopFlow was receiving 10,000+ customer support tickets daily, with average response times of 48 hours. Their support team was overwhelmed, and customer satisfaction was dropping rapidly.',
     solution: 'Designed and deployed an AI chatbot system that handles 85% of inquiries automatically, with intelligent escalation to human agents for complex issues.',
@@ -33,12 +35,12 @@ export const caseStudies: CaseStudy[] = [
     businessImpact: '$1.2M annual savings in support costs, 40% increase in customer retention, and the ability to scale support without proportional hiring.',
     timeline: '8 weeks from kickoff to full deployment',
     gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop'
   },
   {
     id: 'saas-automation',
     title: 'End-to-End Automation for SaaS Platform',
-    client: 'DataSync Pro (B2B SaaS)',
+    client: 'Concept study · B2B SaaS company',
+    isConcept: true,
     industry: 'Technology / SaaS',
     problem: 'DataSync Pro was manually processing onboarding, invoicing, and customer communications for 5,000+ clients, leading to errors, delays, and missed revenue opportunities.',
     solution: 'Built a comprehensive automation system connecting their CRM, billing, email, and support tools into a unified workflow.',
@@ -53,12 +55,12 @@ export const caseStudies: CaseStudy[] = [
     businessImpact: '$800K annual cost savings, 3x increase in onboarding capacity, and 95% reduction in billing errors.',
     timeline: '12 weeks for full implementation',
     gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop'
   },
   {
     id: 'healthcare-ai',
     title: 'AI Document Processing for Healthcare Provider',
-    client: 'MediCare Plus (Healthcare Network)',
+    client: 'Concept study · healthcare document workflow',
+    isConcept: true,
     industry: 'Healthcare',
     problem: 'MediCare Plus was processing 50,000+ medical documents monthly manually, leading to 15% error rates and delayed patient care decisions.',
     solution: 'Developed an AI-powered document processing system that extracts, validates, and routes medical information with 99.5% accuracy.',
@@ -73,6 +75,5 @@ export const caseStudies: CaseStudy[] = [
     businessImpact: 'Faster patient care decisions, regulatory compliance achieved, and the ability to handle 3x the document volume without additional staff.',
     timeline: '16 weeks from design to production',
     gradient: 'from-[#33302a] via-[#1e1c18] to-[#121110]',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop'
   }
 ];

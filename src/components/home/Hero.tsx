@@ -93,8 +93,8 @@ export default function Hero() {
                     alt="Nimrah Qureshi — AI Engineer and Full-Stack Developer"
                     loading="eager"
                     fetchPriority="high"
-                    width={1024}
-                    height={1024}
+                    width={640}
+                    height={960}
                     className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] object-contain
 drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]
 transition-all duration-500 ease-out

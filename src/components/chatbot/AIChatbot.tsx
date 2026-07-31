@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X, MessageCircle, HelpCircle, Sparkles } from 'lucide-react';
 import { FlabbyMonster, FlabbyMini, UserAvatar, SpeechBubble } from './FlabbyMonster';
-import { knowledgeBase, quickActions, getGreeting}  from '@/data/chathknowledge';
+import { knowledgeBase, quickActions, getGreeting } from '@/data/chatKnowledge';
+import { api, ApiError } from '@/lib/api';
 import { useUI } from '@/context/UIContext';
 interface Message {
   role: 'user' | 'assistant';
@@ -80,7 +81,19 @@ export default function AIChatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  // null = not probed yet; true = a real LLM answers; false = instant FAQ mode.
+  const [liveAI, setLiveAI] = useState<boolean | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  // Probe once, when the chat is first opened, whether live AI is configured.
+  useEffect(() => {
+    if (!isOpen || liveAI !== null) return;
+    let cancelled = false;
+    api.aiStatus()
+      .then((r) => { if (!cancelled) setLiveAI(r.configured); })
+      .catch(() => { if (!cancelled) setLiveAI(false); });
+    return () => { cancelled = true; };
+  }, [isOpen, liveAI]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -98,25 +111,34 @@ export default function AIChatbot() {
   const sendMessage = async (text: string) => {
     if (!text.trim() || isTyping) return;
 
-    const userMessage: Message = {
-      role: 'user',
-      content: text,
-      timestamp: getTime(),
-    };
-    setMessages((prev) => [...prev, userMessage]);
+    const userMessage: Message = { role: 'user', content: text, timestamp: getTime() };
+    const history = [...messages, userMessage];
+    setMessages(history);
     setInput('');
     setIsTyping(true);
     setShowWelcome(false);
 
-    const delay = 900 + Math.random() * 800;
-    setTimeout(() => {
-      const { content, options } = getResponse(text);
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content, timestamp: getTime(), options },
-      ]);
-      setIsTyping(false);
-    }, delay);
+    const pushAssistant = (content: string, options?: string[]) =>
+      setMessages((prev) => [...prev, { role: 'assistant', content, timestamp: getTime(), options }]);
+
+    if (liveAI) {
+      try {
+        const payload = history.slice(-10).map(({ role, content }) => ({ role, content }));
+        const res = await api.aiChat(payload);
+        pushAssistant(res.reply, ['Get a quote', 'See portfolio', 'Contact']);
+        setIsTyping(false);
+        return;
+      } catch (err) {
+        if (err instanceof ApiError && err.status === 503) {
+          setLiveAI(false); // provider not configured — drop to FAQ mode
+        }
+        // Any failure falls through to the instant FAQ answers below.
+      }
+    }
+
+    const { content, options } = getResponse(text);
+    pushAssistant(content, options);
+    setIsTyping(false);
   };
 
   const handleQuickAction = (label: string) => {
@@ -215,7 +237,7 @@ export default function AIChatbot() {
                         <Sparkles className="w-3.5 h-3.5 text-[#C8B68A]" />
                       </div>
                       <p className="text-[#E1E0CC]/50 text-xs mt-0.5">
-                        Nimrah's AI assistant
+                        {liveAI ? "Nimrah's AI assistant" : "Nimrah's assistant"}
                       </p>
                       <div className="flex items-center gap-1.5 mt-1.5">
                         <span className="relative flex h-2 w-2">
@@ -223,7 +245,7 @@ export default function AIChatbot() {
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E1E0CC]" />
                         </span>
                         <span className="text-[11px] text-[#E1E0CC]/60 font-medium">
-                          Online • Replies instantly
+                          {liveAI ? 'Online • Live AI responses' : 'Online • Instant answers'}
                         </span>
                       </div>
                     </div>
@@ -401,7 +423,7 @@ export default function AIChatbot() {
                 </div>
 
                 <p className="text-center text-[10px] text-[#E1E0CC]/40 mt-2 font-medium">
-                  Powered by Nimrah • Press{' '}
+                  {liveAI ? 'AI answers can be imperfect' : 'Powered by Nimrah'} • Press{' '}
                   <kbd className="px-1 py-0.5 bg-[#E1E0CC]/10 rounded border border-[#E1E0CC]/15 text-[#E1E0CC]/60">
                     Enter
                   </kbd>{' '}

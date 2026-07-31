@@ -15,7 +15,6 @@ export interface Project {
   results: string[];
   links: ProjectLink[];
   gradient: string;
-  image: string;
   category: string;
 }
 
@@ -44,9 +43,11 @@ export const projects: Project[] = [
       'Reusable templates for faster MVP delivery',
       'Workflow automation for repetitive client tasks',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [
+      { label: 'Live Demo', url: 'https://blai-portfolio.vercel.app' },
+      { label: 'Discuss This Project', url: '/contact' },
+    ],
     gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]',
-    image: '/images/neuraloft.jpg',
     category: 'Studio',
   },
   {
@@ -73,9 +74,8 @@ export const projects: Project[] = [
       'OpenAI-powered integrations for business workflows',
       'Smart-contract and Web3 capabilities for clients',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]',
-    image: '/images/brain-link-ai.jpg',
     category: 'AI Company',
   },
   {
@@ -102,9 +102,8 @@ export const projects: Project[] = [
       'Automated lead qualification',
       'Reduced repetitive support questions',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#2e2e2e] via-[#1c1c1c] to-[#0d0d0d]',
-    image: '/images/chatbot-assistant.jpg',
     category: 'AI Chatbot',
   },
   {
@@ -130,9 +129,8 @@ export const projects: Project[] = [
       'Less time spent searching files',
       'Reusable across knowledge bases',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#33302a] via-[#1e1c18] to-[#121110]',
-    image: '/images/pdf-chatbot.jpg',
     category: 'AI Tool',
   },
   {
@@ -158,9 +156,8 @@ export const projects: Project[] = [
       'Faster customer responses',
       'Support that scales with demand',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#262626] to-[#0a0a0a]',
-    image: '/images/whatsapp-bot.jpg',
     category: 'Automation',
   },
   {
@@ -186,9 +183,8 @@ export const projects: Project[] = [
       'Clear visibility into workflows',
       'Easier process maintenance',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#3a3629] via-[#23211a] to-[#101010]',
-    image: '/images/automation-dashboard.jpg',
     category: 'Dashboard',
   },
   {
@@ -214,9 +210,8 @@ export const projects: Project[] = [
       'Integrated subscription billing',
       'Scalable, maintainable codebase',
     ],
-    links: [{ label: 'Learn More', url: '#contact' }],
+    links: [{ label: 'Discuss This Project', url: '/contact' }],
     gradient: 'from-[#2b2e30] via-[#191b1c] to-[#0c0d0e]',
-    image: '/images/saas-platform.jpg',
     category: 'SaaS',
   },
 ];

@@ -16,13 +16,14 @@ export default function Typewriter() {
 
   useEffect(() => {
     const currentWord = roles[currentIndex];
-    
+    let pause: ReturnType<typeof setTimeout> | undefined;
+
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (charIndex < currentWord.length) {
           setCharIndex(prev => prev + 1);
         } else {
-          setTimeout(() => setIsDeleting(true), 2000);
+          pause = setTimeout(() => setIsDeleting(true), 2000);
         }
       } else {
         if (charIndex > 0) {
@@ -34,7 +35,8 @@ export default function Typewriter() {
       }
     }, isDeleting ? 50 : 100);
 
-    return () => clearTimeout(timeout);
+    // Clear both timers on unmount — the nested pause timer previously leaked.
+    return () => { clearTimeout(timeout); if (pause) clearTimeout(pause); };
   }, [charIndex, isDeleting, currentIndex]);
 
   return (

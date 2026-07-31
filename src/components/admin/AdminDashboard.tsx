@@ -1,3 +1,10 @@
+/**
+ * NOTE (production audit): This dashboard is intentionally NOT routed yet.
+ * It is excluded from the production bundle by tree-shaking (nothing imports
+ * it) and will be wired up behind Clerk authentication in Phase 3, backed by
+ * the now-protected /api/leads and /api/subscribers endpoints
+ * (Authorization: Bearer ADMIN_API_KEY).
+ */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 

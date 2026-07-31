@@ -5,9 +5,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import "./index.css";
 import App from "./App";
+import ErrorBoundary from "./components/layout/ErrorBoundary";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <ErrorBoundary>
     <HelmetProvider>
       <BrowserRouter>
         <App />
@@ -24,5 +26,6 @@ createRoot(document.getElementById("root")!).render(
         />
       </BrowserRouter>
     </HelmetProvider>
+    </ErrorBoundary>
   </StrictMode>
 );

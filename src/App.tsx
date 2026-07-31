@@ -12,6 +12,7 @@ const Projects = lazy(() => import('@/pages/Projects'));
 const CaseStudies = lazy(() => import('@/pages/CaseStudies'));
 const AITools = lazy(() => import('@/pages/AITools'));
 const Blog = lazy(() => import('@/pages/Blog'));
+const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const Pricing = lazy(() => import('@/pages/Pricing'));
 const FAQ = lazy(() => import('@/pages/FAQ'));
 const Contact = lazy(() => import('@/pages/Contact'));
@@ -38,6 +39,7 @@ function App() {
         <Route path="case-studies" element={<Suspense fallback={<RouteLoader />}><CaseStudies /></Suspense>} />
         <Route path="ai-tools" element={<Suspense fallback={<RouteLoader />}><AITools /></Suspense>} />
         <Route path="blog" element={<Suspense fallback={<RouteLoader />}><Blog /></Suspense>} />
+        <Route path="blog/:slug" element={<Suspense fallback={<RouteLoader />}><BlogPost /></Suspense>} />
         <Route path="pricing" element={<Suspense fallback={<RouteLoader />}><Pricing /></Suspense>} />
         <Route path="faq" element={<Suspense fallback={<RouteLoader />}><FAQ /></Suspense>} />
         <Route path="contact" element={<Suspense fallback={<RouteLoader />}><Contact /></Suspense>} />

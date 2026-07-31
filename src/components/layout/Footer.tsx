@@ -29,7 +29,7 @@ const footerLinks = {
 const socialLinks = [
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/nimrah-qureshi-5a372b2bb', label: 'LinkedIn' },
   { icon: FaUpwork, href: 'https://www.upwork.com/freelancers/~010d340d7ed5f5c501?mp_source=share', label: 'Upwork' },
-  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrahqureshi13', label: 'Fiverr' },
+  { icon: SiFiverr, href: 'https://www.fiverr.com/nimrah_013', label: 'Fiverr' },
   { icon: FaGithub, href: 'https://github.com/nimrahqureshi', label: 'GitHub' },
   { icon: FaInstagram, href: 'https://www.instagram.com/nimrahqureshi13', label: 'Instagram' },
   { icon: Mail, href: 'mailto:nimrahqureshi13@gmail.com', label: 'Email' },

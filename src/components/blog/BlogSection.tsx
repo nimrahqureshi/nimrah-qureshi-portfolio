@@ -3,15 +3,21 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, Tag, Sparkles } from 'lucide-react';
 import { WordsPullUpMultiStyle } from "@/components/effects/WordsPullUpMultiStyle";
 import GlassCard from '@/components/effects/GlassCard';
-import { blogPosts, blogCategories } from '@/data/blogPosts';
+import { Link } from 'react-router-dom';
+import { blogPosts, blogCategories, formatPostDate } from '@/data/blogPosts';
 
 export default function BlogSection() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [query, setQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(4);
 
-  const filtered = activeCategory === 'All'
+  const byCategory = activeCategory === 'All'
     ? blogPosts
     : blogPosts.filter(p => p.category === activeCategory);
+  const q = query.trim().toLowerCase();
+  const filtered = q
+    ? byCategory.filter(p => [p.title, p.excerpt, ...p.tags].join(' ').toLowerCase().includes(q))
+    : byCategory;
 
   const displayed = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -102,6 +108,25 @@ export default function BlogSection() {
           ))}
         </div>
 
+        {/* Article search */}
+        <div className="max-w-md mx-auto mb-12 relative z-20">
+          <label htmlFor="blog-search" className="sr-only">Search articles</label>
+          <input
+            id="blog-search"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search articles by topic or tag…"
+            className="w-full bg-[#101010] border border-neutral-900 focus:border-[#E1E0CC]/30 focus:ring-1 focus:ring-[#E1E0CC]/20 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300"
+          />
+        </div>
+
+        {displayed.length === 0 && (
+          <p className="text-center text-sm text-gray-500 mb-10" role="status">
+            No articles match your search. Try a different keyword or category.
+          </p>
+        )}
+
         {/* Blog Grid (Earthy Contrast Dark Cards) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {displayed.map((post, i) => (
@@ -116,6 +141,7 @@ export default function BlogSection() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
+              <Link to={`/blog/${post.slug}`} className="block h-full" aria-label={`Read article: ${post.title}`}>
               <GlassCard className="h-full bg-[#101010] border border-neutral-900 hover:border-[#E1E0CC]/20 p-5 sm:p-6 rounded-2xl md:rounded-[1.5rem] flex flex-col justify-between group cursor-pointer transition-all duration-300">
                 <div>
                   {/* Image Canvas Container */}
@@ -143,7 +169,7 @@ export default function BlogSection() {
                   <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
                     <span className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-gray-600" />
-                      {post.date}
+                      {formatPostDate(post.date)}
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-gray-600" />
@@ -177,6 +203,7 @@ export default function BlogSection() {
                   </div>
                 </div>
               </GlassCard>
+              </Link>
             </motion.div>
           ))}
         </div>
